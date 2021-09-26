@@ -20,15 +20,15 @@ variables:
   GCP_PROJECT_ID: production-servers-228902
   gcp_servicekey: '{
   "type": "service_account",
-  "project_id": "production-servers-228902",
-  "private_key_id": "505df1674338d0c11e95524c25bc2591310fdfb6",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCrWgpcHYtgyNRQ\nZR3B0RtiPw/lun7fB0TA5TcGgRpEJAR/g78dl5qiEjAfDFAJymaRtiuJ8sMOLyFR\nnsOMSUcvZ/LQECfAVnZH6jdiA4CRSkjHhDOnYGQlIAXtY818asaLopT/mVA/s0Q0\nOr8TEd8a8ru6gve7T6Uf0os/1KPgG7AsC8HOn+rBRTVawmHSnP578JRduu95c1Z2\n6vVQMVCTTBSMhe9cujZdxtBwi/q9AxEUs1kcm4Rb8GxB0xiYOmDK9P/yfrepgStq\nBP13XNU4it2tmqr4nroD3SguuKRh/tImtcmMS8LVJuAiXIitGyETWsaJgNgAz8gr\nOz0C65NBAgMBAAECggEAEFqsqHQNbHRehznPaEM7+NmJ++Qb3c+EyWBXKyDBUAWc\nBEufvwRMNvHDdAMp1HVj6r5XU3g/E6h95ptfkJEh4S1rqF4SXTIjYePB23H4IGXV\nom1EvNHfXQe8aRbgcuKCBqvCys5oMVw7wzxkJj7La3gFYNzFJjSIzwu6TKJP7cCu\nuZibXwj+lXNFpvEuqFB1Darrag0iQ/krdtVKNzgm1wBHC+Er1LFndT/AgBiF1O+F\nrrHX68PnAXIlqkpGQQJIsisMBOIGny3xPznhDOyM6zWcFIePOwJVRjOwwCYPS5pp\ntMcJ7Hat8w9q9t4fkIcMqBFs7wG32eUoOormnh5I/QKBgQDdoj7u9zNm2gn2aIf5\nYVNu2O9+U1HpF8hddDlS8cFWlPMz1Edhcv6YZ7dYpMnY8JZ4tzDfrkWQGWtzahjI\nWMkUf/dW/auDxZqG6YF9QR8z7mO1TPxR1EKKWC0pCktKVaKf6spptztPQOSY06/g\nOdy0nUXGhD8JhCL7mjH5ZLlQZwKBgQDF69kk39cGCKJL6VATK7TQ/hGJFqAEqH7A\n27NE87maLTQ++AAHg3Iv9oCE8JeHm1aClUWhmL5ec6qz0kl0anndKCwa0aAvygMH\nVZ3jORTACS4FiulBQhdVwIVaNkd50lZUulqq9ERfC1eZw5mb8NMQXsAI90YxDkC+\n/bFYh++WFwKBgFraNHQe73o87RKOXRb0N5Bb6yjcnNoxPphYmVsP8RI98sgPP8eJ\nrSXqdjUnL/r2/Ke1aJp4xNlCIlLobgpKovr9TfXh/JoCucqOE9+1f0X5dfQO/+vH\nWBN/+9sz9hMdsZFeXOUjEHP3hP3E4PbIoVmEkuLCuVh8Sx7aYZv7FyAHAoGBAL+f\nH6Y23bzmwRNT+YYGC9NIGPwsHpND+yyHyWIZwnnGCE5q18RufDB5rWaIdX0CZVia\nY0cYVj+mJwBguWNv7zqyuTjh+gAqypHgT7P9wNxIRvlwy3K2JVeNxM5ZvQvyHEl9\n/2iChGus1Ix3txImsIKp6a0Ekz3NedwwTPLU8Z7TAoGAOBSkAKS7TAErhHyNpWo8\nJ6TQdx4n+5KHfyc7lknTSSApoeyunPCG0aOUDlxlMIouGuvc2Iay7uyvo2iUzbaR\nKic9B9/9gSd7uv7d/TQwMCs1ejzjcvu54IfjOjodkU6S9NjZ6X5Va4+WJixlkDN3\n1a5rI5rqOkAqMgBCJqT0h8c=\n-----END PRIVATE KEY-----\n",
-  "client_email": "clouderbuild@production-servers-228902.iam.gserviceaccount.com",
-  "client_id": "101199189170661635341",
+  "project_id": "",
+  "private_key_id": "",
+  "private_key": "",
+  "client_email": "",
+  "client_id": "",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/clouderbuild%40production-servers-228902.iam.gserviceaccount.com"
+  "client_x509_cert_url": ""
 }'
 
 
