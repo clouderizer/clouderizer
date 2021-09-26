@@ -1,0 +1,414 @@
+
+<div class="col-sm-12 row p-t-15 p-b-15 p-l-0 p-r-0 m-0 h-100">
+    <div *ngIf="parserProgress == 'Parsing in progress'" [class.spinnerParser]="parserProgress == 'Parsing in progress'" class="parserBox">
+        <div class="dependencies">Parsing in progress...</div>
+    </div>       
+    <div *ngIf="projectStatus == 'Updating deployment'" [class.spinnerParser]="projectStatus == 'Updating deployment'" class="parserBox">
+        <div class="dependencies">Updating deployment...</div>
+    </div> 
+   
+    <div class="viewcontent h-100">
+        <div style="height:70px; line-height: 35px; background-color:#d4edda;" *ngIf="modelStatusMessage.includes('image is ready') && !close" class="modelsizeBox">
+            <div class="dependencies d-inline-flex" style="font-size:12px; color:#155724; margin-left:0;">   
+                <a style="font-family:Roboto,Noto Sans JP,sans-serif;margin-right:2px">An optimized image is ready for this project that decreases the cold start invocation time. Click on update deployment below to use it.</a>
+                <i class="fa fa-close" style="float:right;color:#155724;margin-left:auto;margin-top:5px;cursor:pointer;width:17px;height:17px" (click)="closeMessage()"></i>
+            </div>
+        </div>
+        <div style="height:70px; line-height: 35px; background-color:#d4edda;" *ngIf="projectStatus == 'Running' && projectStatusMessage ==  'Retraining successful, model file updated. If project is already running, click update deployment to deploy with new model' && !close" class="modelsizeBox">
+            <div class="dependencies d-inline-flex" style="font-size:12px; color:#155724; margin-left:0;">   
+                <a style="font-family:Roboto,Noto Sans JP,sans-serif;margin-right:2px">{{projectStatusMessage}}.</a>
+                <i class="fa fa-close" style="float:right;color:#155724;margin-left:auto;margin-top:5px;cursor:pointer;width:17px;height:17px" (click)="closeMessage()"></i>
+            </div>
+        </div>
+        <div style="height:30px; width:fit-content; background-color:#f8d7da;" *ngIf="projectStatus == 'Running' && projectStatusMessage.toLowerCase().includes('retraining failed') && !close" class="modelsizeBox">
+            <div class="dependencies d-inline-flex" style="font-size:13px; padding: 5px 15px; color:#721c24; margin-left:0;">   
+                <a style="font-family:Roboto,Noto Sans JP,sans-serif;margin-right:2px">{{projectStatusMessage}}</a>
+                <i class="fa fa-close" style="float:right;color:#721c24;margin-left:auto;margin-top:5px;cursor:pointer;width:17px;height:17px" (click)="closeMessage()"></i>
+            </div>
+        </div>
+<ngx-spinner
+name = "s3upload"
+bdColor = "rgba(0,0,0,0.6)"
+size = "medium"
+color = "white"
+type = "ball-climbing-dot"
+[fullScreen] = "true">
+<p *ngIf="uploadFile" style="color: white" >Uploading file(s)...</p>
+<p *ngIf="uploadotherFile" style="color: white" >Uploading file(s)...</p>
+<p *ngIf="uploadFile" style="color: white;text-align:center" >{{percentLoaded}}%</p>
+</ngx-spinner>
+<div>
+    <div class="col-sm-12 row">
+        <h4 style="font-size: 12px;display:flex;" class="title-page">
+            <a [routerLink]="['/serving/model']" style="color: var(--navbar-bg-clr1);font-size:12px">Serving Models List > </a>
+            <input style="font-size:12px;padding-top:0px;" *ngIf="projectType != 'public'" placeholder="Project name" [(ngModel)]="projectName" type="text" value="projectName" />
+            <span style="font-size:12px" *ngIf="projectType == 'public'"> {{ projectName }}</span>
+            <div matTooltip="save" (click)="savedetails()" class="showname">
+                <mat-icon style="font-size:20px;color:dimgrey" matSuffix>save_outlined</mat-icon>
+            </div>
+        </h4>
+    </div>
+    <h6 style="display:flex" class="description">
+        <textarea rows="2" cols="100" style="resize:none" *ngIf="projectType != 'public'" placeholder="Project description" [(ngModel)]="projectDescription" type="text" value="projectDescription">
+        </textarea>
+        <span style="font-size:10px;color:#7a7a8c" *ngIf="projectType == 'public'"> {{ projectDescription }}</span>
+        <div matTooltip="save" (click)="savedetails()" class="showdescription">
+            <mat-icon style="font-size:20px;color:dimgrey" matSuffix>save_outlined</mat-icon>
+        </div>
+    </h6>
+</div>    
+
+<div class="topServingHead" style="height:70px;">
+    <div class="rightsectionServingBtns">
+        <ul>
+            <li *ngIf="projectType == 'public'">
+                <button type="button" (click)="copyProject()" class="btn btn-outline-primary d-inline-flex">
+                    <img src="assets/images/dashboard/copy.svg" />Copy
+                </button>
+            </li>
+            <li *ngIf="projectType != 'public'">
+                <button type="button" (click)="otherSettings()" class="btn btn-outline-primary d-inline-flex">
+                    <img src="assets/images/leftSidebar/Settings_15.svg">
+                    Settings
+                </button>
+            </li>
+            <li matTooltip="Your deployment will be updated with zero downtime!" *ngIf="(projectType != 'public') && (modelStatusMessage.toLowerCase().includes('deployed successfully') || modelStatus =='Running')">
+                <button type="button" [class.spinner]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging')" [disabled]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('project publish in progress')" (click)="updateClouderizerAlert()" style="width: max-content" class="btn btn-outline-primary d-inline-flex">
+                    <a *ngIf="!modelStatusMessage.toLowerCase().includes('saved') && !modelStatusMessage.toLowerCase().includes('now...') && !modelStatusMessage.toLowerCase().includes('merging') && !modelStatusMessage.toLowerCase().includes('collating')"><img src="assets/images/serving/Deploy_1.svg" />Update Deployment</a>
+                    <a *ngIf="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging')" style="margin-left: 20px;">Updating...</a>
+                </button>
+            </li>
+            <li *ngIf="(!lambdadeployment && projectType != 'public' && !modelStatusMessage.toLowerCase().includes('deployed successfully') && modelStatus !='Running') || (projectStatus != 'Running' && lambdadeployment)" (click)="startClouderizerAlert()">
+                <button type="button" *ngIf="!modelStatusMessage.toLowerCase().includes('deployed successfully') && modelStatus !='Running'" [class.spinner]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('stopping model instance')" class="btn btn-outline-primary d-inline-flex" [disabled]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('stopping model instance') || modelStatusMessage.toLowerCase().includes('project publish in progress')">
+                    <a *ngIf="!modelStatusMessage.toLowerCase().includes('saved') && !modelStatusMessage.toLowerCase().includes('now...') && !modelStatusMessage.toLowerCase().includes('merging') && !modelStatusMessage.toLowerCase().includes('collating') && !modelStatusMessage.toLowerCase().includes('stopping model instance') && !modelStatusMessage.toLowerCase().includes('deployed successfully')"><img src="assets/images/serving/Deploy_1.svg" />Deploy</a>
+                    <a *ngIf="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging')" style="margin-left: 20px;">Deploying...</a>
+                    <a *ngIf="modelStatusMessage.toLowerCase().includes('stopping model instance')" style="margin-left: 20px;">Stopping...</a>
+                </button>
+            </li>
+            <li *ngIf="projectType != 'public' && (modelStatusMessage.toLowerCase().includes('deployed successfully') || modelStatus =='Running')">
+                <button type="button" (click) = "stopProjectInstance()" class="btn btn-outline-danger d-inline-flex" *ngIf="modelStatusMessage.toLowerCase().includes('deployed successfully') || modelStatus =='Running'" [disabled]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('stopping model instance') || modelStatusMessage.toLowerCase().includes('project publish in progress') || modelStatusMessage.toLowerCase().includes('stopping model instance')">
+                    <img src="assets/images/dashboard/stop.svg" />Stop
+                </button>
+            </li>
+            <li *ngIf="projectType != 'public' && (projectStatus == 'Running' && lambdadeployment)">
+                <button type="button" (click) = "stoplambdaproject()" class="btn btn-outline-danger d-inline-flex">
+                    <img src="assets/images/dashboard/stop.svg" />Stop
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-outline-darker d-inline-flex" (click)="dashBoard()">
+                    <mat-icon style="font-size:18px;height:12px;" matPrefix>insert_chart_outlined</mat-icon>Invocations
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div [class.postprocess-Body]="postprocessEnabled && !preprocessEnabled" [class.prepost-Body]="preprocessEnabled && postprocessEnabled" [class.preprocess-Body]="preprocessEnabled && !postprocessEnabled" [class.serving-Body]="!preprocessEnabled && !postprocessEnabled">
+    <div *ngIf="preprocessEnabled && postprocessEnabled" class="inprocessBlk">
+        <div class="inputServingBlk downArrowDesign" (drop)="drop($event)" (dragover)="allowDrop($event)">
+            <h4>Raw Input</h4>
+            <div class="dashedBox col-sm-12 row m-0 p-0">
+                <div class="col-sm-12" *ngFor="let item of iItems">
+                    <div class="inputServ-item">
+                        <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                        <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                            <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configinModal(item, true)">Configure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:80px" *ngIf="preprocessEnabled" class="inputServingBlk rightArrowDesign">
+            <h4>Preprocessing</h4>
+            <div class="dashedBox col-sm-12 row m-0 p-0">
+            </div>
+            <p class="browse-btn">
+                <button type="button" (click)="openEditor('Preprocess')" class="btn btn-outline-primary d-inline-flex">
+                    <mat-icon style="font-size:18px;height:12px;" matPrefix>code</mat-icon>Preprocess Code
+                </button>
+            </p>
+        </div>
+    </div>
+
+    <div *ngIf="preprocessEnabled && !postprocessEnabled" class="inputServingBlk rightArrowDesign" (drop)="drop($event)" (dragover)="allowDrop($event)">
+        <h4>Raw Input</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0">
+            <div class="col-sm-12" *ngFor="let item of iItems">
+                <div class="inputServ-item">
+                    <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                    <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                        <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configinModal(item, true)">Configure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="preprocessEnabled && !postprocessEnabled" class="preprocessBlk rightArrowDesign">
+        <h4>Preprocessing</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0">
+        </div>
+        <p class="browse-btn">
+            <button type="button" (click)="openEditor('Preprocess')" class="btn btn-outline-primary d-inline-flex">
+                <mat-icon style="font-size:18px;height:12px;" matPrefix>code</mat-icon>Preprocess Code
+            </button>
+        </p>
+    </div>
+
+    <div class="modelServingBlk rightArrowDesign" [style.opacity]="training ? '0.5' : '1'" (drop)="drop($event)" (dragover)="allowDrop($event)">
+        <h4 *ngIf="protype == 'prediction'">Model Input</h4>
+        <h4 *ngIf="protype == 'training'">Input</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0" style="height:100%">
+            <div class="col-sm-12" *ngIf="protype == 'prediction'"> 
+                <div [class.col-sm-12]="preprocessEnabled || postprocessEnabled" [class.col-sm-6]="!preprocessEnabled && !postprocessEnabled" *ngFor="let item of iItems">
+                    <div class="inputServ-item">
+                        <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                        <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                            <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configinModal(item, false)">Configure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modelServingBlk rightArrowDesign">
+        <h4 *ngIf="protype == 'prediction'">Model</h4>
+        <h4 *ngIf="protype == 'training'">Training</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0">
+            <div [class.col-sm-12]="preprocessEnabled || postprocessEnabled" [class.col-sm-6]="!preprocessEnabled && !postprocessEnabled" *ngFor="let file of projectModels">
+                <div class="modelServ-item">
+                    <span><img src="assets/images/serving/file.svg" /></span>
+                    <span style="overflow:auto;margin:5%;">{{ file.model }}</span>
+                    <span *ngFor="let otherfilename of file.otherfilenames" style="overflow:auto;margin:5%;">{{ otherfilename }}</span>
+                </div>
+            </div>
+            <div *ngFor="let file of projectModels" [class.col-sm-12]="preprocessEnabled || postprocessEnabled" [class.col-sm-6]="!preprocessEnabled && !postprocessEnabled">
+                <div *ngIf="protype == 'training' && file.reqfilename">
+                    <div class="modelServ-item">
+                        <span><img src="assets/images/serving/file.svg" /></span>
+                        <span style="overflow:auto;margin:2%;height:50%;">{{ file.reqfilename }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="retrain-btn" *ngIf="retrain && protype == 'prediction'">
+            <button id="modelButton" style="line-height:20px;" [class.spinner]="projectStatusMessage == 'Retraining in progress' || projectStatusMessage == 'Retraining initiated'" [disabled]="projectStatus == 'Starting' || projectStatus == 'Stopping' || projectType == 'public' || parserProgress == 'Parsing in progress'" type="button" class="btn btn-outline-primary d-inline-flex" (click)="retrainModel();">
+                <a style="display:flex" *ngIf="projectStatusMessage != 'Retraining in progress' && projectStatusMessage != 'Retraining initiated'"><mat-icon style="font-size:18px;height:12px;" matPrefix>model_training</mat-icon>Retrain Model</a>
+                <a style="display:flex; margin-left: 20px;" *ngIf="projectStatusMessage == 'Retraining in progress' || projectStatusMessage == 'Retraining initiated'">Retraining Model...</a>
+            </button>
+        </p>
+        <p class="code-btn" *ngIf="subtype == 'pythonscore' && protype == 'prediction'">
+            <button type="button" (click)="openEditor('Predict')" class="btn btn-outline-primary d-inline-flex">
+                <mat-icon style="font-size:18px;height:12px;" matPrefix>code</mat-icon>Prediction Code
+            </button>
+        </p>
+        <p class="browse-btn" *ngIf="protype == 'prediction'">
+            <button id="modelButton" [disabled]="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('stopping model instance')" type="button" class="btn btn-outline-primary d-inline-flex" (click)="openPop();">
+                <mat-icon style="font-size:18px;height:12px;" matPrefix>update</mat-icon>Update Model
+            </button>
+        </p>
+        <p class="browse-btn" *ngIf="protype == 'training'">
+            <button id="modelButton"  type="button" class="btn btn-outline-primary d-inline-flex" (click)="openPop();">
+                <mat-icon style="font-size:18px;height:12px;" matPrefix>update</mat-icon>Update
+            </button>
+        </p>
+    </div>
+
+    <div class="modelServingBlk" [style.opacity]="training ? '0.5' : '1'" [class.topArrowDesign]="postprocessEnabled && preprocessEnabled" [class.rightArrowDesign]="postprocessEnabled && !preprocessEnabled" (drop)="dropOutput($event)" (dragover)="allowDrop($event)">
+        <h4 style="font-size:1em;" *ngIf="protype == 'prediction'">Model Output</h4>
+        <h4 style="font-size:1em;" *ngIf="protype == 'training'">Output</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0" style="height:100%">
+            <div class="col-sm-12" *ngIf="protype == 'prediction'">
+                <div [class.col-sm-12]="preprocessEnabled || postprocessEnabled" [class.col-sm-6]="!preprocessEnabled && !postprocessEnabled" *ngFor="let item of outputItems">
+                    <div class="inputServ-item">
+                        <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                        <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                            <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configoutModal(item, false)">Configure</span>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            
+            <div *ngIf="protype == 'training'" class="col-sm-12">
+                <div class="outputtrain">
+                    <div style="margin-top:40%">
+                        <mat-spinner style="margin-left:45%" [diameter]="25" *ngIf="projectStatusMessage == 'noteboook execution in progress'"></mat-spinner>
+                    </div>
+                    
+                    <div *ngIf="projectStatusMessage == 'noteboook execution in progress'" class="notebooktext">
+                            Notebook execution in progress...
+                    </div>
+                    
+                    <div *ngIf="projectStatusMessage == 'noteboook execution complete'" class="notebooktext">
+                            {{notebookoutput}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="preprocessEnabled && postprocessEnabled" class="inprocessBlk">
+        <div class="postprocessBlk downArrowDesign">
+            <h4>Postprocessing</h4>
+            <div class="dashedBox col-sm-12 row m-0 p-0">
+            </div>
+            <p class="browse-btn">
+                <button type="button" (click)="openEditor('Postprocess')" class="btn btn-outline-primary d-inline-flex">
+                    <mat-icon style="font-size:18px;height:12px;" matPrefix>code</mat-icon>Postprocess Code
+                </button>
+            </p>
+        </div>
+
+        <div style="margin-top:80px;" class="OutputServingBlk finalOutput" (drop)="dropOutput($event)" (dragover)="allowDrop($event)">
+            <h4>Final Output</h4>
+            <div class="dashedBox col-sm-12 row m-0 p-0">
+                <div class="col-sm-12" *ngFor="let item of outputItems">
+                    <div class="inputServ-item">
+                        <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                        <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                            <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configoutModal(item, true)">Configure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="postprocessBlk rightArrowDesign" *ngIf="postprocessEnabled && !preprocessEnabled">
+        <h4>Postprocessing</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0">
+        </div>
+        <p class="browse-btn">
+            <button type="button" (click)="openEditor('Postprocess')" class="btn btn-outline-primary d-inline-flex">
+                <mat-icon style="font-size:18px;height:12px;" matPrefix>code</mat-icon>Postprocess Code
+            </button>
+        </p>
+    </div>
+
+    <div *ngIf="postprocessEnabled && !preprocessEnabled" class="finalOutput" (drop)="dropOutput($event)" (dragover)="allowDrop($event)">
+        <h4>Final Output</h4>
+        <div class="dashedBox col-sm-12 row m-0 p-0">
+            <div class="col-sm-12" *ngFor="let item of outputItems">
+                <div class="inputServ-item">
+                    <!-- <button type="button" class="close" aria-label="Close" (click)="deleteOutputItem(item)"><span aria-hidden="true">&times;</span></button> -->
+                    <span><img src="assets/images/serving/Grid_Table_1.svg" /></span>
+                    <div [matTooltip]="parserProgress == 'Parsing in progress' ? 'Parsing in progress...': ''">
+                        <span class="config-table" [style.pointer-events]="parserProgress == 'Parsing in progress' ? 'none': 'auto'" (click)="configoutModal(item, true)">Configure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="serving-footer col-sm-12 row m-0 p-0">
+    <div class="col-sm-12 p-l-0" style="padding-right:0">
+        <div class="innerserving-footer">
+            <div class="col-sm-12 row m-0 p-0 h-100">
+                <div matTooltip="Execution times - GPU: {{function_time_sum_gpu/60 | tofixeddecimal}} min, Standard: {{function_time_sum_standard/60 | tofixeddecimal}} min, High Memory: {{function_time_sum_highmemory/60 | tofixeddecimal}} min" class="col-sm-2">
+                    <div class="analytics">
+                        <span *ngIf="!refreshing" style="cursor:pointer;float:right;padding:0 4px;border-radius:2px;" (click)="refreshmetrics()" class="grn-bg-clr">
+                            <img style="width:14px;" src="assets/images/dashboard/metricsrefresh.svg" />
+                        </span>
+                        <p><u style="text-decoration: underline; font-size:12px;text-decoration-color: lightblue;">Metrics</u></p>
+                        <div style="margin-top:5%" *ngIf="refreshing">
+                            <ngx-spinner
+                                name = "refreshmetrics"
+                                bdColor = "rgba(0,0,0,0)"
+                                size = "small"
+                                color = "#20248c"
+                                type = "ball-clip-rotate-multiple"
+                                [fullScreen] = "false">
+                            </ngx-spinner>
+                        </div>
+                        <div *ngIf="!refreshing" style="display:flex;font-size: 10px;margin-top: 15%;padding:0px;" class="col-sm-12">
+                            <p class="col-sm-9" style="color:darkslategray;padding:0px;text-align:left;">Requests</p>
+                            <p class="col-sm-3" style="padding:0px;color:#1e228a;font-family: 'MontserratSemiBold';">{{(project && project.function_invocation_count) || 0}}</p>
+                        </div>
+                        <div *ngIf="!refreshing" style="margin-top: 10%;display:flex;font-size: 10px;padding:0px;" class="col-sm-12">
+                            <p class="col-sm-9" style="color:darkslategray;padding:0px;text-align:left;">Execution time(min)</p>
+                            <p class="col-sm-3" style="padding:0px;color:#1e228a;font-family: 'MontserratSemiBold';">{{(function_time_sum/60) || 0 | tofixeddecimal}}</p> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-10" style="height:120px;">
+                    <div class="col-sm-12 projectDetail" style="overflow:hidden">
+                        <div>
+                            <p *ngIf="(projectStatus != 'Running' && lambdadeployment) || (!lambdadeployment && !modelStatusMessage.toLowerCase().includes('deployed successfully'))" style="text-decoration: underline; color: black; font-size:12px;text-decoration-color: lightblue;position:absolute;left:46%;">Status Box</p>
+                            <p matTooltip="deployed on GPU machine" class="infralabel" style="margin-right:2px;color: darkgreen" *ngIf="infratype == 'gpu'">GPU</p>
+                            <p matTooltip="deployed on standard machine" class="infralabel" style="margin-right:2px;color: darkgreen" *ngIf="infratype == 'standard'">STANDARD</p>
+                            <p matTooltip="deployed on high memory machine" class="infralabel" style="margin-right:2px;color: darkgreen" *ngIf="infratype == 'highmemory'">HIGH MEMORY</p>
+                            <p matTooltip="deployed on aws lambda" class="infralabel" style="margin-right:2px;color: darkgreen" *ngIf="lambdadeployment">AWS lambda</p>
+                        </div>
+
+                        <div style="margin-top: 3%;width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" *ngIf="modelStatusMessage && !modelStatusMessage.toLowerCase().includes('deployed successfully')">
+                            <p [style.color]="modelStatusMessage.includes('Error') ? 'red' : '#1e228a'">{{modelStatusMessage}}</p>
+                            <p class="anchor" style="text-transform:none;cursor:pointer;color:darkslategrey;width:fit-content;padding:5px;margin-left:auto;margin-right:auto" (click)="openError(modelStatusMessage)" *ngIf="modelStatusMessage.includes('Error')">view details</p>
+                            <div style="margin-top: 3%;width:50%;margin-left:auto;margin-right:auto;" *ngIf="modelStatusMessage.toLowerCase().includes('saved') || modelStatusMessage.toLowerCase().includes('project publish in progress') || modelStatusMessage.toLowerCase().includes('collating') || modelStatusMessage.toLowerCase().includes('now...') || modelStatusMessage.toLowerCase().includes('merging') || modelStatusMessage.toLowerCase().includes('stopping model instance')">
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar> 
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="position:absolute;padding:0 5px;display:flex;">
+                            <div class="col-sm-6" style="border-right: 1px solid lightgrey;" *ngIf="accessUrl || (modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running')))">
+                                <div style="text-decoration: underline; font-size:12px;text-decoration-color: lightblue;">
+                                    API URL
+                                </div>
+                                <div style="font-size:10px;margin-bottom:1%;margin-top:1%" *ngIf="accessUrl && protype == 'training'">
+                                    <a> {{accessUrl}}/notebook </a>
+                                </div>
+                                <div style="font-size:10px;margin-bottom:1%;margin-top:1%" *ngIf="!accessUrl && protype == 'training' && modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running'))">
+                                    <a> {{hostName}}/api/async-function/{{ppname.replace('_', '-') | stripSpaces}}/notebook </a>
+                                </div>
+                                <div style="font-size:10px;margin-bottom:1%;margin-top:1%" *ngIf="accessUrl && protype == 'prediction'">
+                                   <a> {{accessUrl}}/predict </a>
+                                </div>
+                                <div style="font-size:10px;margin-bottom:1%;margin-top:1%" *ngIf="!accessUrl && protype == 'prediction' && modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running'))">
+                                   <a> {{serverlessurl}}/function/{{ppname.replace('_', '-') | stripSpaces}}/predict </a>
+                                </div>
+                                <div class="row">
+                                    <a class="anchor gradient" style="font-size:1em;" (click)="opensdk('Curl')"><img style="height:35px;width:45px" title="Curl" src="assets/images/serving/curl.svg" /></a>
+                                    <a class="anchor gradient" style="font-size:1em;" (click)="opensdk('Node.js')"><img style="width:35px" title="Node.js" src="assets/images/serving/nodejs.svg" /></a>
+                                    <a class="anchor gradient" style="font-size:1em;" (click)="opensdk('Python')"><img style="width:35px" title="Python" src="assets/images/serving/python.svg" /></a>
+                                    <a class="anchor gradient" style="font-size:1em;" (click)="opensdk('Java')"><img style="width:35px" title="Java" src="assets/images/serving/java.svg" /></a>
+                                    <a class="anchor gradient" style="font-size:1em;" (click)="opensdk('C#')"><img style="width:35px" title="C#" src="assets/images/serving/c-sharp.svg" /></a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" *ngIf="accessUrl || (modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running')))">
+                                <div style="text-decoration: underline; font-size:12px;margin-bottom:1%;text-decoration-color: lightblue;">
+                                    Web App URL
+                                </div>
+                                <div style="padding:0 5px;margin-bottom:2%;font-size:10px;overflow:auto;" *ngIf="accessUrl && protype == 'prediction'">
+                                    
+                                        <a style="overflow-wrap: anywhere;" href="{{accessUrl}}" target="_blank"> {{accessUrl}} </a>
+                                    
+                                </div>
+                                <div style="padding:0 5px;margin-bottom:2%;font-size:10px;overflow:auto;" *ngIf="!accessUrl && protype == 'prediction' && modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running'))">
+                                    
+                                        <a style="overflow-wrap: anywhere;" href="{{serverlessurl}}/function/{{ppname.replace('_', '-') | stripSpaces}}" target="_blank"> {{serverlessurl}}/function/{{ppname.replace('_', '-') | stripSpaces}}</a>
+                                    
+                                </div>
+                                <div style="padding:0 5px;margin-bottom:2%;margin-top:5%;font-size:10px;overflow:auto;" *ngIf="accessUrl && protype == 'training'">
+                                    
+                                        <a style="font-size:12px;color:grey">NA</a>
+                                    
+                                </div>
+                                <div style="padding:0 5px;margin-bottom:2%;margin-top:5%;font-size:10px;overflow:auto;" *ngIf="!accessUrl && protype == 'training' && modelStatusMessage && (modelStatusMessage.toLowerCase().includes('deployed successfully') || (modelStatusMessage.toLowerCase().includes(serverlessurl) && modelStatus == 'Running'))">
+                                    
+                                        <a style="font-size:12px;color:grey">NA</a>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

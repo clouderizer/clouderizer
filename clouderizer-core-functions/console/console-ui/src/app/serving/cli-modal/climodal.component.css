@@ -1,0 +1,15 @@
+::ng-deep .mat-tooltip {
+  background-color: #141e30;
+}
+
+.userInput{
+  color:black; 
+  white-space:nowrap; 
+  font-size:14px; 
+  width:100%;
+  overflow:auto; 
+  font-family: monospace;
+  outline: 0;
+  border-width: 0 0 0 0;
+  border-color: transparent;
+}

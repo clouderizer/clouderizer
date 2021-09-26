@@ -1,0 +1,444 @@
+<ngx-spinner
+name="prediction"
+bdColor = "rgba(0,0,0,0.6)"
+size = "medium"
+color = "white"
+type = "ball-atom"
+[fullScreen] = "true">
+<p style="color: white" > Predicting... </p>
+</ngx-spinner>
+<div class="col-md-12 m-0 theme-default modelmain" style="overflow:auto;">
+        <div class="imageProject">
+            <img [src]="bannerImageSrc" *ngIf="bannerImageSrc">
+        </div>
+        <div class="project-head project-head-mobile" style="margin-bottom:2%">
+            <h1>{{ projectName }}</h1>
+            <p style="opacity:0.6">{{ projectDescription }}</p>
+        </div>
+        <div class="innermain">   
+            <div class="col-md-12 row m-0 contentBlk">
+                <div class="col-md-7 col-xl-6 md-h-100 inputContainer inmobiletab"
+                    [ngClass]="{'showBlkinmobile':tabItem == 1}">
+                    <div class="data-blk">                     
+                        <div class="matItemBlk inputBlkDataForm" [style.z-index]="inimageclicked ? '5' : '4'">
+                            <div class="head_Data_Blk notInMobile">
+                                <div style="background: var(--span-grn-opacity-clr);padding:0 15px;" class="DataBlockType">
+                                    <span>Input</span>
+                                </div>
+                                <div class="viewMoreLink notInMobile">
+                                    <span class="linktext" *ngIf="!viewMore && !uploadcsv" (click)=ViewMore()>View all features</span>
+                                    <span class="linktext" *ngIf="viewMore && !uploadcsv" (click)=ViewMore()>View important features</span>
+                                </div> 
+                            </div>
+                            <div class="head_Data_Blk onlyinMobile">
+                                <div (click)="tabItem = 1" [style.background]="tabItem == 1 ? '#23c87e25' : 'transparent'" class="DataBlockType">
+                                    <span>Input</span>
+                                </div>
+                                <div (click)="tabItem = 2" [style.background]="tabItem == 2 ? '#23c87e25' : 'transparent'" class="DataBlockType">
+                                    <span>Output</span>
+                                </div> 
+                            </div>
+                            <div class="scrollableFormData"  *ngIf="!uploadcsv">
+                                <div class="viewMoreLink onlyinMobile" style="margin-bottom:2%">
+                                    <span class="linktext" *ngIf="!viewMore && !uploadcsv" (click)=ViewMore()>View All</span>
+                                    <span class="linktext" *ngIf="viewMore && !uploadcsv" (click)=ViewMore()>View Important</span>
+                                </div>
+                                <div *ngIf="!viewMore && noneimportant" style="margin-top:50px;opacity:0.8">No features listed as important</div>
+                                <div *ngIf="viewMore && (inputList && inputList.length == 0)" style="margin-top:50px;opacity:0.8">No input features configured</div>
+                                <form [formGroup]="firstFormGroup">
+                                    <!-- <mat-selection-list class="step-content-blk">        -->
+                                        <div id="test" class="formBlk"*ngFor="let input of inputList; let i=index;">                                                  
+                                            <div *ngIf="input.important == true || viewMore"> 
+                                                <span [style.height]="input.url ? '150px' : '50px'" style="height:48px;" class="formFieldcustom" *ngIf="input.type == 'Audio'">
+                                                    <mat-label [style.height]="input.url ? '150px' : '50px'">{{ input.userfriendlyName || input.name}}</mat-label>  
+                                                    <div class="imageinput input-full-width" style="align-items: center;" [style.height]="input.url ? '150px' : '50px'">
+                                                        <div style="display:flex;width:100%">
+                                                            <div style="display:flex;margin:0 auto;">                                                  
+                                                                <button type="button" (click)="initiateRecording(input)" class="btn btn-outline-primary" *ngIf="!input.recording" style="color:green;white-space: nowrap;"> 
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/play.svg" />
+                                                                    Start Recording </button>
+                                                                <button type="button" (click)="stopRecording(input)" class="btn btn-outline-danger" *ngIf="input.recording" style="color:indianred;white-space: nowrap;"> 
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/stop.svg" />
+                                                                    Stop Recording </button>                       
+                                                            </div>
+                                                            <div style="margin:0 auto">                                                  
+                                                                <button type="button" style="align-items:center;display:inline-flex;" class="btn btn-outline-primary" (click)="audiofile.click()">
+                                                                    <input hidden type="file" accept="audio/*" #audiofile (change)="onaudioChange(input, $event)">
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/browse_mat.svg" />                                      
+                                                                    Browse
+                                                                </button>                                   
+                                                            </div> 
+                                                        </div> 
+                                                        <audio controls="" *ngIf="input.url">
+                                                            <source [src]="sanitize(input.url)" type="audio/wav">
+                                                        </audio>
+                                                    </div>
+                                                    
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>                                             
+                                               
+                                                <div class="notInMobile" *ngIf="input.type == 'Image'">
+                                                <!-- <div> -->
+                                                    <span [style.height]="input.imageSrc ? '250px' : '50px'" style="margin-bottom:5%;" class="formFieldcustom">
+                                                        <mat-label [style.height]="input.imageSrc ? '250px' : '50px'">{{ input.userfriendlyName || input.name}}</mat-label>                                                                            
+
+                                                        <div [style.height]="input.imageSrc ? '250px' : '50px'" class="imageinput input-full-width">
+                                                            <div id="inputimage" *ngIf="input.imageSrc" class="zoomout" (click)="isClicked($event, 'in')">
+                                                                <img
+                                                                id="imageid"
+                                                                style="pointer-events:none;height:170px;width:200px;border-radius:5px"
+                                                                [src]="input.imageSrc"
+                                                                alt="input image"
+                                                                >
+                                                                <!-- <img style="height:170px;width:200px;border-radius:5px" [src]="input.imageSrc" > -->
+                                                            </div>
+                                                            <div style="display:flex;justify-content: center;align-items: center;">
+                                                                
+                                                                <button type="button" style="height:25px;align-items:center;display:inline-flex;font-size:10px;margin-right:5%" class="btn btn-outline-primary" (click)="capture(input)">
+                                                                    <!-- <mat-icon style="margin-right:2%" matSuffix>camera_alt</mat-icon> -->
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/camera_mat.svg" />
+                                                                    Camera
+                                                                </button>                  
+                                                               
+                                                                <button type="button" style="height:25px;align-items:center;display:inline-flex;font-size:10px;" class="btn btn-outline-primary" (click)="imagefile.click()">
+                                                                    <input hidden type="file" accept="image/*" #imagefile (change)="onFileChange(input, $event)">
+                                                                    <!-- <mat-icon style="margin-right:2%" matSuffix>pageview</mat-icon> -->
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/browse_mat.svg" />                                      
+                                                                    Browse
+                                                                </button> 
+                                                               
+                                                            </div>
+                                                        </div>
+                                                        <i matTooltip="{{ input.description }}" class="infoIcn"></i>
+                                                    </span>
+                                                </div>  
+
+                                                <div class="onlyinMobile" *ngIf="input.type == 'Image'">
+                                                    <span [style.height]="input.imageSrc ? '250px' : '100px'" style="margin-bottom:5%;" class="formFieldcustom">
+                                                        <mat-label [style.height]="input.imageSrc ? '250px' : '100px'" style="min-width:100px;max-width:100px;overflow:auto;">{{ input.userfriendlyName || input.name}}</mat-label>                                                                            
+
+                                                        <div [style.height]="input.imageSrc ? '250px' : '100px'" class="imageinput input-full-width">
+                                                            <div *ngIf="input.imageSrc" id="inputimagemobile" class="zoomout" (click)="isClicked($event, 'in')">
+                                                                <!-- <div *ngIf="!input.imageSrc" style="width:15px;height:150px;border-radius:5px;border:1px solid gray;background:lightgray"></div> -->
+                                                                <img style="pointer-events:none;height:100px;width:100px;border-radius:5px" [src]="input.imageSrc" >
+                                                            </div>
+                                                            <div style="display:flex;justify-content: center;align-items: center;flex-direction:column">
+                                                                
+                                                                <button type="button" style="height:25px;align-items:center;display:inline-flex;font-size:10px;margin-bottom:15%" class="btn btn-outline-primary" (click)="capture(input)">
+                                                                    <!-- <mat-icon style="margin-right:2%" matSuffix>camera_alt</mat-icon> -->
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/camera_mat.svg" />
+                                                                    Camera
+                                                                </button>                  
+                                                                
+                                                                <button type="button" style="height:25px;align-items:center;display:inline-flex;font-size:10px;" class="btn btn-outline-primary" (click)="imagefile.click()">
+                                                                    <input hidden type="file" accept="image/*" #imagefile (change)="onFileChange(input, $event)">
+                                                                    <!-- <mat-icon style="margin-right:2%" matSuffix>pageview</mat-icon> -->
+                                                                    <img width="15" height="15" src="{{environment.baseurl}}/userserving/assets/images/browse_mat.svg" />                                      
+                                                                    Browse
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <i matTooltip="{{ input.description }}" class="infoIcn"></i>
+                                                    </span>
+                                                </div> 
+
+                                                <span style="height:48px;" class="formFieldcustom" *ngIf="input.type == 'Multiline Text'">
+                                                    <mat-label style="height:48px;">{{ input.userfriendlyName || input.name}}</mat-label>                                                       
+                                                    <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >
+                                                        <textarea style="resize:none; max-width:100%" type="text" class="control-label" matInput placeholder="Enter {{ input.userfriendlyName }}" [(ngModel)]="inputList[i].selected" formControlName="input{{i}}"></textarea>
+                                                    </mat-form-field>
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>
+                                                
+                                                <span class="formFieldcustom" *ngIf="(input.type == 'Text' || input.type == 'None' || !input.type || (input.type == 'Enum' && input.allowedValues.length == 0))">     
+                                                    <mat-label>{{ input.userfriendlyName || input.name }}</mat-label>                                                       
+                                                    <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >
+                                                        <input type="text" class="control-label" matInput placeholder="Enter {{ input.userfriendlyName }}" [(ngModel)]="inputList[i].selected" formControlName="input{{i}}">
+                                                    </mat-form-field>
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>
+
+                                                <span class="formFieldcustom" *ngIf="(input.type == 'Integer' || input.type == 'Whole') && !input.min && !input.max">
+                                                    <mat-label>{{ input.userfriendlyName || input.name }}</mat-label>
+                                                    <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                                                        <mat-error style="padding-top:2px;padding-left:-5px">Please enter a numeric value</mat-error>
+                                                        <input type="number" class="control-label" matInput placeholder="Enter a numeric value " [(ngModel)]="inputList[i].selected" formControlName="input{{i}}">
+                                                    </mat-form-field>
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>
+
+                                                <span class="formFieldcustom" *ngIf="input.min && input.max">
+                                                    <mat-label>{{ input.userfriendlyName || input.name}}</mat-label>
+                                                    <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                                                        <mat-error style="padding-top:2px;padding-left:-5px">Please enter a value between {{input.min}} and {{input.max}}</mat-error>
+                                                        <input type="number" min="input.min" max="input.max" class="control-label" matInput placeholder="Enter a value between {{input.min}} and {{input.max}}" [(ngModel)]="inputList[i].selected" formControlName="input{{i}}">
+                                                    </mat-form-field>
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>
+
+                                                <span class="formFieldcustom"  *ngIf="input.type == 'Enum' && input.allowedValues.length > 0">
+                                                    <mat-label>{{ input.userfriendlyName || input.name }}</mat-label>
+                                                    <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >
+                                                        <mat-select class="control-label" id="{{input.id}}" [(ngModel)]="inputList[i].selected" formControlName="input{{i}}">
+                                                            <mat-option *ngFor="let value of input.allowedValues" value="{{ value }}">
+                                                                {{ value }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <i title="{{ input.description }}" class="infoIcn"></i>
+                                                </span>                                                  
+                                            </div>                                  
+                                        </div>
+                                    <!-- </mat-selection-list> -->
+                                </form>
+                            </div>
+                            <div class="scrollableFormData verticleCenter"  *ngIf="uploadcsv">
+                                <div class="innerBlkscrollData">
+                                    <div class="files-list" *ngFor="let csvfile of csvfiles;let i=index">
+                                        <div class="uploadedFileBlock">
+                                            <img src="{{environment.baseurl}}/userserving/assets/images/icons/csv-large.svg" style="margin-top:2%" />
+                                            <p><span class="uploadedFilelabel">Uploaded File : </span>{{ csvfile }}</p> 
+                                        </div>                                                                                     
+                                    </div>
+                                    <div class="m-t-30">
+                                        <button type="button" class="btn btn-outline-primary btn-img"
+                                        (click)="openModal('input')">
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/config.svg" style="width:25px" />
+                                        Configure Updated File Input</button> 
+                                    </div>
+                                    <div *ngIf="validForm && uploadcsv" class="m-t-30" style="font-size:0.85em; font-family: MontserratSemiBold">
+                                        <!-- <button type="button" class="btn btn-outline-primary rightpos"
+                                        (click)="submitCsv()">Predict</button>    -->
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/configure_tick.svg" width="20" height="20"/>
+                                        <!-- <svg class="tickIcon" style="width:20px;height:20px;margin-right:5px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}.cls-2{fill:#23c87e;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg> -->
+                                        Configured
+                                    </div>
+                                </div>      
+                            </div>
+              
+                            <div class="footerDataText">
+                                <div class="row icnSection notInMobile"> 
+                                    <div matTooltip="We will be bringing you this awesome feature soon!">
+                                        <a (click)="file.click()" style="pointer-events:none">
+                                            <img src="{{environment.baseurl}}/userserving/assets/images/icons/upload_csv.svg" />
+                                            <span>Upload CSV</span>
+                                        </a>
+                                    </div>
+                                    <a *ngIf="uploadcsv" (click)="changetoForm()">
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/custom_form.svg" />
+                                        <span>Custom form</span>
+                                    </a>
+                                    <div matTooltip="We will be bringing you this awesome feature soon!">
+                                        <a *ngIf="!public" (click)="downloadTemplate()" style="pointer-events:none">
+                                            <img src="{{environment.baseurl}}/userserving/assets/images/icons/download_sample_data.svg" />
+                                            <span>Download Template</span>
+                                        </a>
+                                    </div>
+                                    <a *ngIf="public" href="{{environment.baseurl}}/userserving/assets/csv/{{ projectName.toLowerCase() }}_sampledata.csv" download>
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/download_CSV.svg" />
+                                        <span>Download Sample data</span>
+                                    </a>
+                                    <!-- <a (click)="downloadPredicted()">
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/download_CSV.svg" />
+                                        <span>Download predicted</span>
+                                    </a> -->
+                                </div>
+                                <div class="row icnSection onlyinMobile"> 
+                                    <div style="display:none" matTooltip="We will be bringing you this awesome feature soon!">
+                                        <a (click)="file.click()" style="pointer-events:none;">
+                                            <img src="{{environment.baseurl}}/userserving/assets/images/icons/upload_csv.svg" />
+                                            <span>CSV</span>
+                                        </a>
+                                    </div>
+                                    <a *ngIf="uploadcsv" style="display:none" (click)="changetoForm()">
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/custom_form.svg" />
+                                        <span>Form</span>
+                                    </a>
+                                    <div style="display:none" matTooltip="We will be bringing you this awesome feature soon!">
+                                        <a *ngIf="!public" (click)="downloadTemplate()" style="pointer-events:none">
+                                            <img src="{{environment.baseurl}}/userserving/assets/images/icons/download_sample_data.svg" />
+                                            <span>Template</span>
+                                        </a>
+                                    </div>
+                                    <a style="display:none" *ngIf="public" href="{{environment.baseurl}}/userserving/assets/csv/{{ projectName.toLowerCase() }}_sampledata.csv" download>
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/download_CSV.svg" />
+                                        <span>Sample</span>
+                                    </a>
+                                </div>
+                                <div class="btnBlk" [ngClass]="{'btnborderClass' : (!uploadcsv || uploadcsv)}">
+                                    <input hidden type="file" #file (change)="uploadCsv($event)">
+                                    
+                                    <div *ngIf="!uploadcsv">
+                                        <button type="button" class="btn btn-outline-primary submitform uploadcsv"
+                                        (click)="predict()">Submit</button>   
+                                        <!-- [disabled]="!firstFormGroup.valid"                -->
+                                    </div>
+                                    <div [matTooltip]="!validForm ? 'Please configure and save the file input correctly': ''" *ngIf="uploadcsv">
+                                        <button type="button" [disabled]="!validForm" class="btn btn-outline-primary submitform uploadcsv"
+                                        (click)="submitCsv()">Submit</button>                  
+                                    </div>  
+                                </div> 
+                            </div> 
+                        </div>    
+                    </div>
+                </div>
+                <div class="col-md-5 col-xl-6 outputblk inmobiletab" [ngClass]="{'showBlkinmobile':tabItem == 2}">
+                    <div class="data-blk">                     
+                        <div class="matItemBlk inputBlkDataForm p-t-25" [style.z-index]="outimageclicked ? '5' : '4'">
+                            <div class="head_Data_Blk onlyinMobile">
+                                <div (click)="tabItem = 1" [style.background]="tabItem == 1 ? '#23c87e25' : 'transparent'" class="DataBlockType">
+                                    <span>Input</span>
+                                </div>
+                                <div (click)="tabItem = 2" [style.background]="tabItem == 2 ? '#23c87e25' : 'transparent'" class="DataBlockType">
+                                    <span>Output</span>
+                                </div> 
+                            </div>
+                            <div class="head_Data_Blk notInMobile">
+                                <div style="background: var(--span-grn-opacity-clr);padding:0 15px;" class="DataBlockType">
+                                    <span>Output</span>
+                                </div>
+                            </div>
+                            <div class="scrollableOutputData">
+                                <div *ngIf="!uploadcsv"> 
+                                    <div *ngIf="(modelSubtype==='h2o' || modelSubtype==='jpmml' || modelSubtype==='pmml4s'|| modelSubtype==='pythonscore') && !timeSeries" class="row md-h-100" style="width:100%; display: inline-block;">
+                                        <div *ngFor="let output of outputList" style="margin-bottom: 2%">
+                                            <div class="outputList">
+                                                <div id="outputnormal" class="zoomout" (click)="isClicked($event, 'out')">
+                                                    <img style="pointer-events:none;height:170px;width:200px;border-radius:5px" [src]="output.src" *ngIf="output.src"> 
+                                                </div>
+                                                <p class="outputText" *ngIf="output.text">
+                                                    {{ output.text }}
+                                                </p>
+                                                <p class="outputResult">{{ output.userfriendlyName || output.name }}
+                                                    <span style="color: #007FFF" *ngIf="!output.outputValue && output.type != 'Image'" >: ____</span>
+                                                    <span style="color: #007FFF" *ngIf="output.outputValue && output.outputValue != 'Error'" >: {{ output.outputValue }}</span>
+                                                    <span style="color: #ff4141" *ngIf="output.outputValue && output.outputValue == 'Error'" >: {{ output.outputValue }}</span>
+                                                </p>
+                                                <div style="margin-bottom:5%" *ngIf="outputfiles">
+                                                    <div style="margin-bottom:2%;text-align:center" id="outputnormal2" class="zoomout" (click)="isClicked($event, 'out')" *ngFor="let file of outputfiles">
+                                                        <!-- <p style="font-size:12px;margin-bottom:2%">{{file.name}}</p> -->
+                                                        <img style="pointer-events:none;height:170px;width:200px;border-radius:5px" [src]="file.src" />
+                                                    </div>
+                                                </div>
+                                            </div>                                                       
+    
+                                            <div class="col-md-12 m-0 p-0" *ngIf="output.outputValue && (output.outputValue != 'Error' || output.outputValue != 'null')">
+                                                <div *ngFor="let item of output.outputProb">                      
+                                                    <div class="pairmainblk" *ngFor="let x of item.values">  
+                                                        <div class="pairValueBlk">
+                                                            <span class="lblTxt">{{x.value}} :</span>
+                                                            <!-- <span [className]="'valuetxt ' + x.value">{{x.prob}}%</span> -->
+                                                            <span class="classProb">{{x.prob}}%</span>
+                                                        </div>                                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br/>
+                                        </div>
+                                    </div>
+                                    <!-- [class.zoomin]="isZoomed==true" [class.zoomout]="isZoomed==false"  -->
+                                    <div *ngIf="modelSubtype==='dai' && !timeSeries">
+                                        <div *ngFor="let output of outputList" style="margin-bottom: 2%">
+                                            <div class="outputList">
+                                                <div id="outputdai" class="zoomout" (click)="isClicked($event, 'out')">
+                                                    <img style="pointer-events:none;height:170px;width:200px;border-radius:5px" [src]="output.src" *ngIf="output.src">
+                                                </div>    
+                                                <p class="outputText" *ngIf="output.text">
+                                                    {{ output.text }}
+                                                </p>
+                                                <p class="outputResult">{{ output.userfriendlyName || output.name }} :
+                                                    <span style="color: #007FFF" *ngIf="!output.outputValue" >____</span>
+                                                    <span style="color: #007FFF" *ngIf="output.outputValue != 'Error'" >{{ output.outputValue }}</span>
+                                                    <span style="color: #ff4141" *ngIf="output.outputValue == 'Error'" >{{ output.outputValue }}</span>
+                                                </p>
+                                            </div>    
+                                            <div class="col-md-12 m-0 p-0" *ngIf="output.outputValue && (output.outputValue != 'Error' || output.outputValue != 'null')">
+                                                <div *ngFor="let item of output.outputProb">                      
+                                                    <div class="pairmainblk" *ngFor="let x of item.values">  
+                                                        <div class="pairValueBlk">
+                                                            <span class="lblTxt">{{x.value}} :</span>
+                                                            <!-- <span [className]="'valuetxt ' + x.value">{{x.prob}}%</span> -->
+                                                            <span class="classProb">{{x.prob}}%</span>
+                                                        </div>                                                                    
+                                                    </div>
+                                                </div>
+                                            </div>                                                                                                           
+                                        </div>
+                                    </div>
+                                    <div *ngIf="timeSeries">
+                                        <div class="outputList" style="margin-bottom: 2%">
+                                            <p class="outputResult" *ngIf="timeseriesdata.length!=0">
+                                                Result
+                                                <apx-chart
+                                                    [series]="series"
+                                                    [chart]="chart"
+                                                    [dataLabels]="dataLabels"
+                                                    [markers]="markers"
+                                                    [title]="title"                                                 
+                                                    [yaxis]="yaxis"
+                                                    [xaxis]="xaxis"
+                                                    [tooltip]="tooltip"
+                                                    [autoUpdateSeries]="true"
+                                                    [legend]="legend"
+                                                    [stroke]="stroke"
+                                                    [annotations]="annotations"
+                                                    [colors]="colors"
+                                                ></apx-chart>
+                                            </p>                                                                                                                                                 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="uploadcsv" class="viewResultBlock">                                
+                                    <div class="viewResultinnerblk">
+                                        <img class="imgplace" src="{{environment.baseurl}}/userserving/assets/images/dummy/viewresult.JPG" />
+                                        <p *ngIf="predictionComplete"><button (click)="openModal('output')" class="btn btn-outline-primary" type="button"><img src="{{environment.baseurl}}/userserving/assets/images/icons/view.svg" />View Result</button></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="predictionComplete && !uploadcsv" class="mobilebottomSection onlyinMobile">
+                                <div style="font-size:10px">
+                                    <span>Response time : <label>{{ responseTime }} msec</label></span> 
+                                </div>
+                                <div>
+                                    <!-- <div *ngIf="predictionComplete" style="text-align: center;margin-left:auto"> -->
+                                    <button *ngIf="!outputError" class="mdc-icon-button material-icons" style="outline:none;background:transparent;border-color:transparent;" [style.color]="predictionFeedback ? '#23c87e' : 'lightblue'" (click)="changeFeedback('like')">thumb_up</button>      
+                                    <button *ngIf="!outputError" class="mdc-icon-button material-icons" style="outline:none;background:transparent;border-color:transparent;" [style.color]="!predictionFeedback ? '#ff4141' : 'lightblue'" (click)="changeFeedback('dislike')">thumb_down</button>   
+                                    <!-- </div>                                      -->
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+            <div class="onlyinMobile">
+                <div class="bottomSection" style="text-align:center;display:flex;flex-direction:column;" >              
+                    <span class="brandingInfo" style="font-size:10px">Powered by Clouderizer.</span>
+                    <span class="brandingInfo" style="font-size:10px" *ngIf="istrial"><b style="color:red"> TRIAL LICENSE</b></span>
+                    <span class="brandingInfo" style="font-size:10px" *ngIf="!istrial && plan == 'Speedy'"><b style="color:red"> FREE NON-COMMERCIAL LICENSE</b></span>
+                </div>
+            </div>
+            <div class="notInMobile">
+                <div class="col-md-12 m-0 bottomSection">
+                    <div class="leftSectionBottom">
+                        <span class="brandingInfo">Powered by Clouderizer.</span>
+                        <span class="brandingInfo" *ngIf="istrial"><b style="color:red"> TRIAL LICENSE</b></span>
+                        <span class="brandingInfo" *ngIf="!istrial && plan == 'Speedy'"><b style="color:red"> FREE NON-COMMERCIAL LICENSE</b></span>
+                    </div>
+                    <div class="rightSectionBottom" *ngIf="!uploadcsv">
+                        <div *ngIf="predictionComplete" style="text-align: center;">
+                            <span  class="tioutput">
+                                    <i class="tick-icn">
+                                        <img src="{{environment.baseurl}}/userserving/assets/images/icons/tick.svg" />
+                                    </i>Prediction Complete
+                            </span>
+                            <span>Response time : <label>{{ responseTime }} msec</label></span>                       
+                            <button *ngIf="!outputError" class="mdc-icon-button material-icons" style="outline:none;background:transparent;border-color:transparent;" [style.color]="predictionFeedback==true ? '#23c87e' : 'lightblue'" (click)="changeFeedback('like')">thumb_up</button>      
+                            <button *ngIf="!outputError" class="mdc-icon-button material-icons" style="outline:none;background:transparent;border-color:transparent;" [style.color]="predictionFeedback==false ? '#ff4141' : 'lightblue'" (click)="changeFeedback('dislike')">thumb_down</button>                                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

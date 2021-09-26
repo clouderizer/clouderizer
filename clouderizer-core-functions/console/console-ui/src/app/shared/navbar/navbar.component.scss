@@ -1,0 +1,107 @@
+.navbar-brand {
+  display: inline-flex;
+  padding: 0;
+}
+.right-navbar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.userAdmin {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-right: 1px solid #dbddff52;
+  border-left: 1px solid #dbddff52;
+  a {
+    color: #dbddff;
+    font-size: 12px;
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 3px;
+      font-size: 10px;
+      margin-bottom: 3px;
+    }
+  }
+}
+.drive-icon{
+    cursor: pointer;
+    padding: 0 10px;
+    img{
+        width: 25px;
+    }
+}
+.logout {
+  color: #dbddff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 15px;
+  font-size: 12px;
+  
+  img {
+    width: 18px;
+    margin-left: 5px;
+  }
+}
+
+.notif-dropdown-menu{
+  pointer-events:none; 
+  background:#141e30; 
+  width:260px; 
+  border-radius: 10px;
+  white-space: normal;
+}
+
+.notification{
+  position: relative;
+  padding-right:5px;
+  // padding-left:15px;
+  padding-top:5px;
+  cursor: pointer;
+  a {
+    font-size: 12px;
+  }
+  .licenseText{
+    font-size:13px;
+    margin:10px;
+    font-family:Roboto,Noto Sans JP,sans-serif;
+    color:lightblue;
+  }
+}
+
+.white-icon {
+  color: white !important;
+}
+
+.mat-badge-content {
+  background: red !important;
+  color: white !important;
+}
+
+.notif-dropdown-toggle::after { 
+  content: none; 
+} 
+
+.notif-dropdown-menu:after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #141e30; /* change color here, modified for a black arrow */
+  position: absolute;
+  top: -6px;
+  left: 70px;
+}
+
+::ng-deep .mat-tooltip {
+  background-color: #141e30;
+}

@@ -1,0 +1,43 @@
+
+<h4 class="title-page">Profile Settings</h4>
+        <div class="col-sm-12 row m-0 page-main-height">
+            <div class="col-sm-8">
+                <form #f2="ngForm" class="form-horizontal"  novalidate (submit)="saveProfile()">
+                    <div class="form-group">
+                        <label for="uname">Name</label>
+                        <input type="text" class="form-control" id="uname"
+                            placeholder="Enter Name" name="uname" [(ngModel)]="user.name" required>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" class="form-control" id="company"
+                            placeholder="Enter Company" name="company" value="{{user.company.name}}" readonly>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email"
+                            placeholder="Enter Email" name="email" [(ngModel)]="user.email" required>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Phone</label>
+                        <input type="phone" class="form-control" id="phone"
+                            placeholder="Enter Phone" name="phone" [(ngModel)]="user.company.phone" required>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="btns-footer m-t-40" style="text-align: center;">
+                        <button type='submit' class="btn btn-outline-primary m-r-10">
+                            <img alt="save" src="assets/images/serving/Save_2.svg" />Save Details
+                        </button>
+                       
+                        <button type="button" class="btn btn-outline-primary" id="button2" (click)="changePassword()">Change Password</button>
+                    </div>              
+                </form>
+            </div>
+            <div class="col-sm-4 profileSettingAIimg">
+                <img alt="profile" src="assets/images/settings/ProfileSettings-AI-img.svg" />
+            </div>
+
+        </div>

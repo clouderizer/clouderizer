@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Environment variable</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="example-container" style="display:flex;flex-direction:column;">
+        <mat-form-field class="m-t-15" appearance="outline" [style.color]="type=='edit' ? 'grey' : 'black'" [style.pointer-events]="type=='edit' ? 'none' : 'auto'">
+            <mat-label>Key</mat-label>
+            <input matInput [(ngModel)]="notebookKey" matInputAutofocus [readonly]="onlyread">
+            <mat-icon style="opacity:0.5" matSuffix>book</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="m-t-15" appearance="outline">
+            <mat-label>Value</mat-label>
+            <input matInput [(ngModel)]="notebookValue">
+            <mat-icon style="opacity:0.5" matSuffix>description</mat-icon>
+        </mat-form-field>
+    </div>
+</div>
+<div class="modal-footer"> 
+    <button type="button" class="btn btn-outline-primary" (click)="closeModal(false)">Cancel</button>
+    <button type="button" *ngIf="type=='add'" class="btn btn-outline-primary" [disabled]="!notebookKey || !notebookValue" (click)="addVariable('add')">Add variable</button>
+    <button type="button" *ngIf="type=='edit'" class="btn btn-outline-primary" [disabled]="!notebookKey || !notebookValue" (click)="addVariable('update')">Update variable</button>
+</div>

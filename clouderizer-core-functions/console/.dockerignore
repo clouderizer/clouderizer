@@ -1,0 +1,5 @@
+console-api/node_modules
+console-ui/node_modules
+scoring-ui/node_modules
+console-api/config/env/development.js
+console-api/config/env/production.js

@@ -1,0 +1,233 @@
+.radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 15px 0;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+// .browse-btn {
+//   position: absolute;
+//   width: 100px;
+//   height: 20px;
+//   text-align: center;
+//   //bottom: 8px;
+// }
+
+.browse-btn {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 8px;
+}
+
+.dashedBox {
+    display: flex;
+    padding: 10px 10px 0 0 !important;
+    > div {
+        padding: 0 0 10px 10px;
+    }
+}
+
+.mat-chip.mat-standard-chip {
+    background-color: lightblue;
+    color: black;
+}
+// .cdk-global-overlay-wrapper, .cdk-overlay-container {
+//     z-index: 99999 !important;
+//  }
+
+.force-scroll {
+    overflow-y: scroll;
+    height: 200px; 
+}
+
+.inputServ-item {
+    span {
+      display: block;
+      font-size: 10px;
+      &.config-txt {
+        color: var(--span-grn-clr);
+        cursor: pointer;
+        font-size: 8px;
+        margin: 5px 0;
+      }
+    }
+  }
+  
+.configDropdown {
+    box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.21);
+    background-color: #414141;
+    text-align: center;
+    padding: 0 0 10px;
+    min-width: 120px;
+    span {
+      color: #eee;
+      margin-top: 6px;
+      margin-bottom: 3px;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        width: 35%;
+        display: block;
+        border: solid 0.3px rgba(219, 221, 255, 0.5);
+        background-color: #efeef4;
+        margin: 0 5% 3% 0;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 10px;
+        padding: 2px;
+        cursor: pointer;
+      }
+    }
+}
+
+.minmax {
+  width: max-content;
+  margin: auto;
+  padding: 5px;
+  position: relative;
+  text-align:center;
+  outline: none;
+}
+
+//   input {
+//     position     : relative;
+//     z-index      : 1;
+//     border-radius: 50px;
+//     height       : 30px;
+//     font-size    : 13px;
+//     align-items  : center;
+//     width        : 100%;
+//     padding-left : 10px;
+//     box-shadow   : 0 2px 50px 0 rgba(0, 0, 0, 0.21);
+//     margin-bottom: 10px;
+//     margin-top: 10px;
+//   }
+// }
+
+.mat-icon{
+  font-size: small;
+}
+
+.matIcon1{
+  cursor: pointer;
+}
+
+.matIcon2{
+  cursor: pointer;
+}
+
+// input:focus, textarea:focus {
+//   // box-shadow: 0 0 5px red;
+//   // padding: 3px 0px 3px 3px;
+//   // margin: 5px 1px 3px 0px;
+//   // border: 1px solid red;
+//   outline:none;
+// }
+
+// input{
+//   border-radius: 25px;
+//   border: 2px solid lightblue;
+// }
+
+input {
+  outline: 0;
+  border-width: 1px;
+  border-color:#cccccc;
+}
+input:focus {
+  border-color: #cccccc;
+}
+.headList input.form-control {
+  height: 27px;
+  font-size: 0.9em;
+  min-width: 65px;
+}
+.mat-header-cell {
+  text-align: center;
+}
+
+.add{
+  padding-top:10px;
+  overflow:auto;
+}
+
+// .matchip{
+//   height: 100px;
+// }
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  white-space: nowrap;
+  height: 30px;
+}
+
+// mat-chip-list.mat-chip-list-wrapper {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   align-items: center;
+//   margin: -4px;
+//   height: 100px;
+// }
+
+/* To display a border for the input */
+.mat-input-flex.mat-form-field-flex{
+  border: 1px solid black;
+}
+
+
+
+::ng-deep mat-input-invalid mat-input-placeholder {
+  color: red !important;
+}
+
+.table-container{
+  max-height: 400px;
+  overflow: auto;
+  width:100%;
+  table{
+    width:100%;
+  }
+  .mat-form-field-wrapper{   
+    span{
+      font-size: 0.9em;
+    }
+  }
+  input{
+    background: var(--bg-voilet-light-clr);
+    border-radius: 4px;
+    border: solid 1px rgba(0,0,0,.12);
+    margin: 5px 0 5px;
+    padding: 0 .75em 0 .75em;
+    height: 30px;
+    width:120px;
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 0 .75em 0 .75em;
+  margin-top: -.25em;
+  position: relative;
+}
+
+.table-containerOut{
+  max-height: 400px;
+  overflow:auto;
+}
+
+// .stickyHeader{
+//   top: 0px;
+//   z-index: 101;
+//   right: 102px;
+//   position: sticky;
+// }

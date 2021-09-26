@@ -1,0 +1,48 @@
+<div class=" mainApp" >
+  <!-- <app-navheader></app-navheader> -->
+  <router-outlet></router-outlet>
+  
+  <div id="loading" class="modal" style="display: none;">
+    <div class="center">
+       <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  
+  <!-- <app-servingmodel></app-servingmodel> -->
+</div>
+<style type="text/css">
+  .modal
+  {
+      position: fixed;
+      z-index: 999;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-color: Black;
+      filter: alpha(opacity=60);
+      opacity: 0.6;
+      -moz-opacity: 0.8;
+  }
+   .center
+  {
+      z-index: 1000;
+      margin: auto;
+      padding: 10px;
+      width: 130px;
+      border-radius: 10px;
+      filter: alpha(opacity=100);
+      opacity: 1;
+      -moz-opacity: 1;
+      align-items: center;
+      display: flex;
+      min-height: 100%;
+      min-height: 100vh;   
+
+  }
+
+  .mat-spinner::ng-deep circle {
+      stroke: white;
+  }
+</style>
+

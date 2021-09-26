@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Timeout: 300
+Resources:
+  prophet717ofstackApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      FunctionName: lambda-prophet717of-prophet717ofstackApi
+      Timeout: 300
+      MemorySize: 2000
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      Policies:
+      - S3ReadPolicy:
+          BucketName: prophet717of
+      Environment:
+        Variables:
+          API_NAME: prophet717ofstackApi
+          S3_BUCKET: prophet717of
+    Metadata:
+      Dockertag: latest
+      DockerContext: /Users/rohan.kothapalli/.clouderizer/lambda-dir
+      Dockerfile: Dockerfile
+Outputs:
+  S3Bucket:
+    Value: prophet717of
+    Description: S3 Bucket for saving artifacts and lambda bundle
+  EndpointUrl:
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/function/prophet-717-of"
+    Description: URL for endpoint

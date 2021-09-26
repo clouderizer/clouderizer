@@ -1,0 +1,386 @@
+<div class="modal-header">
+        <h4 class="modal-title">{{iotype}} Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closemodal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+            <div *ngIf="outputSelect || iotype==='Input'" class="col-sm-12 row m-0 page-main-height">
+                <div style="margin-left:auto;margin-bottom:1%">
+                    <button *ngIf="(preprocessEnabled || postprocessEnabled || subtype == 'pythonscore' || subtype == 'jpmml' || subtype == 'pmml'|| subtype == 'pmml4s') && !timeSeries" type="button" class="btn btn-outline-primary" (click)="addRow()"><img
+                    class="plusIcon" src="assets/images/button-icns/plus.svg" />Add row</button>
+                </div>
+                <div class="table-container columnlist">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="slno">
+                            <th mat-header-cell *matHeaderCellDef> Row No. </th>
+                            <td mat-cell *matCellDef="let element; let i = index;">
+                                <div class="slno">
+                                    <span>{{ i+1 }}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="(!preprocessEnabled && !postprocessEnabled && subtype != 'pythonscore' && subtype != 'jpmml' && subtype != 'pmml' && subtype != 'pmml4s') || timeSeries" matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Variable </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <div class="headList">
+                                    {{element.name}} 
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container *ngIf="(preprocessEnabled || postprocessEnabled || subtype == 'pythonscore' || subtype == 'jpmml' || subtype == 'pmml' || subtype == 'pmml4s') && !timeSeries" matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Variable </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <input id="editableText" placeholder="variable" [(ngModel)]="element.name" type="text" value="{{element.name}}" />                                                
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="userfriendlyName">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>         
+                            <td mat-cell *matCellDef="let element">   
+                                <input id="editableText" placeholder="Name your variable" [(ngModel)]="element.userfriendlyName" type="text" value="{{element.userfriendlyName}}" />                                                 
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="important" *ngIf="iotype==='Input'">
+                            <th mat-header-cell *matHeaderCellDef> Important?     
+                            </th>         
+                            <td mat-cell *matCellDef="let element">  
+                                <input
+                                    type="checkbox"
+                                    class="larger"
+                                    [checked]="element.important"
+                                    (change)="element.important = !element.important"/> 
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef> Description </th>        
+                            <td mat-cell *matCellDef="let element"> 
+                                <input id="editableText" placeholder="description" [(ngModel)]="element.description" type="text" value="{{element.description}}" />                                            
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="include" *ngIf="iotype==='Output' && timeSeries">
+                            <th mat-header-cell *matHeaderCellDef> Include    
+                            </th>         
+                            <td mat-cell *matCellDef="let element">  
+                                <input *ngIf="['xaxis(timestamp)', 'yaxis(output)'].includes(element.name)"
+                                    type="checkbox"
+                                    class="larger"
+                                    [checked]="true" readonly /> 
+                                <input *ngIf="!['xaxis(timestamp)', 'yaxis(output)'].includes(element.name)"
+                                    type="checkbox"
+                                    class="larger"
+                                    [checked]="element.include"
+                                    (change)="element.include = !element.include"/> 
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> Field type </th>         
+                            <td mat-cell *matCellDef="let element">                             
+                                <mat-select *ngIf="!['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)" [(ngModel)]="element.type">
+                                    <mat-option [value]="inputType" *ngFor="let inputType of inputTypes">
+                                        {{ inputType }}
+                                    </mat-option>
+                                    <mat-optgroup *ngFor="let type of inputSubTypes" [label]="type.name"
+                                                [disabled]="type.disabled">
+                                        <mat-option *ngFor="let item of type.types" [value]="item">
+                                            {{ item }}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-select>
+                                <p *ngIf="['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)">--</p>
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="add">
+                            <th mat-header-cell *matHeaderCellDef> Customize </th>
+                            <td width="25%" mat-cell class="add" *matCellDef="let element"> 
+                                <p *ngIf="['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)">--</p>
+                                <div *ngIf="!['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)" style="height:100px;" class="customize">
+                                    <mat-form-field appearance="outline" class="matchip" style="margin-top:5%;" *ngIf="element.type === 'Enum' && element.allowed2.length <= 1">
+                                
+                                        <mat-chip-list #chipListEnum class="matChipList" *ngIf="element.type === 'Enum'">
+                                                
+                                            <mat-chip *ngFor="let item of element.allowedValues.slice(0,2)"
+                                                    color="primary"
+                                                    [selectable]="selectable"
+                                                    [removable]="removable"
+                                                    (removed)="remove(item, element)">
+                                                {{item}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip> 
+                                            
+                                            <input *ngIf="element.allowedValues.length < 2"  class="inputItem" placeholder="Add your category"
+                                                [matChipInputFor]="chipListEnum"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                (matChipInputTokenEnd)="add($event, element)" matInput
+                                            >
+                                                                    
+                                        </mat-chip-list>
+                                        
+                                    </mat-form-field>
+                                    <a *ngIf="element.allowedValues.length >= 2 && element.type === 'Enum' && element.allowed2.length <= 1" class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="assets/images/dashboard/options-dots.svg" />
+                                    </a>
+                                    <div class="dropdown-menu dropdownAllowed" *ngIf="element.allowed2.length <= 1">
+                                        <mat-form-field appearance="outline" class="matchip2">
+                           
+                                            <mat-chip-list #chipListEnum2 class="matChipList2">
+                                                    
+                                                <mat-chip *ngFor="let item of element.allowedValues.slice(2, element.allowedValues.length)"
+                                                        color="primary"
+                                                        [selectable]="selectable"
+                                                        [removable]="removable"
+                                                        (removed)="remove(item, element)">
+                                                    {{item}}
+                                                    <mat-icon class="" matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                </mat-chip>
+                                                <input class="inputItem2" placeholder="Add your category"
+                                                    [matChipInputFor]="chipListEnum2"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes2"
+                                                    [matChipInputAddOnBlur]="addOnBlur"
+                                                    (matChipInputTokenEnd)="add($event, element)" matInput
+                                                >
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <mat-form-field appearance="outline" class="matchip" style="margin-top:5%;" *ngIf="element.type === 'Enum' && element.allowed2.length > 1">
+                                
+                                        <mat-chip-list #chipListEnum class="matChipList" *ngIf="element.type === 'Enum'">
+                                                
+                                            <mat-chip *ngFor="let item of element.allowed2.slice(0,2)"
+                                                    color="primary"
+                                                    [selectable]="selectable"
+                                                    [removable]="removable"
+                                                    (removed)="remove(item, element)">
+                                                {{item}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip> 
+                                            
+                                            <input *ngIf="element.allowed2.length < 2"  class="inputItem" placeholder="Add your category"
+                                                [matChipInputFor]="chipListEnum"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                (matChipInputTokenEnd)="add($event, element)" matInput
+                                            >
+                                                                    
+                                        </mat-chip-list>
+                                        
+                                    </mat-form-field>
+                                    <a *ngIf="element.allowed2.length >= 2 && element.type === 'Enum'" class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="assets/images/dashboard/options-dots.svg" />
+                                    </a>
+                                    <div class="dropdown-menu dropdownAllowed" *ngIf="element.allowed2.length > 1">
+                                        <mat-form-field appearance="outline" class="matchip2">
+                           
+                                            <mat-chip-list #chipListEnum2 class="matChipList2">
+                                                    
+                                                <mat-chip *ngFor="let item of element.allowed2.slice(2, element.allowed2.length)"
+                                                        color="primary"
+                                                        [selectable]="selectable"
+                                                        [removable]="removable"
+                                                        (removed)="remove(item, element)">
+                                                    {{item}}
+                                                    <mat-icon class="" matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                </mat-chip>
+                                                <input class="inputItem2" placeholder="Add your category"
+                                                    [matChipInputFor]="chipListEnum2"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes2"
+                                                    [matChipInputAddOnBlur]="addOnBlur"
+                                                    (matChipInputTokenEnd)="add($event, element)" matInput
+                                                >
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="element.type === 'Integer'">    
+                                        <div class="minmax">
+                                            <h4 style="font-size:1em;">Range</h4>                           
+                                            
+                                                <input type="text" numbersOnly id="{{element.name}}-min" [(ngModel)]="element.min" class="form-control" placeholder="min" (input)="validateminmax(element)"/>                             
+                                                <input type="text" numbersOnly id="{{element.name}}-max" [(ngModel)]="element.max" class="form-control" placeholder="max" (input)="validateminmax(element)"/> 
+                                                
+                                        </div>                             
+                                        <p style="color: red;" *ngIf="element.minmaxerror">Min >= Max</p>
+                                        <p style="color: red;" *ngIf="element.minmaxabsense">Enter both Min & Max</p>
+                                        
+                                    </div>
+                                    <div *ngIf="element.type === 'Whole'">    
+                                        <div class="minmax">
+                                            <h4 style="font-size:1em;">Range</h4>                           
+                                            
+                                                <input type="number" id="{{element.name}}-min" [(ngModel)]="element.min" class="form-control" placeholder="min" (input)="validateminmax(element)"/>                             
+                                                <input type="number" id="{{element.name}}-max" [(ngModel)]="element.max" class="form-control" placeholder="max" (input)="validateminmax(element)"/> 
+                                                
+                                        </div>                             
+                                        <p style="color: red;" *ngIf="element.minmaxerror">Min >= Max</p>
+                                        <p style="color: red;" *ngIf="element.minmaxabsense">Enter both Min & Max</p>
+                                        <p style="color: red;" *ngIf="element.minmaxdigits">Decimal places don't match</p>
+                                        
+                                    </div>
+                                </div> 
+                            </td>
+                        </ng-container>
+
+                        <ng-container *ngIf="iotype==='Output'" matColumnDef="advance">
+                            <th mat-header-cell *matHeaderCellDef>Advance Settings</th>         
+                            <td mat-cell *matCellDef="let element">   
+                                <div *ngIf="!['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)" [matTooltip]="element.allowedValues.length > 0 ? '' : 'Configuration for only Enum type'">
+                                    <a style="cursor:pointer;font-size:1em;color:#23c87e" [style.pointer-events]="element.allowedValues.length > 0 ? 'auto': 'none'" (click)="advanceSettings(element)">Configure</a>  
+                                </div>   
+                                <p *ngIf="['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)">--</p>                     
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="remove">
+                            <th mat-header-cell *matHeaderCellDef></th>         
+                            <td mat-cell *matCellDef="let element">                             
+                                <button *ngIf="!['xaxis(timestamp)', 'yaxis(output)', 'lower bound', 'upper bound'].includes(element.name)" type="button" class="btn" style="color:#fff;font-size:9px;background:#ff3547;border-radius:50px" (click)="removeRow(element)">Remove</button>
+                            </td>
+                        </ng-container>
+            
+                        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div *ngIf="advanceSelect && iotype==='Output'" class="col-sm-12 m-0 advanceBox">
+                <div class="col-sm-12 row m-0 advanceContent" *ngFor="let item of enums">
+                    <div class="col-sm-8 advanceContent2">
+                        <div style="margin-left:5%;">
+                            <p><b style="font-family: MontserratMedium; color:#414141">Upload </b> <b style="font-family: MontserratBold; color:#414141">{{ item.name }} </b><b style="font-family: MontserratMedium; color:#414141">Image/Icon</b></p>
+                            <div style="display:inline-flex">
+                                <div>
+                                    <input hidden id="classImage{{item.name}}" type="file" class="custom-file-input" (change)="onFileChange($event, item)">
+                                    <label style="cursor:pointer" for="classImage{{item.name}}">
+                                        <p *ngIf="!item.fileName" style="font-size:10px;margin-left:2%;line-height:40px;">Choose a file</p>
+                                        <p *ngIf="item.fileName" style="font-size:10px;margin-left:2%;line-height:40px">{{item.fileName}}</p>
+                                    </label>
+                                </div>
+                                <div (click)="uploadClassImage(item)" [style.pointer-events]="item.uploadHideAndShow || item.uploading ? 'none': 'auto'" [style.width]="item.uploadHideAndShow ? '140px': '120px'" class="row uploadButton">
+                                    <span [style.display]="!item.uploadHideAndShow && !item.uploading ? 'inherit': 'none'" class="uploadImg"></span>
+                                    <span class="uploadText" [style.display]="!item.uploadHideAndShow && !item.uploading ? 'inherit': 'none'">
+                                        Upload
+                                    </span>
+                                    <span class="uploadText" [style.display]="item.uploading ? 'inherit': 'none'">
+                                        Uploading..
+                                    </span>
+                                    <svg [style.display]="item.uploadHideAndShow ? 'inherit': 'none'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+                                    <span class="uploadText" [style.display]="item.uploadHideAndShow ? 'inherit': 'none'">                     
+                                        Uploaded
+                                    </span>                                  
+                                </div>
+                                <div style="margin-left:5%;line-height:32px">
+                                    <p style="font-size:14px;">(OR)</p>
+                                </div>
+                                <div class="uploadButton" (click)="gallery(item)" style="margin-left:5%;width:250px;">
+                                    <span class="uploadText">
+                                        Select from our Gallery
+                                    </span>
+                                </div>
+                            </div>
+                            <p style="margin-top:1%"><b style="color:red; font-family: MontserratBold">Recommended: </b> <b style="font-family: MontserratBold; color: #414141">1920 &#10005; 350 .jpg/.png, Max 2MB file</b></p>
+                            <p style="margin-top:4%;font-family: MontserratMedium; color:#414141">Would you like to have some text along with the image!</p>
+                            <div style="margin-top:1%">
+                                <input placeholder="Enter text" name="classText{{item.name}}" id="classText{{item.name}}" [(ngModel)]="item.text" type="text">                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 imageContent">
+                        <img [src]="item.src" *ngIf="item.src" style="height: 100px; width:222px;margin-bottom:1%">
+                        <p style="font-size:10px" *ngIf="item.src"><b style="font-family: MontserratRegular; color: #414141">size: </b><b style="font-family: MontserratBold; color: #414141">{{item.width}} &#10005; {{item.height}}</b> <b style="font-family: MontserratRegular; color: #414141">  format: </b><b style="font-family: MontserratBold; color: #414141">{{item.ext}}</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 row" id="clouderizerGallery">
+                <div class="col-sm-12 row">
+                    <i class="fa fa-close" style="float:right;margin-left:auto;margin-top:5px;cursor:pointer;width:17px;height:17px" (click)="closeGallery()"></i>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-2 galleryImage" *ngFor="let displayimage of displayimages">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/{{displayimage}}" />
+                    </div>
+                    <!-- <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_smile.svg" />
+                    </div>   
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_ok.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_ok1.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_freight.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_anxiety.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_failure.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_no.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_cloud.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_fire.svg" />
+                    </div>   
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_girl.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_man.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_sad (1).svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_sad (2).svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_sad (3).svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_storm.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_sun.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_wave.svg" />
+                    </div>   
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_rain (1).svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_rain.svg" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_happy.webp" />
+                    </div>
+                    <div class="col-sm-2 galleryImage">
+                        <img width="70px" height="70px" (click)=galleryImageClick($event) src="assets/images/outputServing/clouderizerImage_unhappy.webp" />
+                    </div> -->
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" *ngIf="iotype==='Output' && advanceSelect" (click)="GoBack()">Back</button>
+        <button type="button" class="btn btn-outline-primary" *ngIf="iotype==='Input'" [disabled]="!minmax || projectType == 'public'" (click)="save()">Save</button>
+        <button type="button" class="btn btn-outline-primary" *ngIf="iotype==='Output' && advanceSelect" [disabled]="!minmax || projectType == 'public'" (click)="saveAdvance()">Save & Close</button>
+        <button type="button" class="btn btn-outline-primary" *ngIf="iotype==='Output' && outputSelect" [disabled]="!minmax || projectType == 'public'" (click)="save()">Save & Close</button>
+    </div>
+    

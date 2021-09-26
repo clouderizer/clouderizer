@@ -1,0 +1,37 @@
+textarea {
+    position: absolute;
+    left: -100%;
+  }
+
+.copyIcon{
+    fill:white;
+    opacity:0.5;
+}
+
+.hljs{
+    padding:3em 1em 1em 1em !important;
+}
+
+.copyIcon:hover{
+    fill:white;
+    opacity:1;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

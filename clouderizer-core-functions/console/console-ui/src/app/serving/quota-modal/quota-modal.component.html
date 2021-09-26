@@ -1,0 +1,86 @@
+<div class="modal-header" style="width:600px">
+    <h4 class="modal-title" id="modal-basic-title">Allocated quota usage and limits</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="width:600px">
+    <div class="col-sm-12" style="margin-bottom:2%;display:flex;align-items: center">
+        <div class="col-sm-6">
+            <apx-chart
+                [series]="chartOptions.series2"
+                [chart]="chartOptions.chart"
+                [plotOptions]="chartOptions.plotOptions2"
+                [labels]="chartOptions.labels2"
+                [stroke]="chartOptions.stroke"
+            ></apx-chart>
+        </div>
+        <div class="col-sm-6" style="text-align:center">
+            <div class="invdetails" style="margin-bottom:10%">
+                <div style="margin-right:10%;width:50%">
+                    <p style="color:seagreen;">Remaining</p>
+                    <p style="font-size:20px;overflow:auto">{{allocexec - timeSum | tofixeddecimal}}<b style="font-size:11px;opacity:0.5;font-family:'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif">min</b></p>
+                </div>
+                <div style="width:50%">
+                    <p style="color:seagreen;">Limit</p>
+                    <p style="font-size:20px;overflow:auto">{{allocexec || 0.00}}<b style="font-size:11px;opacity:0.5;font-family:'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif">min/month</b></p>
+                </div>
+            </div>
+            
+            <div style="display:flex;align-items:center;font-size:11px">
+                <div style="width:100px"><p style="margin-bottom:10%;height:25px">CPU</p><img src="assets/images/chips/cpu_clouderizer.svg" alt="Circle Image" style="width:30px;height:30px;margin-bottom:10%" /><p style="font-size:12px">{{timeSumStandard || 0.00}} <b style="font-size:10px">min</b></p></div>
+                <div>+</div>
+                <div style="width:100px"><p style="margin-bottom:10%;height:25px">GPU</p><img src="assets/images/chips/gpu_clouderizer.svg" alt="Circle Image" style="width:30px;height:30px;margin-bottom:10%" /><p style="font-size:12px">{{timeSumGPU || 0.00}} <b style="font-size:10px">min</b><span style="opacity:0.7;font-size:10px">&#215;</span><b style="opacity:0.7;font-size:10px;color:red">10</b></p></div>
+                <div>+</div>
+                <div style="width:100px"><p style="margin-bottom:10%;height:25px">High Memory</p><img src="assets/images/chips/sd-card.svg" alt="Circle Image" style="width:30px;height:30px;margin-bottom:10%" /><p style="font-size:12px">{{timeSumHighMemory || 0.00}} <b style="font-size:10px">min</b><span style="opacity:0.7;font-size:10px">&#215;</span><b style="opacity:0.7;font-size:10px;color:red">3</b></p></div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-sm-12" style="margin-bottom:2%;display:flex;align-items: center;">
+        
+        <div class="col-sm-6" style="margin-right:2%">
+            <apx-chart
+                [series]="chartOptions.series1"
+                [chart]="chartOptions.chart"
+                [plotOptions]="chartOptions.plotOptions1"
+                [labels]="chartOptions.labels1"
+                [stroke]="chartOptions.stroke"
+            ></apx-chart>
+        </div>
+        <div class="col-sm-6 invdetails">
+                <div style="margin-right:10%;width:50%">
+                    <p style="color:seagreen;">Remaining</p>
+                    <p style="font-size:20px;overflow:auto">{{allocinvs - invCount || 0}}</p>
+                </div>
+                <div style="width:50%">
+                    <p style="color:seagreen;">Limit</p>
+                    <p style="font-size:20px;overflow:auto">{{allocinvs || 0}}<b style="font-size:11px;opacity:0.5;font-family:'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif">/month</b></p>
+                </div>
+        </div>
+        
+    </div>
+    <div class="col-sm-12" style="display:flex;align-items: center">
+        
+        <div class="col-sm-6" style="margin-right:5%">
+            <apx-chart
+                [series]="chartOptions.series3"
+                [chart]="chartOptions.chart"
+                [plotOptions]="chartOptions.plotOptions3"
+                [labels]="chartOptions.labels3"
+                [stroke]="chartOptions.stroke"
+            ></apx-chart>
+        </div>
+        <div class="col-sm-6 invdetails">
+            <div style="margin-right:30%;width:50%">
+                <p style="color:seagreen;">Remaining</p>
+                <p style="font-size:20px;overflow:auto">{{allocprojects - projectsLength || 0}}</p>
+            </div>
+            <div style="width:50%">
+                <p style="color:seagreen;">Limit</p>
+                <p style="font-size:20px;overflow:auto">5</p>
+            </div>
+        </div>
+        
+    </div>
+</div>

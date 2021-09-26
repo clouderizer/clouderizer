@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title">Reinvite Users</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+    <button class="btn btn-fill pull-right" style="position:absolute; top:8px; right:8px;" (click)="reInviteAll()" >Re-Invite all</button>
+
+    <table class="table table-striped">
+            <thead>
+                <tr>
+                <th class="text-center">{{ headerRow[0] }}</th>
+                <th>{{ headerRow[1] }}</th>
+                <th>{{ headerRow[2] }}</th>
+                <th>{{ headerRow[3] }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of reInvite; let i = index">
+                    <td class="text-center">{{i+1}}</td>    
+                    <td>{{row.name}}</td>
+                    <td>{{row.email}}</td>
+                    <td>{{row.type}}</td>
+                </tr>
+            </tbody>
+    </table>
+
+</div>
+
+
+

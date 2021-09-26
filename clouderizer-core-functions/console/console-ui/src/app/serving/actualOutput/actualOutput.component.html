@@ -1,0 +1,20 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Real Values</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+            <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body theme-default" style="text-align:center">
+    <div *ngIf= "timeSeries" class="card col-md-12 center uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">
+        <input hidden type="file" #fileInput (change)="fileUpload($event.target.files)">
+        <div  class="files-list" *ngFor="let file of files;let i=index">
+            <img alt="csv" src="assets/images/serving/csv.svg" style="margin-top:2%;width:40px;margin-bottom:5%" />
+            <p>{{ file }}</p> 
+        </div>
+        <p class=center *ngIf="files && files.length == 0"> Drop your csv file with real values here!!</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary" (click)="saveOutput()">Submit</button>
+</div>

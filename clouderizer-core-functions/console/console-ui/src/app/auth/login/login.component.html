@@ -1,0 +1,79 @@
+<!-- <div *ngIf="!noRegister"  class="col-sm-12 text-center">
+  <a href="api/auth/google"><img class="w-35p m-r-20" src="assets/images/loginpage/google-icon.svg"/></a>
+  <a href="api/auth/github"><img class="w-35p" src="assets/images/loginpage/github-icon.svg"/></a>
+</div> -->
+<div *ngIf="!noRegister"  class="col-sm-12 text-center m-t-20 m-b-20">
+  <p class="divisionPara"><span>OR</span></p>
+</div>
+<div *ngIf="!noRegister" class="col-sm-12 text-center">
+  <form (submit)="onLoginSubmit()">
+    <mat-form-field class="w-100">
+      <input type="email" matInput class="email" placeholder="Enter email" [(ngModel)]="email" name="email">
+    </mat-form-field>
+
+    <mat-form-field class="w-100" *ngIf="this.mode == 'Login'">
+      <input [type]="hide ? 'password' : 'text'" class="password" matInput placeholder="Password" [(ngModel)]="password" name="password">
+      <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+
+    <div class="w-100" *ngIf="this.mode == 'Login'">
+      <button type="submit" style="float:left;" class="btn btn-outline-primary">Login</button>
+      <a (click)="onForgotPwdClick()" style="cursor:pointer; color:darkcyan; float:right;">Forgot your password?</a>
+    </div>
+    <br/>
+    <br/>
+
+    <div class="w-100" *ngIf="this.mode == 'Forgot Password'">
+      <button type="submit" class="btn btn-outline-primary" style="float:left;">Reset Password</button>
+      <a (click)="onLoginClick()" style="cursor:pointer; float:right; color:darkcyan;">Login?</a>
+    </div>
+    <br/>
+    <br/>
+  </form>
+</div>
+
+<div *ngIf="noRegister" class="col-sm-12 text-center" style="margin-bottom:10%">
+  <img width="100px" src="assets/images/almostdone1.svg"/>
+  <h1 style="margin:5% 0"> Almost done! </h1>
+</div>
+
+<div *ngIf="noRegister" class="col-sm-12 text-center">
+  <form [formGroup]="formSignup" (submit)="onOauthRegister()" *ngIf="!signup_success">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Company / Organisation" [(ngModel)]="cname" name="cname" formControlName="cname">
+    </mat-form-field>   
+
+    <div style="text-align:left; margin-bottom:4%;">
+      <ngx-intl-tel-input class="telInput" [style.border]="(formSignup.controls['phone']?.errors?.required || formSignup.controls['phone']?.errors?.validatePhoneNumber) && formSignup.controls['phone'].touched ? '2px solid red' : 'transparent'"
+        [cssClass]="'custom'" 
+        [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="false" 
+        [enablePlaceholder]="true" 
+        [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+        [selectFirstCountry]="false" 
+        [selectedCountryISO]="CountryISO.India"
+        [maxLength]="15" 
+        [tooltipField]="TooltipLabel.Name" 
+        [phoneValidation]="true" 
+        [separateDialCode]="separateDialCode"
+        name="phone" formControlName="phone">
+      </ngx-intl-tel-input>
+    </div>
+
+    <mat-form-field  class="w-100"> 
+        <mat-label>Type of Organisation</mat-label>
+        <mat-select [(ngModel)]="organisation_type" formControlName="organisationType">
+          <mat-option *ngFor="let education of educations" [value]="education.value">
+            {{education.viewValue}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox class="w-100" name="termsofuse" [(ngModel)]="termsofuse" [ngModelOptions]="{standalone: true}">I agree to <a href="https://clouderizer.com/terms" target="_blank">Terms of Use</a> and <a href="https://clouderizer.com/privacy-policy/" target="_blank">Privacy Policy</a></mat-checkbox>
+
+    <div class="w-100 text-center m-t-20">
+        <button type="submit" class="btn btn-outline-primary">Proceed</button>
+    </div>
+  </form>
+</div>

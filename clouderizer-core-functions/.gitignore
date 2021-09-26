@@ -1,0 +1,7 @@
+template
+build
+console/public
+console/console-api/node_modules
+console/console-ui/node_modules
+console/scoring-ui/node_modules
+console/console-api/config/env/development.js

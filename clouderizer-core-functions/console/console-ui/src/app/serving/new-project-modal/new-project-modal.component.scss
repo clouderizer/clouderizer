@@ -1,0 +1,130 @@
+.radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 15px 0;
+}
+
+.radio-group-row {
+  display       : flex;
+  flex-direction: row;
+  margin        : 0 15px;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  
+  .example-container form {
+    margin-bottom: 20px;
+  }
+  
+  .example-container form > * {
+    margin: 5px 0;
+  }
+  
+  .example-container {
+    margin: 0 12px;
+  }
+
+  /* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: blue;
+  }
+  /* Font color */
+  input.mat-input-element {
+    color: blue($color: #000000);
+  }
+
+  .uploadfilecontainer {
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    height: 200px;
+    width: 100%;
+    margin: 20px auto;
+    border: 2px dashed rgb(28, 104, 219);
+    border-radius: 10px;
+  }
+  
+  .uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #f5fcff;
+    opacity: 0.8;
+  }
+  
+  .files-list {
+    display: inline-block;
+    justify-content: space-between;
+    //width: 30%;
+    margin: 10px auto;
+    background: #ffffff;
+    border: 1px;
+    border-radius: 12px;
+    padding: 5px;
+    color: #1c8adb;
+  }
+
+  .center {
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 5px;
+    margin-left: 5px;
+    }
+
+  ::ng-deep .mat-radio-label {
+    align-items: initial !important;
+  }
+
+  .borderbox{
+    border-radius: 25px;
+    background: linear-gradient(to top left,#614385, #516395);
+    margin: auto;
+    color:white;
+    padding: 5px;
+    font-size: smaller;
+    font-style: normal;
+  }
+  .disabledType{
+    opacity:70%;
+  }
+
+  .checkbox{
+    text-align: left;
+    margin:5% 1% 0 0%;
+  }
+
+  textarea {
+    height: 200px;
+    overflow: auto;
+  }
+
+  .closepos{
+    color:#20248c;
+    cursor: pointer;
+  }
+
+  .choosefile:hover{
+    background: #2C6181;
+  }
+  .choosefile{
+    background: cadetblue;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+  }

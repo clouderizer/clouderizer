@@ -1,0 +1,149 @@
+.thebelab-button{
+    background:red !important;
+}
+
+
+.mat-form-field{
+    margin-left:1% !important;
+    width: 40% !important;
+    font-size: 12px !important;
+    margin-top:2% !important;
+}
+
+.userInput{
+    outline:none;
+    height:calc(2em);
+    width:50%;
+    font-family: courier;
+}
+
+.rightsectionServingBtns {
+    display: inline-flex;
+    margin-right:0;
+  
+    ul {
+      margin: 0;
+      display: inline-flex;
+      list-style: none;
+      align-items: center;
+      li {
+        margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+}
+
+.topServingHead {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: transparent;
+}
+
+.instruction{
+    color:grey;
+    font-family:Roboto,Noto Sans JP,sans-serif;
+
+}
+
+button:disabled, button[disabled]{
+    color:#00203FFF;
+    border-color:var(--btn-primary-clr);    
+    opacity: 1;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+   
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}
+
+.dotGreen {
+    height: 10px;
+    width: 10px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+.dotRed {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.menu .list {
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+    background: transparent;
+    border-width: thin;
+}
+
+.menu:hover .list{
+    max-height: 400px;
+    overflow:auto;
+    transition: max-height 0.25s ease-in;
+}
+
+.dependencies{
+    background-color: #26aa5a;
+    border-radius: 4px 0 0 4px;
+    font-size: 12px;
+    font-weight: bold;
+    height: 25px;
+    padding: 5px 7px;
+    color: #fff;
+}
+
+.uninstall{
+  background-color: lightblue;
+  border-radius: 0 0 4px 4px;
+  font-size: 12px;
+  font-weight: bold;
+  height: 25px;
+  padding: 5px 7px;
+  color: black;
+}
+
+.menu{
+
+ ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #DDDDDD;
+    font-size:12px;
+  }
+}
+
+.mat-chip.mat-standard-chip {
+    background-color: lightblue;
+    color: black;
+    font-size: 12px;
+    border-radius: 5px !important;
+}
+
+::ng-deep .mat-tooltip {
+  background-color: #141e30;
+}

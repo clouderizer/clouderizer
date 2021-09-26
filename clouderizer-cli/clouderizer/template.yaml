@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Timeout: 30
+Resources:
+  irissuccinctApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      FunctionName: model-irissuccinct
+      Timeout: 30
+      MemorySize: 2000
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      Policies:
+      - S3ReadPolicy:
+          BucketName: irissuccinct
+      Environment:
+        Variables:
+          API_NAME: irissuccinctApi
+          S3_BUCKET: irissuccinct
+    Metadata:
+      Dockertag: latest
+      DockerContext: .
+      Dockerfile: Dockerfile
+Outputs:
+  S3Bucket:
+    Value: irissuccinct
+    Description: S3 Bucket for saving artifacts and lambda bundle
+  EndpointUrl:
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/function/iris-succinct"
+    Description: URL for endpoint

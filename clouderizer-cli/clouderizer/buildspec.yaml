@@ -1,0 +1,9 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo Entered the build phase ...
+      - mkdir -p lambda-dir/function/asset/ &&  cp Dockerfile lambda-dir/ && cp iris.pmml lambda-dir/function/asset/model.file && cp projectConfig.json lambda-dir/function/ && cp template.yaml lambda-dir/template.yml
+      - cd lambda-dir && ls
+      - sam build --use-container --region us-east-2
+      - sam deploy --template-file .aws-sam/build/template.yaml --stack-name iriscodebuildexp --region us-east-2  --capabilities CAPABILITY_IAM --image-repository 639150796852.dkr.ecr.us-east-2.amazonaws.com/clouderizer-lambda

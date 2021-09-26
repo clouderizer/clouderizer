@@ -1,0 +1,52 @@
+
+button:focus {outline:0;}
+
+.center {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.uploadfilecontainer {
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: center;
+  height: 200px;
+  width: 100%;
+  margin: 30px auto;
+  border: 2px dashed rgb(28, 104, 219);
+  border-radius: 10px;
+}
+
+.uploadfilecontainer:hover {
+  cursor: pointer;
+  background-color: #f5fcff;
+  opacity: 0.8;
+}
+
+.textheader{
+  text-align: center;
+  margin:auto;
+}
+
+.icon{
+  font-size: 40px;
+  padding:20px;
+  cursor:pointer;
+  border-radius: 50%;
+  color:white;
+}
+
+#like {
+  background: mediumseagreen;
+}
+
+#dislike {
+  background: indianred;
+}
+
+.emotionText{
+  font-family: Roboto,Noto Sans JP,sans-serif;
+  font-size: 15px;
+  margin-bottom: 5%;
+  margin-top: 5%;
+}

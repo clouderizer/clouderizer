@@ -1,0 +1,91 @@
+.theme-default {
+
+  /**Login page variables**/
+  --bg-login-clr:#fdf7fd ;
+  --green-clr :#23c67e;
+  /*Ecom semantic variables*/
+  --navbar-bg-clr1 : #1e228a;
+  --navbar-bg-clr2 : #31359d;
+  --navbar-bg-clr3 : #4b47b6;
+
+
+    /***********Dashboard grid colors**************/
+    --card-icon-clr : #d3f4e5;
+    --card-icn-default-clr : #d7d7ec;
+    --card-bordr-clr : #0000000d;
+    /*******Dashboard grid colors ends*******/
+
+    /*******billing colors*********/
+    
+    --span-grn-clr:#23c87e ;
+    --span-red-clr: #ff4141;
+    --span-violet-clr:#20248c;
+    --span-orange-clr:#f7a700;
+    --span-grn-bg-clr:#d3f4e5;
+    --span-red-bg-clr:#ff414133;
+    --span-violet-bg-clr: rgba(75, 71, 182, 0.2);
+    --span-grey-bg-clr :rgba(137, 137, 137, 0.2);
+    /*********billing colors*************/
+
+     /*Ecom Custom colors*/
+     --bg-white-clr: #ffffff;
+     --bg-grey-clr: #ececec;
+     --bg-grey-opacity-clr: #ececec77;
+     --bg-blue-grey-light-clr: #f7f7f9;
+     --bg-grey-light-clr: #f5f5f5;
+     --bg-grey-lighter-clr: #f9f9f9;
+     --bg-grey-darker-clr: #555555;
+
+     --primary-clr:#23c87e;
+     --main-text-clr:#777777;
+
+     --btn-text-clr : #414141;
+
+     /******border opacity colors*****/
+     --btn-default-opacity-clr : #b0b4b733 ;
+
+     /********Switch colors ***********/
+     --primary-unchecked-pipe-clr:#55555555;
+     --primary-checked-pipe-clr:#00a58755;
+     --primary-checked-clr:#23c87e;
+     
+     /*Ecom Alert backgrounds*/
+     --success-alert-clr:#F6F9CC;
+     --info-alert-clr:#D1E9F6;
+     --danger-alert-clr:#FFC3B0;
+     --warning-alert-clr:#F7DD99;
+
+     /*Ecom button colors*/
+     --btn-default-clr : #b0b4b7 ;
+     --btn-default-hover-clr : #00a587;
+
+     --btn-primary-clr : #7fe6b8;
+     --btn-primary-hover-clr : #23c87e22;
+
+     --btn-violet-clr: #4b47b6;
+
+     --btn-darker-clr:#414141;
+     
+     --btn-success-clr : #d0df00;
+     --btn-success-hover-clr : #d9e533;
+
+     --btn-warning-clr : #eaaa00;
+     --btn-warning-hover-clr : #eebb33;
+
+     --btn-danger-clr : #f1a3a3;
+     --btn-danger-hover-clr : #ff414157;
+
+     --btn-info-clr : #8dc8e8;
+     --btn-info-hover-clr : #a4d3ed;
+
+     $nav-bg-clr1: #a4d3ed;
+}
+
+
+
+$nav-bg-clr1: var(--navbar-bg-clr1);
+$nav-bg-clr2: var(--navbar-bg-clr2);
+$nav-bg-clr3: var(--navbar-bg-clr3);
+.navbar{
+background: linear-gradient(to right, $nav-bg-clr1, $nav-bg-clr2 42%,  $nav-bg-clr3);
+}

@@ -1,0 +1,9 @@
+FROM cldz-lambda-python-baseimage:latest
+
+USER app
+WORKDIR /home/app
+
+COPY function /home/app/function/
+
+USER root
+RUN while read requirement; do pip install $requirement || conda install -c conda-forge -c fastai -c pytorch --yes $requirement || exit 1; done < function/requirements.txt

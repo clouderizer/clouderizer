@@ -1,0 +1,72 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Prediction feedback</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+            <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body theme-default" style="text-align:center">
+    <img src="{{environment.baseurl}}/userserving/assets/images/icons/{{imageEmotion}}.svg" width="150px" style="margin-top:2%;margin-bottom:2%" />
+    <h4 class="emotionText" *ngIf="imageEmotion == 'happy'">Looks like the model did fine with the prediction. But should it have been better!</h4>
+    <h4 class="emotionText" *ngIf="imageEmotion == 'unhappy'">Uh, oh! Clearly you are not satisfied with the prediction output. What do you think should have been the output?</h4>
+    <div *ngIf="!timeSeries && outputList && outputList.length > 0" class="col-md-12 m-10">
+        <div *ngFor="let output of outputList">
+            <span class="formFieldcustom"  *ngIf="output.allowedValues && output.allowedValues.length > 0">
+                <mat-label>Actual Output</mat-label>
+                <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >
+                    <mat-select class="control-label" [(ngModel)]="output.actualOutput">
+                        <mat-option *ngFor="let value of output.allowedValues" value="{{ value }}">
+                            {{ value }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <i title="{{ output.description }}" class="infoIcn"></i>
+            </span>   
+            <span class="formFieldcustom" *ngIf="output.type=='Integer' || output.type=='Whole'">
+                <mat-label>Actual Output</mat-label>
+                <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                    <!-- <mat-error style="padding-top:2px;padding-left:-5px">Please enter a numeric value</mat-error> -->
+                    <input type="number" class="control-label" matInput placeholder="Enter a numeric value" [(ngModel)]="output.actualOutput">
+                </mat-form-field>
+                <i title="{{ output.description }}" class="infoIcn"></i>
+            </span>
+            <span class="formFieldcustom" *ngIf="output.allowedValues && output.allowedValues.length == 0 && output.type!='Integer' && output.type!='Whole'">
+                <mat-label>Actual Output</mat-label>
+                <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                    <input type="text" class="control-label" matInput placeholder="Enter text or value" [(ngModel)]="output.actualOutput">
+                </mat-form-field>
+                <i title="{{ output.description }}" class="infoIcn"></i>
+            </span>
+            <span class="formFieldcustom" *ngIf="!output.allowedValues && !output.type">
+                <mat-label>Actual Output</mat-label>
+                <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                    <input type="text" class="control-label" matInput placeholder="Enter text or value" [(ngModel)]="output.actualOutput">
+                </mat-form-field>
+                <i title="{{ output.description }}" class="infoIcn"></i>
+            </span>
+        </div>
+    </div>
+
+    <div *ngIf= "!timeSeries && outputList && outputList.length == 0" class="col-md-12 m-10">  
+        <span class="formFieldcustom">
+            <mat-label>Actual Output</mat-label>
+            <mat-form-field style="margin:auto" floatLabel="never" class="input-full-width" appearance="outline" >                                                 
+                <input type="text" class="control-label" matInput placeholder="Enter text or value" [(ngModel)]="actualOutput">
+            </mat-form-field>
+        </span>
+    </div>
+   
+    <div *ngIf= "timeSeries" class="card col-md-12 center uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">
+        <input hidden type="file" #fileInput (change)="fileUpload($event.target.files)">
+        <div  class="files-list" *ngFor="let file of files;let i=index">
+            <img src="{{environment.baseurl}}/userserving/assets/images/icons/csv.svg" style="margin-top:2%;width:40px;margin-bottom:5%" />
+            <p>{{ file }}</p> 
+        </div>
+        <p class=center *ngIf="files && files.length == 0"> Drop your csv file with actual output here!!</p>
+        <!-- <p class=center *ngIf="files && files.length > 0"> Now click on <b>submit</b> and get going!!</p> -->
+    </div>
+    
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary" (click)="saveOutput()">Submit</button>
+</div>

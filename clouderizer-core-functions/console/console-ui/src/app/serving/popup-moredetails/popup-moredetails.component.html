@@ -1,0 +1,145 @@
+<div class="modal-header">
+    <h4 class="modal-title">Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="protype=='prediction'" class="col-sm-12 row m-0 p-0">
+        <div class="col-sm-5 border-modal table-scroll">
+            <div class="bodytitle">
+                <h4>Input</h4>
+                <div style="margin-bottom:5%" *ngIf="modelHistory.inputFiles">
+                    <div style="margin-bottom:2%;text-align:center" *ngFor="let file of modelHistory.inputFiles">
+                        <p style="font-size:10px;margin-bottom:2%">{{file.name}}</p>
+                        <img class="imageclass" [width]="150" [height]="150" style="border-radius:5px;" [src]="file.src" />
+                    </div>
+                </div>
+                <table *ngIf="modelHistory.input && modelHistory.input.length > 0">
+                    <tr>
+                        <th *ngFor="let x of modelHistory.input">{{ x.name}}</th>                  
+                    </tr>
+                    <tr>
+                        <td *ngFor="let x of modelHistory.input">{{ x.value }}</td>                  
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-5 border-modal table-scroll" *ngIf="!modelHistory.output.predictionResult">
+            <div class="bodytitle" *ngIf="!timeSeries" style="margin-bottom: 5%">
+                <h4>Predicted Output</h4>
+                <div style="margin-bottom:5%" *ngIf="modelHistory.outputFiles">
+                    <div style="margin-bottom:2%;text-align:center" *ngFor="let file of modelHistory.outputFiles">
+                        <p style="font-size:10px;margin-bottom:2%">{{file.name}}</p>
+                        <img class="imageclass" [width]="150" [height]="150" style="border-radius:5px;" [src]="file.src" />
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <th *ngFor="let x of modelHistory.output">{{ x.name }}</th>
+                    </tr>
+                    <tr>
+                        <td *ngFor="let x of modelHistory.output">{{ x.value }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bodytitle" *ngIf="!timeSeries && modelHistory.actualOutput && modelHistory.actualOutput.length > 0">
+                <h4>Actual Output</h4>      
+                <table>
+                    <tr>
+                        <th *ngFor="let x of modelHistory.actualOutput">{{ x.name }}</th>
+                    </tr>
+                    <tr>
+                        <td *ngFor="let x of modelHistory.actualOutput">{{ x.value }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bodytitle" *ngIf="timeSeries">
+                <h4>Output</h4>      
+                <apx-chart
+                    [series]="series"
+                    [chart]="chart"
+                    [dataLabels]="dataLabels"
+                    [markers]="markers"
+                    [title]="title"                                                 
+                    [yaxis]="yaxis"
+                    [xaxis]="xaxis"
+                    [tooltip]="tooltip"
+                    [autoUpdateSeries]="true"
+                    [legend]="legend"
+                    [stroke]="stroke"
+                    [annotations]="annotations"
+                    [colors]="colors"
+                ></apx-chart>
+            </div>
+        </div>
+        <div class="col-sm-5 border-modal table-scroll bodytitle" *ngIf="modelHistory.output.predictionResult == 'Failed'">
+            <h4>Error Output</h4>
+            <table>
+                <tr>
+                    <th>Error log</th>
+                </tr>
+                <tr>
+                    <td style="color:#ff4141">{{ modelHistory.output.stackTrace }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-2 flex-VHcenter border-modal bodytitle">
+            <div class="">
+                <h4>Feedback</h4>
+                <button *ngIf="modelHistory.output.predictionResult != 'Failed' && modelHistory.feedback" class="mdc-icon-button material-icons" style="width:40px;color:#23c87e;outline:none;background:transparent;pointer-events:none;border-color:transparent;">thumb_up</button>      
+                <button *ngIf="modelHistory.output.predictionResult != 'Failed' && !modelHistory.feedback" class="mdc-icon-button material-icons" style="width:40px;color:#ff4141;outline:none;background:transparent;pointer-events:none;border-color:transparent;">thumb_down</button>                        
+                <p *ngIf="modelHistory.output.predictionResult == 'Failed'">-</p>
+
+            </div>
+            <br/>
+            <br/>
+            <div class="bodytitle">
+                <h4>Response Time</h4>
+                <p *ngIf="modelHistory.responseTime" style="color:#4272d7;">{{ modelHistory.responseTime.toString().slice(0,6)}} ms</p>
+                <p *ngIf="!modelHistory.responseTime" style="color:#4272d7;">-</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="protype=='training'" class="col-sm-12 row m-0 p-0">
+        <div class="col-sm-3 border-modal table-scroll">
+            <div class="bodytitle">
+                <h4 style="margin-bottom: 10%;color: var(--navbar-bg-clr1)">Input</h4>
+                <div *ngIf="finalinput && finalinput.length>0" style="height:150px;overflow:auto">
+                    <div *ngFor="let item of finalinput" style="display:inline-flex;margin-bottom:5%;">
+                        <p style="font-size:10px;margin-right:2px;">{{item["key"]}}: </p>
+                        <p style="font-size:10px"> {{item["value"]}}</p>
+                    </div>
+                    <div *ngFor="let item of modelHistory.inputFiles" style="margin-bottom:5%;">
+                        <a style="cursor:pointer" (click)="downloadfiles(item)">
+                            <p style="margin-bottom:5%;font-size:10px">{{item.split('/')[4]}}</p>
+                            <img src="assets/images/download_sample_data.svg" />
+                        </a>
+                    </div>
+                </div>
+                <p style="overflow:auto;height:150px;font-family: monospace;font-size:12px;" *ngIf="finalinput && finalinput.length==0">No input</p>
+            </div>
+        </div>
+        <div class="col-sm-3 border-modal table-scroll">
+            <div class="bodytitle">
+                <h4 style="margin-bottom: 10%;color: var(--navbar-bg-clr1)">Output</h4>
+                <div *ngIf="historyoutputfiles && historyoutputfiles.length>0" style="height:150px;overflow:auto">
+                    <div *ngFor="let item of historyoutputfiles" style="margin-bottom:5%;">
+                        <a style="cursor:pointer" (click)="downloadfiles(item)" >
+                            <p style="margin-bottom:5%;font-size:10px">{{item.split('/')[4]}}</p>
+                            <img src="assets/images/download_sample_data.svg" />
+                        </a>
+                    </div>  
+                </div>
+                <p style="overflow:auto;height:150px;font-family: monospace;font-size:12px;" *ngIf="historyoutputfiles && historyoutputfiles.length==0">No output files</p>
+            </div>
+        </div>
+        <div class="col-sm-6 border-modal table-scroll bodytitle">
+            <img *ngIf="notebook" matTooltip="Download entire notebook with output displayed" style="float:right;cursor:pointer" (click)="downloadnotebook()" src="assets/images/download_sample_data.svg" />
+            <img *ngIf="notebook" matTooltip="View notebook on nbviewer" style="margin-right:15px;float:right;cursor:pointer" (click)="nbview()" src="assets/images/preview.svg" />
+            <h4 style="color: var(--navbar-bg-clr1);margin-bottom:5%">Notebook output</h4>
+            <p *ngIf="modelHistory.output" style="overflow:auto;height:150px;font-family: monospace;font-size:12px;">{{modelHistory.output | decodefrombase64}}</p>
+            <p *ngIf="!modelHistory.output" style="overflow:auto;height:150px;font-family: monospace;font-size:12px;">No cell output</p>
+        </div>
+    </div>
+</div>

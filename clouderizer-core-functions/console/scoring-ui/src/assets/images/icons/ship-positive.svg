@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="97px" height="73px" viewBox="0 0 97 73" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Slice 1</title>
+    <defs>
+        <linearGradient x1="50%" y1="100.000003%" x2="50%" y2="2.27087538e-15%" id="linearGradient-1">
+            <stop stop-color="#808080" stop-opacity="0.25" offset="0%"></stop>
+            <stop stop-color="#808080" stop-opacity="0.12" offset="53.514%"></stop>
+            <stop stop-color="#808080" stop-opacity="0.1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="undraw_Yacht_8g6r" transform="translate(3.000000, 3.000000)" fill-rule="nonzero">
+            <ellipse id="Oval" fill="url(#linearGradient-1)" cx="24.3529412" cy="15.3529412" rx="15.8823529" ry="14.2941176"></ellipse>
+            <ellipse id="Oval" fill="#FF5252" cx="23.8235294" cy="14.8235294" rx="14.2941176" ry="13.7647059"></ellipse>
+            <rect id="Rectangle" fill="#6C63FF" x="43.4117647" y="0" width="3.17647059" height="12.7058824"></rect>
+            <rect id="Rectangle" fill="#464353" x="26.4705882" y="10.5882353" width="39.1764706" height="19.0588235"></rect>
+            <g id="Group" opacity="0.5" transform="translate(27.529412, 14.823529)" fill="#6C63FF">
+                <rect id="Rectangle" x="0.0196560461" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="14.0575248" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="28.0953936" y="0" width="8.48331639" height="6.35294118"></rect>
+            </g>
+            <path d="M90,24.3529412 C90.0026041,33.6206245 85.8483621,42.5093903 78.45171,49.0626323 C71.0550578,55.6158742 61.022297,59.2964248 50.5618515,59.2941176 L3.17647059,59.2941176 L3.17647059,24.3529412 L90,24.3529412 Z" id="Path" fill="#464353"></path>
+            <path d="M90,24.3529412 C90.0012906,26.4863762 89.739388,28.6145834 89.2181861,30.7058824 L3.17647059,30.7058824 L3.17647059,24.3529412 L90,24.3529412 Z" id="Path" fill="#6C63FF"></path>
+            <path d="M80.4705882,47.6470588 C78.0181915,50.097099 75.1357334,52.2378684 71.9166139,54 L3.17647059,54 L3.17647059,47.6470588 L80.4705882,47.6470588 Z" id="Path" fill="#6C63FF"></path>
+            <g id="Group" opacity="0.5" transform="translate(4.235294, 36.000000)" fill="#6C63FF">
+                <rect id="Rectangle" x="0.0196560461" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="14.0575248" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="28.0953936" y="0" width="8.48331639" height="6.35294118"></rect>
+            </g>
+            <g id="Group" opacity="0.5" transform="translate(46.588235, 36.000000)" fill="#6C63FF">
+                <rect id="Rectangle" x="0.0196560461" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="14.0575248" y="0" width="8.48331639" height="6.35294118"></rect>
+                <rect id="Rectangle" x="28.0953936" y="0" width="8.48331639" height="6.35294118"></rect>
+            </g>
+            <rect id="Rectangle" fill="#6C63FF" x="0" y="58.2352941" width="76.2352941" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="0" y="59.2941176" width="28.5882353" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="20.1176471" y="62.4705882" width="28.5882353" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="45.5294118" y="63.5294118" width="28.5882353" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="79.4117647" y="58.2352941" width="4.23529412" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="50.8235294" y="59.2941176" width="4.23529412" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="6.35294118" y="62.4705882" width="4.23529412" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="56.1176471" y="62.4705882" width="4.23529412" height="3.17647059" rx="1.58823529"></rect>
+            <rect id="Rectangle" fill="#6C63FF" x="3.17647059" y="63.5294118" width="28.5882353" height="3.17647059" rx="1.58823529"></rect>
+            <path d="M46.2073955,0 C46.2073955,0 59.0890856,0.467128028 61.0261818,0 C61.0261818,0 59.7670693,2.33564014 61.0261818,3.73702422 C62.2852944,5.1384083 60.0576337,6.35294118 60.0576337,6.35294118 L45.5294118,6.35294118 L46.2073955,0 Z" id="Path" fill="#6C63FF"></path>
+        </g>
+    </g>
+</svg>

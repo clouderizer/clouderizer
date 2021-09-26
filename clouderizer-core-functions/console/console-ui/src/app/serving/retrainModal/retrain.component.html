@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">Retrain model</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="example-container">
+        <mat-form-field class="m-t-15" style="width:100%" appearance="outline">
+            <mat-label>Enter URL</mat-label>
+            <input matInput placeholder="Enter retrain URL" [(ngModel)]="retrainURL" required matInputAutofocus>
+            <mat-icon matSuffix>link</mat-icon>
+        </mat-form-field>
+    </div>
+</div>
+<div class="modal-footer"> 
+    <button type="button" class="btn btn-outline-primary" [disabled]="!retrainURL" (click)="retrain()">Submit</button>
+</div>

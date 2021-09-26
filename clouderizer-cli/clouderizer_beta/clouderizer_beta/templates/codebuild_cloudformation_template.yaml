@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Template creates Codebuild resources for a Clouderizer project
+Resources:
+  SamCodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: #PROJECT_NAME#
+      ServiceRole: !GetAtt CodeBuildIAMRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        PrivilegedMode: true
+      Source:
+        Type: S3
+        Location: clouderizer-serving-projects/#S3_PATH#
+      BadgeEnabled: false
+      LogsConfig:
+        CloudWatchLogs: 
+          Status: ENABLED
+        S3Logs:
+          Status: DISABLED
+          EncryptionDisabled: false
+      TimeoutInMinutes: 20
+  CodeBuildIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub 'codebuild-sam-full-access-${AWS::Region}'
+      Description: Provides Codebuild permission to access API GW, Lambda and Cloudformation
+      #Provide Codebuild permission to assume this role
+      AssumeRolePolicyDocument: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"codebuild.amazonaws.com"},"Action":"sts:AssumeRole"}]}
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+        - arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator
+        - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+        - arn:aws:iam::aws:policy/IAMFullAccess
+      Path: '/service-role/'
+      Policies:
+        - PolicyDocument: !Sub '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Resource":["arn:aws:logs:us-east-1:${AWS::AccountId}:log-group:/aws/codebuild/sam-python-hello-world","arn:aws:logs:us-east-1:${AWS::AccountId}:log-group:/aws/codebuild/sam-python-hello-world:*"],"Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"]},{"Effect":"Allow","Resource":["arn:aws:s3:::codepipeline-us-east-1-*"],"Action":["s3:PutObject","s3:GetObject","s3:GetObjectVersion","s3:GetBucketAcl","s3:GetBucketLocation"]},{"Effect":"Allow","Resource":["arn:aws:s3:::sam-artifacts-sou","arn:aws:s3:::sam-artifacts-sou/*"],"Action":["s3:PutObject","s3:GetBucketAcl","s3:GetBucketLocation"]},{"Effect":"Allow","Action":["codebuild:CreateReportGroup","codebuild:CreateReport","codebuild:UpdateReport","codebuild:BatchPutTestCases"],"Resource":["arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/sam-python-hello-world-*"]}]}'
+          PolicyName: !Sub 'codebuild-access-cloudwatch-s3-${AWS::Region}'

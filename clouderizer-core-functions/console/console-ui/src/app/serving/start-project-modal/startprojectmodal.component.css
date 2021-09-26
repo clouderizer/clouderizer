@@ -1,0 +1,51 @@
+.platform-text {
+  font-size: 18px;
+}
+
+.outer {
+  display: table;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /*whatever width you want*/
+}
+
+.instruction{
+  opacity:1;
+  font-family: Roboto,Noto Sans JP,sans-serif;
+  color: grey;
+}
+
+.curlLine{
+  font-family: 'Courier New';
+}
+
+.userInput{
+  outline:none;
+  width:90%;
+  font-family: courier;
+}
+
+.licenseText{
+  margin-top:2%;
+  font-size:13px;
+  margin:10px;
+  text-align:center;
+  font-family:Roboto,Noto Sans JP,sans-serif;
+  color:#53718f;
+}
+
+.lidisabled:hover {
+  background: white;
+}

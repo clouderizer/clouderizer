@@ -1,0 +1,9 @@
+input.email:focus, textarea {
+    outline: none !important;
+}
+h1{
+    font-size:1.5em;
+    background: linear-gradient(to right, #2c3e50, #fd746c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

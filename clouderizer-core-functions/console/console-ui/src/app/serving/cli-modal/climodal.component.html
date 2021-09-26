@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title" *ngIf="type=='cli'" id="modal-basic-title">CLI</h4>
+    <h4 class="modal-title" *ngIf="type=='api'" id="modal-basic-title">API url</h4>
+    <h4 class="modal-title" *ngIf="type=='stoplambda'" id="modal-basic-title">Stop project</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <img alt="commandline" src="assets/images/command-line2.svg" style="margin-top:2%;width:150px;margin-bottom:2%" />
+    <div *ngIf="type=='cli'" style="font-size:13px;opacity:0.7;margin-bottom: 5%">
+        Install Clouderizer CLI with pip. More info can be found <a href="https://docs.clouderizer.com/cli/setup/" target="_blank">here</a>
+    </div>
+    <div *ngIf="type=='api'" style="font-size:13px;opacity:0.7;margin-bottom: 5%">
+        Please use the below API endpoint to run your deployed notebook
+    </div>
+    <div *ngIf="type=='stoplambda'" style="font-size:13px;opacity:0.7;margin-bottom: 5%">
+        Please use the below command to stop your lambda project
+    </div>
+    <div style="display:flex;font-size:14px;font-family:monospace; margin-bottom:5%;">
+        <input *ngIf="type=='cli'" style="text-align:center" class="userInput" type="text" value="pip install clouderizer" readonly id="myInput" >
+        <input *ngIf="type=='api'" style="text-align:center" class="userInput" type="text" value="{{apiurl}}" readonly id="myInput" >
+        <input *ngIf="type=='stoplambda'" style="text-align:center" class="userInput" type="text" value="{{stoplambdacommand}}" readonly id="myInput" >
+        <div matTooltip="copy command" style="margin-left:2%;" [style.display]="msgHideAndShow ? 'none': 'block'" (click)="copyCommand()">
+            <svg class="copyIcon" style="width:20px;height:20px;cursor:pointer;" height="512pt" viewBox="-21 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m410.667969 405.332031h-245.335938c-32.363281 0-58.664062-26.300781-58.664062-58.664062v-288c0-32.363281 26.300781-58.667969 58.664062-58.667969h181.503907c21.058593 0 41.6875 8.535156 56.554687 23.445312l42.496094 42.496094c15.125 15.125 23.445312 35.222656 23.445312 56.574219v224.152344c0 32.363281-26.300781 58.664062-58.664062 58.664062zm-245.335938-373.332031c-14.699219 0-26.664062 11.96875-26.664062 26.667969v288c0 14.699219 11.964843 26.664062 26.664062 26.664062h245.335938c14.699219 0 26.664062-11.964843 26.664062-26.664062v-224.152344c0-12.820313-4.992187-24.871094-14.058593-33.941406l-42.496094-42.496094c-8.9375-8.957031-21.289063-14.078125-33.941406-14.078125zm0 0"></path><path d="m314.667969 512h-256c-32.363281 0-58.667969-26.304688-58.667969-58.667969v-341.332031c0-32.363281 26.304688-58.667969 58.667969-58.667969h10.664062c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16h-10.664062c-14.699219 0-26.667969 11.96875-26.667969 26.667969v341.332031c0 14.699219 11.96875 26.667969 26.667969 26.667969h256c14.699219 0 26.664062-11.96875 26.664062-26.667969v-10.664062c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v10.664062c0 32.363281-26.300781 58.667969-58.664062 58.667969zm0 0"></path><path d="m368 181.332031h-160c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h160c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"></path><path d="m368 245.332031h-160c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h160c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"></path><path d="m368 309.332031h-160c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h160c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"></path></svg>
+        </div>
+        <div style="margin-left:2%;" [style.display]="msgHideAndShow ? 'block': 'none'">
+            <svg class="tickIcon" style="width:20px;height:20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}.cls-2{fill:#23c87e;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+        </div>
+    </div>
+</div>

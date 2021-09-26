@@ -1,0 +1,6 @@
+FROM clouderizer/cldz-lambda-java-baseimage:semifinal
+
+USER app
+WORKDIR /home/app
+
+COPY function /home/app/function/

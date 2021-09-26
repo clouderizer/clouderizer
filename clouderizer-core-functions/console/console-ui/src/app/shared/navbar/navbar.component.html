@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <a class="navbar-brand">
+        <img alt="logo" width="170" src="assets/images/logos/Clouderizer_Logo_White.svg" />
+    </a>
+    
+    <div class="right-navbar">
+      <div matTooltip="Install CLI" (click)="openCLI()" style="display:flex;height:40px;cursor:pointer;padding-top:5px;padding-bottom:5px;padding-right:15px;border-right:1px solid #dbddff52">
+        <img alt="commandline" src="assets/images/command-line.svg" style="width:30px" />
+        <p style="font-size: 12px;color: white;line-height: 28px;margin-left: 5%;">CLI</p>
+      </div>
+      <div matTooltip="notifications" class="notification" *ngIf="listNotifications.length > 0">
+        <a class="nav-link notif-dropdown-toggle" data-toggle="dropdown" id="menu">
+          <mat-icon class="white-icon" matBadge="1">
+            notifications
+          </mat-icon>
+        </a>
+        <div class="dropdown-menu notif-dropdown-menu">
+          <div *ngFor="let n of listNotifications">
+            <div class="licenseText" >
+              {{n.message}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="userAdmin" style="height:40px;">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+            {{username}}
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="settings/profile" style="color:#100e17">My Profile</a>
+        </div>
+      </div> 
+      <div class="logout" (click)="onLogoutClick()">
+        Logout  <img alt="logout" src="assets/images/navbar/logout.svg" />
+      </div>   
+    </div>    
+</nav>

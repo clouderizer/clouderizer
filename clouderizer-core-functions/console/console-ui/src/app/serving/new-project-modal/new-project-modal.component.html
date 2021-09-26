@@ -1,0 +1,191 @@
+<div class="modal-header" style="width:600px">
+    <h4 class="modal-title" *ngIf="projectSelect">Serving Project details</h4>
+    <h4 class="modal-title" *ngIf="modelSelect">Select Model format</h4>
+    <h4 class="modal-title" *ngIf="modelUpload && !training">Upload Model file</h4>
+    <h4 class="modal-title" *ngIf="modelUpload && training">Upload jupyter notebook</h4>
+    <h4 class="modal-title" *ngIf="training && showdeps">Dependencies</h4>
+    <h4 class="modal-title" *ngIf="showother">Other files</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="width:600px">
+    <div class="example-container" *ngIf="projectSelect">
+        <mat-form-field class="m-t-15" appearance="outline">
+            <mat-label>Enter Project Name</mat-label>
+            <input matInput placeholder="ex. project1" [(ngModel)]="projectName" required matInputAutofocus>
+            <mat-icon matSuffix style="color:dimgrey">book</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="m-t-15" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="Description (optional)" [(ngModel)]="projectDescription">
+            <mat-icon matSuffix style="color:dimgrey">description</mat-icon>
+        </mat-form-field>
+        <div style="margin-top:2%" class="select-item">
+            <mat-radio-group style="flex-direction:row;justify-content: center;" [(ngModel)]="training" aria-labelledby="autoML" class="radio-group" required>
+                <mat-radio-button class="radio-button" [value]="false">
+                    Model  
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" [value]="true">
+                    Notebook
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div *ngIf="modelSelect && !training">
+        <div class="select-item">
+            <mat-radio-group [(ngModel)]="subtype" aria-labelledby="autoML" class="radio-group" required>
+                
+                <mat-radio-button class="radio-button" name="autoMLlist" ngDefaultControl [value]="'h2o.ai'">
+                    
+                    <a>AutoML Mojo models
+                        <div class="row"><p style="margin:10px" class="borderbox">H2O Driverless AI</p><p style="margin:10px" class="borderbox">H2O v3</p></div>
+                    </a>
+                    
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" name="autoMLlist" ngDefaultControl [value]="'pmml'">
+                    
+                    <a>PMML
+                        <div class="row"><p style="margin:10px" class="borderbox">Alteryx</p><p style="margin:10px;" class="borderbox">RapidMiner</p><p style="margin:10px;" class="borderbox">SaS</p><p style="margin:10px" class="borderbox">Dataiku</p></div>
+                    </a>
+                    
+                </mat-radio-button>
+                <mat-radio-button  class="radio-button" name="autoMLlist" ngDefaultControl [value]="'pythonscore'">
+                    
+                    <a>Python
+                        <div class="row"><p style="margin:10px" class="borderbox">Scikit-learn</p><p style="margin:10px" class="borderbox">Keras</p><p style="margin:10px" class="borderbox">Pytorch</p></div>
+                    </a>
+                </mat-radio-button>
+                <mat-radio-button [disabled]="true"  class="radio-button" name="autoMLlist" ngDefaultControl [value]="'onnx'">
+                    
+                    <a><p style="color:grey">ONNX [Coming soon...]</p>
+                        <div class="row"><p style="margin:10px" class="borderbox disabledType">Tensorflow</p><p style="margin:10px" class="borderbox disabledType">Pytorch</p></div>
+                    </a>
+                </mat-radio-button>
+                
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="droppableArea" *ngIf="modelUpload">
+        <h4 *ngIf="!training" class="m-t-15 modal-page"><a style="color: var(--navbar-bg-clr3);">Auto ML</a> 
+            > <a *ngIf="subtype === 'h2o.ai' || subtype === 'h2o' || subtype === 'dai'">AutoML Mojo Model</a>
+            <a *ngIf="subtype === 'pmml' || subtype === 'jpmml' || subtype === 'pmml4s'">PMML</a>
+            <a *ngIf="subtype === 'pythonscore'">Python</a>
+        </h4>
+
+        <div *ngIf= "!training" style="margin-top:2%">
+            <div *ngIf= "subtype === 'h2o.ai' || subtype === 'h2o' || subtype === 'dai'" class="card col-md-12 center uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">            
+                <input hidden type="file" accept=".zip" #fileInput (change)="fileUpload($event.target.files)">
+                <div  class="files-list" *ngFor="let file of files;let i=index">
+                    <p style="color: #20248c;">{{ file }}</p>    
+                </div>
+                <p class=center style="font-size:12px;" *ngIf="files.length == 0"> Drop your model file here!!</p>
+                <!-- <p class=center style="font-size:12px;" *ngIf="files.length > 0"> Now click on <b>Finish</b> and get going!!</p> -->
+            </div>
+            <div *ngIf= "subtype === 'pmml' || subtype === 'jpmml' || subtype === 'pmml4s'" class="card col-md-12 center uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">
+                <input hidden type="file" accept=".pmml" #fileInput (change)="fileUpload($event.target.files)">
+                <div  class="files-list" *ngFor="let file of files;let i=index">
+                    <p style="color: #20248c;">{{ file }}</p>    
+                </div>
+                <p class=center style="font-size:12px;" *ngIf="files.length == 0"> Drop your model file here!!</p>
+                <!-- <p class=center style="font-size:12px;" *ngIf="files.length > 0"> Now click on <b>Finish</b> and get going!!</p> -->
+            </div>
+            <div *ngIf= "subtype === 'pythonscore'" class="card col-md-12 center uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">
+                <input hidden type="file" #fileInput (change)="fileUpload($event.target.files)">
+                <div style="width:100%" class="files-list" *ngFor="let file of files;let i=index">
+                    <p style="color: #20248c;">{{ file }}</p>       
+                </div>
+                <p class=center style="font-size:12px;" *ngIf="files.length == 0"> Drop your model file here!!</p>
+                <!-- <p class=center style="font-size:12px;" *ngIf="files.length > 0"> Now click on <b>Finish</b> and get going!!</p> -->
+            </div>
+        </div>
+        <div *ngIf= "training" style="margin-top:2%;display:flex;flex-direction:row">
+            <div class="card col-md-12 center uploadfilecontainer" (click)="notebookInput.click()" appDragDrop (onFileDropped)="fileUpload($event)">
+                <input hidden type="file" accept=".ipynb" #notebookInput (change)="fileUpload($event.target.files)">
+                <div style="width:100%" class="files-list" *ngFor="let notebook of notebookfiles">
+                    <p style="color: #20248c;">{{ notebook }}</p>  
+                </div>
+                <p style="font-size:12px;" class=center *ngIf="notebookfiles.length == 0"> Drop your jupyter notebook here</p>
+            </div>
+        </div>
+        <div *ngIf="!training" style="font-size:12px;padding:0">
+            <p style="font-size: 12px;color: darkgray;margin-bottom: 2%;">Select your base image</p>
+            <mat-radio-group [(ngModel)]="imagetype" aria-labelledby="dockerimage" class="radio-group-row" required>
+                <mat-radio-button class="radio-button" [value]="'standard'" name="image" ngDefaultControl>
+                    Python3.8-standard
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" [value]="'tensorflow'" name="image" ngDefaultControl>
+                    Python3.8-tensorflow2.4  
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" [value]="'torch'" name="image" ngDefaultControl>
+                    Python3.8-torch1.7-fastai1.0
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="checkbox" *ngIf="subtype === 'pythonscore' && !projectExists && !training">
+            <mat-checkbox [(ngModel)]="timeSeries"><p style="font-size:13px;font-family:MontserratMedium">Is it a Time series model?</p></mat-checkbox>
+        </div>
+    </div>
+    <div *ngIf="training && showdeps" style="height:240px;display:flex">
+        <div *ngIf="showtextarea" class="col-md-6">
+            <p  style="text-align: center;font-size: 12px;color: darkgray;margin-bottom: 5%;">Add/Edit dependencies below</p>
+            <div class="card col-md-12 center" style="padding:0px;font-family:Arial">
+                <textarea style="resize:none; max-width:100%;border-radius:inherit;padding:10px;" placeholder="Enter dependencies here if any..." spellcheck="false" type="text" [(ngModel)]="requirements" class="control-label"></textarea>
+            </div>
+        </div>
+        <div class="col-md-5" *ngIf="showtextarea" style="font-size:12px;margin-left:7%">
+            <p style="font-size: 12px;color: darkgray;margin-bottom: 2%;">Select your base image</p>
+            <mat-radio-group [(ngModel)]="imagetype" aria-labelledby="dockerimage" class="radio-group" required>
+                <mat-radio-button class="radio-button" [value]="'standard'" name="image" ngDefaultControl>
+                    Python3.8-standard
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" [value]="'tensorflow'" name="image" ngDefaultControl *ngIf="requirements.includes('tensorflow')">
+                    Python3.8-tensorflow2.4  
+                </mat-radio-button>
+                <mat-radio-button class="radio-button" [value]="'torch'" name="image" ngDefaultControl *ngIf="requirements.includes('torch') || requirements.includes('torchvision') || requirements.includes('fastai')">
+                    Python3.8-torch1.7-fastai1.0
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div *ngIf="!showtextarea">
+            <ngx-spinner
+                name = "nbupload"
+                bdColor = "rgba(0,0,0,0)"
+                size = "default"
+                color = "#20248c"
+                type = "ball-clip-rotate-multiple"
+                [fullScreen] = "false">
+                <p style="padding-top:25px;color: #20248c;font-size: 12px;" >fetching dependencies...</p>
+            </ngx-spinner>
+        </div> 
+    </div>
+    
+    <div class="droppableArea" *ngIf= "showother">
+        <div style="margin-top:2%;display:flex;flex-direction:row">
+            <div style="overflow:auto;cursor:default" class="card col-md-12 center uploadfilecontainer" appDragDrop (onFileDropped)="otherfileUpload($event)">
+                <input hidden type="file" #otherInput (change)="otherfileUpload($event.target.files)">
+                
+                <div style="margin-bottom:10px;position:sticky;top:0"><b class="choosefile" (click)="otherInput.click()">Choose a file</b><b *ngIf="otherfiles.length == 0" style="margin-left:2%;color:grey">or drag it here</b></div>
+
+                <div style="display:flex;justify-content:center;width:100%;margin: 0px auto;" class="files-list" *ngFor="let other of otherfiles; let i = index">
+                    <p style="font-size:14px;color: #20248c;">{{ other }}</p>
+                    
+                    
+                    <div style="margin-left:2%"><i class="fa fa-close closepos" (click)="deleteFile(other, i)"></i></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="width:600px"> 
+    <button type="button" class="btn btn-outline-primary" *ngIf="(showother || (showdeps && showtextarea) || modelUpload || (modelSelect && !hideBackButton)) && (!updateModel || (training && !modelUpload) || (!training && showother))" (click)="GoBack()">Back</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="modelSelect || projectSelect" [disabled]="!projectName" (click)="updateProject()">Next</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="training && modelUpload && (requirements || updateModel)" [disabled]="!projectName" (click)="updateProject()">Edit dependencies</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="training && modelUpload && !showdeps" [disabled]="notebookfiles.length==0" (click)="uploadNotebook()">Upload</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="(!training && modelUpload) || (!training && showother)" [disabled]="(files.length==0 && otherfiles.length==0)" (click)="finishProject()">Finish</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="!training && modelUpload" (click)="updateProject()">Add other files</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="training && showdeps" [disabled]="!showtextarea" (click)="updateProject()">Add other files</button>
+    <button type="button" class="btn btn-outline-primary" *ngIf="(training && showdeps) || (training && showother)" [disabled]="!showtextarea" (click)="finishProject()">Finish</button>
+</div>

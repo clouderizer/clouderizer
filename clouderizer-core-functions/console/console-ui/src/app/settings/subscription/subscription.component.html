@@ -1,0 +1,90 @@
+            <div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="col-sm-12 row m-0 page-main-height">
+                    <div class="col-sm-12 row">
+                        <div class="pricingdiv">
+                            <ul [ngClass]="user.company.planName == 'freecloud' ? 'theplan selected' : 'theplan'">
+                                <li class="title">
+                                    <img alt="freeplan" src="assets/images/subscriptionplans/speedyplan.svg" />
+                                    <h4>Free Cloud License</h4>
+                                    <div class="priceTag">
+                                        <p class="grntxt-clr"><span>FREE </span></p>
+                                    </div>
+                
+                                </li>
+                                <li><b>NON COMMERCIAL USE </b> </li>
+                                <li>5 Projects</li>
+                                <li>1000 invocations / month</li>
+                                <li>100 CPU minutes / month</li>
+                                <li>Community Support</li>
+                                <li class="btn-item">
+                                    <button *ngIf="user.company.planName == 'freecloud'"
+                                        type="button" class="pricebutton btn btn-outline-primary disabled">
+                                        Active
+                                    </button>
+                                    <button *ngIf="!user.company.planName"
+                                        type="button" class="pricebutton btn btn-outline-primary" (click)="onSignupClick()">
+                                        Signup
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <ul [ngClass]="!user.company.planName ? 'theplan selected' : 'theplan'">
+                                <li class="title">
+                                    <img alt="freeplan" src="assets/images/subscriptionplans/speedyplan.svg" />
+                                    <h4>Open License</h4>
+                                    <div class="priceTag">
+                                        <p class="grntxt-clr"><span>FREE </span></p>
+                                    </div>
+                
+                                </li>
+                                <li><b>COMMERCIAL USE </b> </li>
+                                <li>OnPremise / Private Cloud hosting</li>
+                                <li>Unlimited Projects</li>
+                                <li>Unlimited invocations</li>
+                                <li>Community Support</li>
+                                <li class="btn-item">
+                                    <button *ngIf="!user.company.planName"
+                                        type="button" class="pricebutton btn btn-outline-primary disabled">
+                                        Active
+                                    </button>
+                                    <button *ngIf="user.company.planName == 'freecloud'"
+                                        type="button" class="pricebutton btn btn-outline-primary" (click)="openlicense()">
+                                        Get it from GitHub
+                                    </button>
+                                </li>
+                            </ul>
+                
+                            <ul class='theplan'>
+                                <li class="title">
+                                    <img alt="enterpriseplan" src="assets/images/subscriptionplans/robbieplan.svg" />
+                                    <h4>Enterprise License</h4>
+                                    <div class="priceTag">
+                                        <p class="grntxt-clr">
+                                            <span >Contact Us</span>
+                                        </p>
+                                    </div>
+                
+                                </li>
+                                <li><b>COMMERCIAL USE</b></li>
+                                <li>OnPremise / Private Cloud hosting</li>
+                                <li>Unlimited Projects</li>
+                                <li>Unlimited invocations</li>
+                                <li>GPU Support</li>
+                                <li>Endpoint security and encryption</li>
+                                <li>24/7 Phone, Email, Chat Support</li>
+                                <li class="btn-item">
+                                    <button 
+                                        type="button" class="pricebutton btn btn-outline-primary" (click)="iamInterested()">
+                                        I'm interested
+                                    </button>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>    
+            </div>

@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "clouderizer_beta"
+version = "0.2.11"
+description = ""
+authors = ["Clouderizer <rohan.kothapalli@clouderizer.com>"]
+include = ["operator_this.py","cldz_aws_lambda.py","dockerfiles/"]
+
+[tool.poetry.scripts]
+cldzb="clouderizer_beta.cldz_cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.5"
+fire = "^0.3.1"
+requests = "^2.7.0"
+coolname = "^1.1.0"
+prettytable = "^0.7.2"
+requirements-parser = "^0.2.0"
+PyJWT = "^1.7.0"
+pipreqs = "^0.4.0"
+"ruamel.yaml" = "^0.16.13"
+pyyaml = "^5.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

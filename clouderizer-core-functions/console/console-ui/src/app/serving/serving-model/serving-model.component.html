@@ -1,0 +1,156 @@
+<div class="col-sm-12 row m-0 p-t-15 p-b-15 p-l-0 p-r-0 topDashboardPanel">
+    <div class="servingsearchblock">
+        <input [(ngModel)]="searchProject" type="text" class="form-control" placeholder="search project(s)" />
+    </div>
+    <div class="rightSectionBtns">
+        <ul class="m-0">
+            <ul class="m-0 nav nav-tabs">
+                <!-- <li matTooltip="View allocated quota details" class="menu">
+                    <div style="cursor:pointer;" (click)="openquota()" class="freequota">
+                        Allocated Quota
+                    </div>
+                </li> -->
+                <li *ngIf="projectsLength > 0" matTooltip="Refresh projects" class="refesh-icn">
+                    <a (click)="loadprojects()">
+                        <span><img src="assets/images/dashboard/refresh.svg" /></span>
+                    </a>
+                </li>
+                <li *ngIf="projectsLength > 0" matTooltip="Create new project">                  
+                    <button type="button" class="btn btn-outline-primary" (click)="openPop()"><span style="font-size:18px" class="material-icons">
+                        add
+                    </span>New Project</button>                   
+                </li>
+            </ul>
+        </ul>
+    </div>
+</div>
+<div class="quotamessage" *ngIf="(inv_count > allocinvs || time_sum > allocexec)">
+    <img style="margin-right:5px;margin-top:6px;" src="assets/images/info.svg" width="12px" height="12px" /> 
+    <p style="margin-right:2px;">You have used</p>
+    <p style="margin-right:2px;" *ngIf="inv_count > allocinvs"> {{inv_count}} of {{allocinvs}} free requests and</p>
+    <p style="margin-right:2px;" *ngIf="time_sum > allocexec"> {{(time_sum/60) | tofixeddecimal}} min of 100 free execution time.</p>
+    <p>We have stopped all the running projects for now. Contact sales@clouderizer.com for more info.</p>
+</div>
+<div class="viewcontent" style="overflow:hidden;">
+    <!-- page-main-height -->
+<div class="col-sm-12 row m-0 page-main-height">
+    <div class="col-sm-12 row m-0 createnewProject" *ngIf="publicProjects && publicProjects.length>0">
+        <div class="grid">
+            <div class="item" *ngFor="let project of publicProjects">
+                <div class="projectItem">
+                    <i *ngIf="canmakePublic" class="fa fa-close closepos" (click)="removeProject(project)"></i>  
+                    <img *ngIf="project.bannerImage" src="https://clouderizerpublicprojects.s3.amazonaws.com/images/{{project.bannerImage.name}}"  width="150" height="100"/>
+                    <img *ngIf="!project.bannerImage" src="" width="150" height="100"/>                
+                    <h4>{{project.name}}</h4>
+                    <textarea readonly class="height">{{project.description}}</textarea>             
+                    <a class="anchor gradient" style="font-size:0.9em;" (click)="openPublicProject(project)">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="projectsLength==0" class="col-sm-12 text-center" style="margin-top:5%">
+        <img width="400px" src="assets/images/empty.png"/>
+        <h1 style="margin:2%;font-size:1.3em"> No projects created yet! </h1>
+        <h1 style="opacity:0.7; font-size:12px; margin-bottom:2%"> Create your first project </h1>
+        <button style="display:inline-flex;" type="button" class="btn btn-outline-primary" (click)="openPop()">
+            <span>Create</span>
+        </button>
+    </div>
+    <div *ngIf="projectsLength > 0" class="table-container serving-modeltable projectlist" [style.height]="publicProjects && publicProjects.length>0 ? 'calc(100vh - 400px)' : 'calc(100vh - 200px)'" (window:resize)="onResize($event)">
+        <table mat-table [dataSource]="dataSource | filter : searchProject">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="projectname">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Name </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <div class="headList" style="cursor: pointer;" (click)="onEditProject(element)">
+                        {{element.name}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Status </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <p class="status" *ngIf="element.status">
+                        <span class="dot-roundStatus green-status"
+                            *ngIf="element.status != 'Not Running' && element.status != 'Stopping'"></span>
+                        <span class="dot-roundStatus red-status"
+                            *ngIf="element.status == 'Not Running' || element.status == 'Stopping'"></span>
+                        {{element.status}}
+                    </p>
+                    <p *ngIf="!element.status"><span class="dot-roundStatus red-status"></span>Not Running</p>
+                </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="requests">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Requests </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <!-- {{element.requests}} -->
+                    {{element.function_invocation_count || 0}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="requesttime">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Total execution time(min) </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <!-- {{element.requests}} -->
+                    <!-- {{(parseFloat(element.function_time_sum_gpu)*6 + parseFloat(element.function_time_sum_highmemory)*3 + parseFloat(element.function_time_sum_standard))/60) || 0 | tofixeddecimal}} -->
+                    {{element | toTotal}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="thumbsup">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> <img src="assets/images/serving/Like_Icon_white.svg" width="25" /> </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    {{element.thumbs_up}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="thumbsdown">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center">  <img src="assets/images/serving/Dislike_Icon_white.svg" width="25" /> </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">               
+                    {{element.thumbs_down}}
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="buttons">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"></th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <div class="buttonsBlkList">
+                        <ul class="icn-btnlist">
+                            <li [class.disabled]="element.status != 'Running'" (click)="element.status == 'Running' && openServingUrl(element)"><span matTooltip="Showcase URL" class="violet-bg-clr"><img
+                                src="assets/images/serving/URL_1.svg" /></span>
+                            </li>
+                            <li (click)="onCopyProject(element)"><span matTooltip="Click to create a copy of this project" class="grn-bg-clr"><img
+                                src="assets/images/dashboard/copy.svg" /></span>
+                            </li>
+                            <li (click)="onRefreshProject(element)"><span matTooltip="Refresh" class="grn-bg-clr"><img
+                                        src="assets/images/dashboard/refresh.svg" /></span>
+                            </li>
+                            <li (click)="onEditProject(element)"><span matTooltip="Edit project details"  class="violet-bg-clr"><img
+                                        src="assets/images/dashboard/edit.svg" /></span>
+                            </li>
+                            <li (click)="onDeleteProject(element)"><span matTooltip="Delete project"  class="red-bg-clr"><img
+                                        src="assets/images/dashboard/delete.svg" /></span>
+                            </li>
+                            <li *ngIf="canmakePublic" (click)="makeProjectPublic(element)"><span matTooltip="Make this project public" class="grn-bg-clr"><img
+                                src="assets/images/dashboard/bus.svg" /></span>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div style="display:flex;justify-content:center;">
+            <mat-paginator style="position:absolute;background:lightblue;border-radius:10px;" class="mat-paginator-sticky" [length]="projectsLength" [pageSize]="pageSize" [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+</div>
+

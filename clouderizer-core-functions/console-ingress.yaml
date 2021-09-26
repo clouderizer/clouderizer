@@ -1,0 +1,18 @@
+apiVersion: openfaas.com/v1alpha2
+kind: FunctionIngress
+metadata:
+  name: console
+  namespace: openfaas-fn
+spec:
+  domain: "opensource.clouderizer.com"
+  function: "console"
+  ingressType: "nginx"
+  bypassGateway: true
+  tls:
+    enabled: true
+    issuerRef:
+      name: "letsencrypt-prod2"
+      # Change to ClusterIssuer if required
+      # https://docs.cert-manager.io/en/latest/reference/clusterissuers.html
+      # https://docs.cert-manager.io/en/latest/reference/issuers.html
+      kind: "Issuer"

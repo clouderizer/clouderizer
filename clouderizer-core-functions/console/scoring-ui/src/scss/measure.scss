@@ -1,0 +1,159 @@
+/*********************Defining class names for headers(h1,h2,h3,h4,h5,h6)**************************/
+/********************* Margins and paddings, widths and heights **************************/
+
+/*********** Widths Starts ****************/
+@for $i from 0 through 100 {
+  .w-#{$i} {
+    width: round(percentage($i/100));
+  }
+  .h-#{$i} {
+    height: round(percentage($i/100));
+  }
+  .w-#{$i}p {
+    width: #{$i}px;
+  }
+  .p-#{$i * 5} {
+    padding: #{$i * 5}px;
+  }
+  .p-l-#{$i * 5} {
+    padding-left: #{$i * 5}px;
+  }
+  .p-r-#{$i * 5} {
+    padding-right: #{$i * 5}px;
+  }
+  .p-t-#{$i * 5} {
+    padding-top: #{$i * 5}px;
+  }
+  .p-b-#{$i * 5} {
+    padding-bottom: #{$i * 5}px;
+  }
+
+  .m-#{$i * 5} {
+    margin: #{$i * 5}px;
+  }
+  .m-l-#{$i * 5} {
+    margin-left: #{$i * 5}px;
+  }
+  .m-r-#{$i * 5} {
+    margin-right: #{$i * 5}px;
+  }
+  .m-t-#{$i * 5} {
+    margin-top: #{$i * 5}px;
+  }
+  .m-b-#{$i * 5} {
+    margin-bottom: #{$i * 5}px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label {
+  font-weight: normal;
+}
+h1 {
+  font-size: 1.8em;
+}
+h2 {
+  font-size: 1.6em;
+}
+h3 {
+  font-size: 1.4em;
+}
+h4 {
+  font-size: 1.2em;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 0.857em;
+}
+
+p {
+  font-size: 1em;
+}
+span,
+label {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+
+/********user defined common classes*************/
+.cursor-pointer {
+  cursor: pointer;
+}
+.dflex {
+  display: flex;
+}
+.dflex- {
+  &Vcenter {
+    @extend .dflex;
+    align-items: center;
+  }
+  &Hcenter {
+    @extend .dflex;
+    justify-content: center;
+  }
+  &VHcenter {
+    @extend .dflex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.grn-brdr{
+ border:1px solid var(--span-grn-clr);
+}
+.grn-bg{
+  background: var(--span-grn-bg-clr);
+}
+
+.fontSize0875em{
+  font-size:0.875em;
+}
+.fontsize0-75{
+  font-size:0.75em;
+}
+.fontsize0-8{
+  font-size:0.8em;
+}
+.fontsize0-9{
+  font-size:0.9em;
+}
+.fontsize1em{
+  font-size:1em;
+}
+.fontsize1-1em{
+  font-size:1.1em;
+}
+.fontsize1-2em{
+  font-size:1.2em;
+}
+.fontsize1-4em{
+  font-size:1.4em;
+}
+.fontsize1-3em{
+  font-size:1.3em;
+}
+.fontsize1-5em{
+  font-size:1.5em;
+}
+.fontsize1-6em{
+  font-size:1.6em;
+}
+.fontsize1-7em{
+  font-size:1.7em;
+}
+.fontsize1-8em{
+  font-size:1.8em;
+}
+
+.ftsmbold{
+  font-family: "MontserratSemiBold";
+}
+/*************User defined common classes css ends*****************/

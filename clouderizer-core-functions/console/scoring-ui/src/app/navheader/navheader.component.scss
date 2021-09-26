@@ -1,0 +1,23 @@
+
+@media (min-width: 576px){
+.navbar-expand-sm .project{
+    flex-flow: row nowrap;
+    margin-left:35%;
+    color: lightgreen;
+}
+
+.navbar-expand-sm .logo{
+    flex-flow: row nowrap;
+    justify-content: flex-start !important;
+}
+}
+
+a{
+    color:white;
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color:white;
+}

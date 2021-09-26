@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo Entered the build phase ...
+      # - mkdir -p lambda-dir/function/asset/ &&  cp Dockerfile lambda-dir/ && cp #MODEL_NAME# lambda-dir/function/asset/model.file && cp projectConfig.json lambda-dir/function/ && cp template.yaml lambda-dir/template.yml
+      # - test -f requirements.txt && cp requirements.txt lambda-dir/function/ || echo No requirements txt
+      # - #PREDICT_FUNCTION#
+      # - #PREPROCESS_FUNCTION#
+      # - #POSTPROCESS_FUNCTION#
+      # - cd lambda-dir && ls
+      - sam build --use-container --region #AWS_REGION#
+      - sam deploy --template-file .aws-sam/build/template.yaml --stack-name #STACK_NAME# --region #AWS_REGION#  --capabilities CAPABILITY_IAM --image-repository #IMAGE_REPO#

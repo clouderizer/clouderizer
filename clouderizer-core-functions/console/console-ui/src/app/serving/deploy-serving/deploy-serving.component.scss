@@ -1,0 +1,93 @@
+table {
+  width: 100%;
+}
+
+tr.expanded-detail-row {
+  height: 0;
+}
+
+
+.example-element-detail {
+  overflow: hidden;
+  display : flex;
+}
+
+.table-container.userlist {
+  height: calc(100vh - 125px);
+}
+
+.viewcontent{
+  position: relative;
+}
+
+.dashboard{
+  overflow:hidden
+}
+
+.force-scroll {
+  overflow: auto;
+}
+
+.pullRight{
+  position: absolute;
+  top:10px;
+  right:20px;
+}
+
+.graphs{
+  .ItemBlk{
+      max-width: 33%;
+      width: 33%;
+      flex: 0 0 33%;
+  }
+}
+
+.errorBox{
+  background-color: #141e30;
+  border-radius: 0 0 4px 4px;
+  position:absolute;
+  top:0;
+  height:30px;
+  right:50%;
+  width:200px;
+  z-index:1;
+}
+
+
+.dependencies{
+  font-size: 13px;
+  line-height: 20px;
+  padding: 5px 7px;
+  color: #26aa5a;
+  margin-left:30px;
+}
+
+::ng-deep .mat-paginator-container{
+  justify-content: center !important;
+}
+
+.download-icn{
+  img {
+    width: 25px;
+  }
+}
+
+.rmse{
+  border: 1px solid red;
+  border-radius: 3px;
+  background: red;
+  color: white;
+  padding: 0 5px;
+  height: 30px;
+  line-height: 27px;
+}
+
+::ng-deep .mat-tooltip {
+  background-color: #141e30 !important;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}

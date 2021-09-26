@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="./jar_files/mojo2-runtime.jar"/>
+	<classpathentry kind="lib" path="./jar_files/java-json.jar"/>
+	<classpathentry kind="lib" path="./jar_files/h2o-genmodel.jar"/>
+	<classpathentry kind="lib" path="./jar_files/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/slf4j-simple-1.7.25.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/okio-1.13.0.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/WebSocket.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/commons-lang3-3.7.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/engine.io-client-1.0.0.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/json-20140107.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/json-org.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="../machineclient/lib/okhttp-3.9.1.jar"/>
+	<classpathentry kind="lib" path="./jar_files/asm-5.0.3.jar"/>
+	<classpathentry kind="lib" path="./jar_files/asm-analysis-5.0.3.jar"/>
+	<classpathentry kind="lib" path="./jar_files/asm-commons-5.0.3.jar"/>
+	<classpathentry kind="lib" path="./jar_files/asm-tree-5.0.3.jar"/>
+	<classpathentry kind="lib" path="./jar_files/asm-util-5.0.3.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jffi-1.2.15-native.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jffi-1.2.15.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-constants-0.9.9.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-enxio-0.17.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-ffi-2.1.4.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-posix-3.0.45.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-unixsocket-0.19.jar"/>
+	<classpathentry kind="lib" path="./jar_files/jnr-x86asm-1.0.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

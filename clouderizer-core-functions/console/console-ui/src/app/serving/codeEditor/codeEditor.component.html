@@ -1,0 +1,123 @@
+<div class="modal-header">
+    <h4 class="modal-title" *ngIf="type!='Predict'">{{type}} Code</h4>
+    <h4 class="modal-title" *ngIf="type=='Predict'">Prediction Code</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div style="text-align:center" *ngIf="user && user.jupyterStatus != 'Running'">
+        <p class="instruction">Please start your Jupyter Kernel to use the below code Editor. To do it, go to your machine, open a terminal and type the
+            following command. Make sure, you have docker installed and running.</p>
+        <br />
+        <input class="userInput" type="text" value="curl -s {{baseURL}}/givemepythontestenv/{{user.id}}| bash" readonly id="myInput" >
+        <button style="margin-bottom:2%;background:aliceblue;outline:none;height:calc(2em + 2px)" id="copy-button" title="Copy">  
+            <svg [style.display]="!msgHideAndShow ? 'inherit': 'none'" style="width:15px;height:15px;" (click)="copyCommand()" class="octicon octicon-clippy copy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg>
+            <svg [style.display]="msgHideAndShow ? 'inherit': 'none'" class="tickIcon" style="width:15px;height:15px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}.cls-2{fill:#23c87e;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+        </button>
+    </div>
+    <div class="saveUpload row" style="margin-top:2%">
+        <div class="row" style="width:45%;margin-left:2%;margin-right:5%">
+            <div class="topServingHead">
+                <div style="width:50%">
+                    <span *ngIf="user && user.jupyterStatus == 'Installing'" style="font-size:0.9em"><span class="dotGreen"></span> Installing packages...</span>
+                    <span *ngIf="user && user.jupyterStatus == 'Starting'" style="font-size:0.9em"><span class="dotGreen"></span> Starting Kernel...</span>
+                    <span *ngIf="user && user.jupyterStatus == 'Running'" style="font-size:0.9em"><span class="dotGreen"></span> Connected to Kernel</span>
+                    <span *ngIf="user && user.jupyterStatus == 'Not Running'" style="font-size:0.9em"><span class="dotRed"></span> Not Connected to Kernel</span>
+                </div>
+                <div class="rightsectionServingBtns">
+                    <ul>
+                        <li>
+                            <button id="save" [class.spinner]="saving" [disabled]="saveHideAndShow || saving || projectType == 'public'" type="button" class="btn btn-outline-primary d-inline-flex" (click)="saveCode()">
+                                <p [style.display]="!saveHideAndShow && !saving ? 'inherit': 'none'">
+                                    <img alt="save" src="assets/images/serving/Save_2.svg" />Save
+                                </p>
+                                <p style="margin-left:15px" [style.display]="saving ? 'inherit': 'none'">
+                                    Saving..
+                                </p>
+                                <p [style.display]="saveHideAndShow ? 'inherit': 'none'">
+                                    <svg class="tickIcon" style="width:17px;height:17px;margin-right:5px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}.cls-2{fill:#23c87e;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+                                    Saved
+                                </p>
+                            </button>
+
+                        </li>
+                        <li>
+                            <button id="upload" [class.spinner]="uploading" [disabled]="uploadHideAndShow || uploading || projectType == 'public'" type="button" class="btn btn-outline-primary d-inline-flex" (click)="uploadCode()">
+                                <p [style.display]="!uploadHideAndShow && !uploading ? 'inherit': 'none'">
+                                    <svg style="width:17px;height:17px;margin-right:5px" height="512pt" viewBox="0 -24 512.00046 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m413.492188 128.910156c-17.292969-86.765625-101.648438-143.082031-188.414063-125.789062-63.460937 12.648437-113.082031 62.238281-125.769531 125.691406-61.519532 7.089844-105.648438 62.707031-98.5625 124.230469 6.523437 56.621093 54.480468 99.339843 111.476562 99.300781h80.09375c8.847656 0 16.019532-7.171875 16.019532-16.019531 0-8.847657-7.171876-16.019531-16.019532-16.019531h-80.09375c-44.238281-.261719-79.882812-36.332032-79.625-80.566407.261719-44.234375 36.332032-79.882812 80.570313-79.625 8.164062.003907 15.023437-6.140625 15.921875-14.253906 8.132812-70.308594 71.722656-120.710937 142.03125-112.578125 59.109375 6.839844 105.738281 53.464844 112.574218 112.578125 1.34375 8.257813 8.5 14.308594 16.867188 14.253906 44.238281 0 80.097656 35.859375 80.097656 80.097657 0 44.234374-35.859375 80.09375-80.097656 80.09375h-80.09375c-8.847656 0-16.019531 7.171874-16.019531 16.019531 0 8.847656 7.171875 16.019531 16.019531 16.019531h80.097656c61.925782-.386719 111.816406-50.898438 111.433594-112.828125-.351562-56.394531-42.53125-103.753906-98.507812-110.605469zm0 0"/><path d="m313.019531 287.464844c6.148438 6.367187 16.289063 6.542968 22.652344.394531 6.363281-6.144531 6.539063-16.285156.394531-22.648437-.128906-.136719-.261718-.265626-.394531-.394532l-67.9375-67.953125c-6.246094-6.265625-16.390625-6.277343-22.65625-.03125-.007813.011719-.019531.019531-.027344.03125l-67.9375 67.953125c-6.363281 6.144532-6.539062 16.285156-.394531 22.648438 6.148438 6.363281 16.289062 6.539062 22.652344.394531.132812-.128906.265625-.261719.394531-.394531l40.609375-40.625v201.617187c0 8.847657 7.171875 16.019531 16.019531 16.019531 8.84375 0 16.015625-7.171874 16.015625-16.019531v-201.617187zm0 0"/></svg>
+                                    Upload code
+                                </p>
+                                <p style="margin-left:15px" [style.display]="uploading ? 'inherit': 'none'">
+                                    Uploading..
+                                </p>
+                                <p [style.display]="uploadHideAndShow ? 'inherit': 'none'">
+                                    <svg class="tickIcon" style="width:17px;height:17px;margin-right:5px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}.cls-2{fill:#23c87e;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+                                    Uploaded
+                                </p>
+                            </button>
+                        </li>                
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="width:45%;margin-left:1%;margin-right:2%">
+            <p style="margin-left:48%;margin-top:1.5%">Output</p>
+        </div>
+    </div>
+    <pre id="code" data-executable="true" data-language="python"></pre>
+   <!-- <pre id="install" data-executable="true" data-language="python"></pre> -->
+     <!-- <button id="activateButton"  (click)="clickThebe()" style="width: 150px; height: 75px; font-size: 1.5em;">Activate</button> -->
+    
+    <mat-form-field appearance="outline" class="matchip">
+                                
+        <mat-chip-list #chipListEnum [(ngModel)]="packages">
+                
+            <mat-chip *ngFor="let item of packages"
+                    color="primary"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(item)">
+                {{item}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input class="inputItem" placeholder="Add pip package(s)"
+                [matChipInputFor]="chipListEnum"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" matInput
+            >
+        </mat-chip-list>
+    </mat-form-field>
+    <button *ngIf="!installing" type="button" [matTooltip]="user && user.jupyterStatus != 'Running' ? 'Kernel is not running': ''" [disabled]="user && user.jupyterStatus != 'Running' || projectType == 'public'" style="margin-left:2%" class="btn btn-outline-primary d-inline-flex" (click)="install()">
+        <mat-icon style="font-size:18px;height:12px;margin-right:10%" matPrefix>system_update_alt</mat-icon>Install
+    </button>
+    <button [class.spinner]="installing" *ngIf="installing" [disabled]="true" type="button" style="margin-left:2%" class="btn btn-outline-primary d-inline-flex">
+        <p style="margin-left:15px">
+            Installing..
+        </p>
+    </button>
+    <div *ngIf="uninstalling" style="z-index:10;position:absolute;top:0;left:45%;width:200px">
+        <div class="row uninstall"><p style="margin-left:10px;" [class.spinner]="true"></p><p style="margin-left:20px">UNINSTALLING PACKAGE</p></div>
+    </div>
+    <div *ngIf="running" style="z-index:10;position:absolute;top:0;left:45%;width:90px">
+        <div class="row uninstall"><p style="margin-left:10px;" [class.spinner]="true"></p><p style="margin-left:15px">EXECUTING</p></div>
+    </div>
+    
+</div>
+<div class="menu" style="position:absolute;bottom:0;right:0;width:200px">
+    <div class="dependencies">PROJECT DEPENDENCIES</div>
+    <ul class="list">
+        <li *ngFor="let package of pipPackages; let i=index" (mouseover)="hover[i]=true" (mouseleave)="hover[i]=false">{{ package }}
+            <i class="fa fa-close" *ngIf="package != 'None installed yet'" [style.display]="hover[i]==true ? 'block' : 'none'" style="color:grey;float:right;margin-left:auto;cursor:pointer;width:17px;height:17px" (click)="uninstall(package)"></i>
+        </li>
+    </ul>
+</div>
+
+<!-- <script>
+    var bootstrapThebe = function() {
+        thebelab.bootstrap();
+    }
+    
+    document.querySelector("#activateButton").addEventListener('click', bootstrapThebe)
+</script> -->

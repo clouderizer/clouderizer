@@ -1,0 +1,6 @@
+# os-playground
+**/.DS_Store
+clouderizer-core-functions/console-config-beta.js
+clouderizer-core-functions/console-config-prod.js
+clouderizer-cli/clouderizer/dist/*
+clouderizer-cli/clouderizer_beta/dist/*

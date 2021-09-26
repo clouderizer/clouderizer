@@ -1,0 +1,139 @@
+
+.advanceBox{
+  box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.21);
+  border-radius: 6px;
+  background-color: #fff;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  padding-bottom: 10px;
+}
+
+.advanceContent{
+  height:210px;
+  border-bottom: solid 1px rgba(219, 221, 255, 0.5);
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px;
+  margin-left: 5px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+.advanceContent2{
+  margin-top:auto;
+  margin-bottom:auto;
+  text-align:initial;
+  border-right: solid 1px rgba(219, 221, 255, 0.5);
+  p:nth-child(1){
+    font-size:13px;
+    margin-bottom:1%;
+  }
+  p:nth-child(3){
+    font-size:10px !important;
+  }
+  button{
+    margin-left:2%;
+    vertical-align:text-top;
+  }
+  label{
+    font-size: 12px;
+    font-family: MontserratRegular;
+    color:#414141;
+    background-color: #f7f6fc;
+    border-radius: 4px;
+    border: solid 0.5px #979797;
+    width:300px;
+    height:40px;
+  }
+
+}
+
+.uploadButton{
+  height: 32px;
+  border-radius: 3px;
+  border: solid 1px #23c87e;
+  background-color: #f7f6fc;
+  font-family: MontserratSemiBold;
+  font-size:12px;
+  line-height:32px;
+  margin-left:3%;
+  margin-top:auto;
+  margin-bottom:auto;
+  cursor: pointer;
+  span.uploadText{
+    color:#414141;
+    float:right; 
+    margin-right:10%;
+    font-size:12px;
+    margin-left:10%;
+  }
+  span.uploadImg{
+    background-image: url('../../../assets/images/image_upload_dark.svg');
+    margin-left:auto;
+    margin-top:auto;
+    margin-bottom:auto;
+    width:14px;
+    height:14px;
+  }
+  svg{
+    width:12px;
+    height:12px;
+    position:relative;
+    top: 10px;
+    margin-left:7%; 
+    margin-right:2%;
+    fill: #23c87e;
+    .cls-2{fill:#23c87e;}
+  }
+}
+
+.uploadButton:hover{
+  background-color: #23c87e;
+  span.uploadImg{
+    background-image: url('../../../assets/images/image_upload_white.svg');
+  }
+  span.uploadText{
+    color:#fff;
+  }
+  svg{
+    fill:#fff;
+    .cls-2{fill:#fff;}
+  }
+  
+}
+
+.imageContent{
+  margin:auto;
+}
+
+.checkbox{
+  text-align: left;
+  margin:2% 1% 0 6%;
+}
+
+.retrainInput{
+  font-size: 12px;
+  font-family: MontserratRegular;
+  color: #000;
+  background-color: #f7f6fc;
+  border-radius: 4px;
+  border: .5px solid #979797;
+  width: 500px;
+  height: 40px;
+  padding: 8px;
+  margin-bottom:2%;
+}
+

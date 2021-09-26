@@ -1,0 +1,200 @@
+
+<div class="col-sm-12 row p-t-15 p-b-15 p-l-0 p-r-0 m-0 h-100">
+            
+    <div class="viewcontent h-100">
+       
+<div class="row">
+    <h4 style="padding: 10px 50px 5px; font-size: 12px" class="title-page"><a [routerLink]="['/serving/model']" style="color: var(--navbar-bg-clr1);">Serving Model List</a> > <a [routerLink]="['/serving/new']" [queryParams]="{name: projectName, id: projectId, type: projectType}" style="color: var(--navbar-bg-clr1);">{{ projectName }}</a> > Invocations</h4>
+    <div class="rightSectionBtns pullRight">
+        <ul class="m-0">
+            <ul class="m-0 nav nav-tabs">
+                
+                <li class="refesh-icn">
+                    <a matTooltip="Refresh invocation history" (click)="onRefresh()">
+                        <span><img alt="refresh" src="assets/images/dashboard/refresh.svg" /></span>
+                    </a>
+                </li>
+                <li class="error-icn" *ngIf="errorTypes">                  
+                    <button style="align-items:center" type="button" (click)="errorMetrics()" class="btn btn-outline-primary d-inline-flex">
+                        <mat-icon style="margin-right:5px;font-size:24px;height:24px;" matPrefix>insert_chart_outlined</mat-icon>Error Metrics
+                    </button>
+                </li>
+                <li *ngIf="timeSeries" class="error-icn">                  
+                    <button matTooltip="Upload real data that you have" type="button" (click)="uploadActual()" class="btn btn-outline-primary d-inline-flex">
+                        <img alt="upload" src="assets/images/serving/upload_analytics.svg" />Upload Real values
+                    </button>
+                </li>
+
+                <li class="download-icn" *ngIf="!timeSeries">                  
+                    <button matTooltip="Download analytics data" type="button" (click)="downloadCSV()" class="btn btn-outline-primary d-inline-flex">
+                        <img alt="download" style="width: 17px;" src="assets/images/serving/download_analytics.svg" />Download CSV
+                    </button>
+                </li>
+            </ul>
+        </ul>
+    </div>
+    
+</div>
+<div class="col-sm-12 row m-0 page-main-height dashboard">
+    <div *ngIf="protype=='prediction'" class="col-sm-12 row graphs" style="margin:4% 2% 2% 2%">
+        <div class="col-sm-4 ItemBlk">
+            <apx-chart
+                [series]="series"
+                [chart]="chart"
+                [dataLabels]="dataLabels"
+                [markers]="markers"
+                [title]="title"
+                [fill]="fill"
+                [theme]="theme"
+                [yaxis]="yaxis"
+                [xaxis]="xaxis"
+                [tooltip]="tooltip"
+                [autoUpdateSeries]="true"
+                [legend]="legend"
+                [stroke]="stroke"
+            ></apx-chart>
+        </div>
+        <div class="col-sm-4 ItemBlk">
+            <apx-chart
+                [series]="series2"
+                [chart]="chart"
+                [theme]="theme2"
+                [dataLabels]="dataLabels"
+                [markers]="markers"
+                [title]="title2"
+                [fill]="fill"
+                [yaxis]="yaxis2"
+                [xaxis]="xaxis"
+                [tooltip]="tooltip"
+                [autoUpdateSeries]="true"
+                [legend]="legend"
+                [stroke]="stroke"
+            ></apx-chart>
+        </div>
+        <div class="col-sm-4 ItemBlk">
+            <apx-chart
+                [series]="series3"
+                [chart]="chart"
+                [theme]="theme3"
+                [dataLabels]="dataLabels"
+                [markers]="markers"
+                [title]="title3"
+                [fill]="fill"
+                [yaxis]="yaxis3"
+                [xaxis]="xaxis"
+                [tooltip]="tooltip"
+                [autoUpdateSeries]="true"
+                [legend]="legend"
+                [stroke]="stroke"
+            ></apx-chart>
+        </div>
+    </div>
+    <div [style.height]="protype == 'training' ? 'calc(100vh - 200px)' : 'calc(100vh - 400px)'" class="table-container historyTable modelHistory" [style.margin-top]="protype == 'training' ? '2%' : '0'" (window:resize)="onResize($event)">
+        <table class="force-scroll" mat-table [dataSource]="modelHistory" multiTemplateDataRows>
+           
+            <ng-container matColumnDef="timestamp">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">
+                    <p *ngIf="protype == 'prediction'">Prediction made at</p>
+                    <p *ngIf="protype == 'training'">Notebook run at</p>
+                </th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">{{item.timestamp | date:'MMM d, y h:mm:ss a Z'}}</td>
+            </ng-container>
+            
+            <ng-container *ngIf="protype=='prediction'" matColumnDef="input">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Input</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <div class="tagslist">
+                        
+                        <span class="violettxt-clr">Input fields <label>({{ item && item.input ? item.input.length : 0}})</label></span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='training'" matColumnDef="inputfiles">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Input</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <div class="tagslisttraining">
+                        
+                        <span class="violettxt-clr">Input <label>({{ item && item.inputFiles ? item.inputFiles.length : 0 }})</label></span>
+                    </div>
+                </td>
+            </ng-container>
+           
+            <ng-container *ngIf="protype=='prediction'" matColumnDef="output">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Output</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <div class="tagslist">
+                        
+                        <span class="violettxt-clr">Output fields <label>({{ item && item.output ? item.output.length : 0 }})</label></span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='training'" matColumnDef="outputfiles">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Output</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <div class="tagslisttraining">
+                        <span class="violettxt-clr">Output <label>({{ item && item.outputFiles ? item.outputFiles.length : 0 }})</label></span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='prediction'" matColumnDef="responsetime">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Response Time</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center"> 
+                    <p *ngIf="item.output.predictionResult != 'Failed'">{{item.responseTime.toString().slice(0,6)}}ms</p>
+                    <p *ngIf="item.output.predictionResult == 'Failed'">-</p>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='prediction'" matColumnDef="feedback">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Feedback</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <button *ngIf="item.feedback==true && item.output.predictionResult != 'Failed'" class="mdc-icon-button material-icons" style="width:25px;opacity:0.8;color:#23c87e;outline:none;background:transparent;pointer-events:none;border-color:transparent;">thumb_up</button>      
+                    <button *ngIf="item.feedback==false && item.output.predictionResult != 'Failed'" class="mdc-icon-button material-icons" style="width:25px;opacity:0.8;color:#ff4141;outline:none;background:transparent;pointer-events:none;border-color:transparent;">thumb_down</button>                        
+                    <p *ngIf="item.feedback==undefined || item.output.predictionResult == 'Failed'">-</p>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='prediction'" matColumnDef="prediction">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Status</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center"> 
+                    <p *ngIf="item.output.predictionResult == 'Failed'" style="color:#ff4141">{{item.output.predictionResult}}</p>
+                    <p *ngIf="item.output.predictionResult == 'Success'" style="color:#23c87e">{{item.output.predictionResult}}</p>
+                    <p *ngIf="!item.output.predictionResult" style="color:#23c87e"> Success </p>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='training'" matColumnDef="prediction">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Status</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center"> 
+                    <p *ngIf="item.status == 'Failure'" style="color:#ff4141">Failed</p>
+                    <p *ngIf="item.status == 'Success'" style="color:#23c87e">Success</p>
+                    <p *ngIf="item.status == 'Executing'" style="color:orange">In progress</p>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="protype=='training'" matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center">Time taken(seconds)</th>
+                <td mat-cell *matCellDef="let item" style="text-align: center"> 
+                    <p *ngIf="item.duration">{{item.duration | tofixeddecimal}}</p>
+                    <p *ngIf="!item.duration">-</p>
+                </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="moredetails">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center"></th>
+                <td mat-cell *matCellDef="let item" style="text-align: center">
+                    <span class="moredetails" (click)="openPop(item)">More details<img alt="arrowright" src="assets/images/arrow_right_violet.svg" /></span>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay2; sticky: true"></tr>
+            <tr mat-row *matRowDef="let item; columns: columnsToDisplay2;"></tr>                  
+        </table>
+        <mat-paginator class="mat-paginator-sticky" [length]="modelHistoryLength" [pageSize]="pageSize" [pageSizeOptions]="[8, 12, 20, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+</div>
+</div>

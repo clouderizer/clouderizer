@@ -1,0 +1,14 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: https://serverless.clouderizer.com
+functions:
+  docs:
+    lang: dockerfile
+    handler: .
+    image: clouderizer/docs:first
+    secrets:
+    environment:
+        read_timeout: 1m
+        write_timeout: 1m
+        exec_timeout: 1m

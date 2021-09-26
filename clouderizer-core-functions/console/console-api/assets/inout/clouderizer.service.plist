@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>EnvironmentVariables</key>
+    <dict>
+           <key>PATH</key>
+           <string>@PATH@</string>
+           <key>CONDA_ENV_NAME</key>
+           <string>@CONDA_ENV_NAME@</string>
+           <key>BASE_URL</key>
+           <string>@BASE_URL@</string>
+    </dict>
+    
+    <key>WorkingDirectory</key>
+    <string>@HOME_DIR@</string>
+    <key>Label</key>
+    <string>clouderizer.service</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/java</string>
+        <string>-jar</string>
+        <string>clouderizer.jar</string>
+        <string>@PROJECT_KEY@</string>
+    </array>
+    <key>StandardOutPath</key> 
+    <string>/tmp/clouderizer.stdout</string>
+    <key>StandardErrorPath</key> 
+    <string>/tmp/clouderizer.stderr</string>
+</dict>
+</plist>

@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Copy Project</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div>
+        <div class="form-group">
+            <label class="control-label">
+                New Project Name
+                <span class="star">*</span>
+            </label>
+            <input class="form-control" type="text" name="name" [(ngModel)]="projectname"
+                placeholder="ex: MyProject1" />
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+
+    <button (click)="closeModal(false)" type="button" class="btn btn-outline-danger m-r-10">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="copy()">Create Copy</button>
+</div>

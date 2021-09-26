@@ -1,0 +1,67 @@
+
+<div class="row">
+    <h4 class="title-page" style="margin-left:1%; margin-top:10px;">User List</h4>
+    <div class="btn-toolbar" style="margin-left:77%; margin-top:10px;margin-bottom: 10px;">
+        <button class="btn btn-outline-primary" (click)="onInviteUser()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>
+            Invite User
+        </button>
+    </div>
+</div>
+<div class="col-sm-12 row m-0 page-main-height">
+    <div class="table-container userlist">
+        <table mat-table [dataSource]="userList">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="slno">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center"> S.No. </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    <div class="slno">
+                        <span>{{ i+1 }}</span>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Delete </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="delete-icn" (click)="onDelete(element)">
+                        <span class="red-bg-clr"><img alt="delete" src="assets/images/dashboard/delete.svg" /></span>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="enable">
+                <th mat-header-cell *matHeaderCellDef  style="text-align: center"> Enable / Disable User's account </th>
+                <td mat-cell *matCellDef="let element"  style="text-align: center">
+                    <div class="checkbox-enable">
+                        <mat-checkbox [(ngModel)]="element.active" (change)="onActiveClick(element)"></mat-checkbox>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

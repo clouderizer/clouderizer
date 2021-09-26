@@ -1,0 +1,18 @@
+[Unit]
+Description=Clouderizer Agent
+After=syslog.target
+After=network.target
+
+[Service]
+WorkingDirectory=/usr/share/java/clouderizer
+ExecStart=/usr/bin/java -jar /usr/share/java/clouderizer/clouderizer.jar #PROJECT_KEY#
+User=#USER#
+SuccessExitStatus=143
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=clouderizer
+Restart=on-failure
+EnvironmentFile=#ENV_FILE#
+
+[Install]
+WantedBy=multi-user.target

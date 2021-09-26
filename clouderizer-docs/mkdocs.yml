@@ -1,0 +1,160 @@
+site_name: Clouderizer Documentation
+site_url: https://docs.clouderizer.com
+site_author: Clouderizer Team
+site_description: Clouderizer is an end to end MLOps platform for businesses. It helps teams build, deploy, manage AI / ML models in production environmnet.
+#theme_dir: 'theme_overrides'
+
+pages:
+    - Overview: index.md
+    - Showcase: 
+        - 'Introduction': showcase/introduction.md
+        - 'Quick Start': showcase/quickstart.md
+        - Upload:
+            - 'Create Project': showcase/uploadmodels/createproject.md
+            - 'Configure': showcase/uploadmodels/configure.md
+            - 'Preprocessing': showcase/uploadmodels/preprocessing.md
+            - 'Prediction': showcase/uploadmodels/prediction.md
+            - 'Postprocessing': showcase/uploadmodels/postprocessing.md
+            - 'Debugging Setup': showcase/uploadmodels/debuggingsetup.md
+        - Deploy: 
+            - 'Deploy': showcase/deploymodels.md
+            # - 'AWS': showcase/deploymodels/aws.md
+            # - 'GCP': showcase/deploymodels/gcp.md
+            # - 'Ubuntu': showcase/deploymodels/ubuntu.md
+            # - 'Mac': showcase/deploymodels/mac.md
+        - Invoke:
+            - 'RESTful APIs': showcase/scoremodels/restfulapis.md
+                # - '/predict': showcase/scoremodels/restfulapis/predict.md
+                # - '/feedback': showcase/scoremodels/restfulapis/feedback.md
+            - Scoring UI:
+                - 'Introduction': showcase/scoremodels/scoringui/introduction.md
+                - 'Form based Scoring': showcase/scoremodels/scoringui/formbasedscoring.md
+                - 'Bulk Scoring': showcase/scoremodels/scoringui/bulkscoring.md
+                - 'Customizations': showcase/scoremodels/scoringui/customizations.md
+                    # - 'Banner': showcase/scoremodels/scoringui/customizations/banner.md
+                    # - 'Output Icons': showcase/scoremodels/scoringui/customizations/outputicons.md
+        - Manage:
+            - 'Monitor Notebooks': showcase/managemodels/monitornotebooks.md
+            - 'Monitor Models': showcase/managemodels/monitormodels.md
+            # - 'Trigger Re-training': showcase/managemodels/triggerretraining.md
+            - 'Update Notebooks': showcase/managemodels/updatenotebooks.md
+            - 'Update Models': showcase/managemodels/updatemodels.md
+            # - 'Model Versions': showcase/managemodels/modelversions.md
+    
+    # - Workspace:
+    #     - 'Introduction': workspace/introduction.md
+    #     - Create Projects:
+    #         - 'Overview': workspace/projects/overview.md
+    #         - Code:
+    #             - 'Git': workspace/projects/code/git.md
+    #             - 'URL': workspace/projects/code/url.md
+    #         - Dataset:
+    #             - 'URL': workspace/projects/dataset/url.md
+    #             - 'Kaggle': workspace/projects/dataset/kaggle.md
+    #         - Dependency Packages:
+    #             # - 'requiremnets.txt': projects/dependency/requirements.txt.md
+    #             - 'Apt': workspace/projects/dependency/apt.md
+    #             - 'Pip': workspace/projects/dependency/pip.md
+    #         - Scripts:
+    #             - 'Setup' : workspace/projects/scripts/setup.md
+    #             - 'Startup' : workspace/projects/scripts/startup.md
+    #     # - Running Projects:
+    #     #     #- 'Colab': workspace/running_projects/colab.md
+    #     #     # - 'Kaggle': running_projects/kaggle.md
+    #     #     - 'AWS': workspace/running_projects/aws.md
+    #     #     - 'GCP': workspace/running_projects/gcp.md
+    #     #     - 'Ubuntu': workspace/running_projects/ubuntu.md
+    #     #     - 'Mac': workspace/running_projects/mac.md
+    #     - Data:
+    #         - 'Project Folders': workspace/data/project_folders.md
+    #         # - 'Accessing Data': data/accessing_data.md
+    #         - 'Sync to Google Drive': workspace/data/sync_to_googledrive.md
+    # - Advanced Setup:
+    #     - 'AWS': advanced_setup/aws.md
+    #     - 'GCP': advanced_setup/gcp.md
+
+    - CLI:
+        - Setup: cli/setup.md
+        - cldz deploy: cli/deploy.md
+        - cldz update: cli/update.md
+        - cldz start: cli/start.md
+        - cldz stop: cli/stop.md
+        - cldz ls: cli/ls.md
+        - cldz describe: cli/describe.md
+        - cldz delete: cli/delete.md
+        - Miscellaneous: cli/miscellaneous.md
+
+    # - Get Started:
+    #     # - 'How Clouderizer Works': getstarted/how_works.md
+    #     - 'Google Drive Setup': getstarted/gdrive_setup.md
+    #     - 'Quick Start': getstarted/quick_start.md 
+theme: 
+  name: material
+  logo: 'img/logo.png'
+  favicon: 'img/favicon.ico'
+  # Don't include MkDocs' JavaScript
+  include_search_page: false
+  search_index_only: true
+
+  # Default values, taken from mkdocs_theme.yml
+  language: en
+  features:
+    # - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+  palette:
+    scheme: default
+    primary: indigo
+    accent: indigo
+  font:
+    text: Roboto
+    code: Roboto Mono
+  
+google_analytics:
+  - UA-113348927-1
+  - auto
+extra:
+  # Use this to make a section open by default in the sidebar. These names have
+  # to match the titles in the `pages` section above. If a child section is
+  # defaulted to open, but its parent is not, the parent will be closed, but
+  # when you open the parent, the child will be open
+  nav_items_open_by_default:
+    - Showcase
+    - Advanced Setup
+  # palette:
+  #   primary: 'blue'
+  #   accent: 'blue'
+  #   extra:
+  #logo: 'img/logo.png'
+  font: false
+  #   text: 'Roboto'
+  #   code: 'Source Code Pro'
+markdown_extensions:
+    - admonition
+    - codehilite
+    - footnotes
+    - toc:
+        permalink: true
+    - pymdownx.arithmatex
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.emoji:
+        emoji_generator: !!python/name:pymdownx.emoji.to_svg
+    - pymdownx.inlinehilite
+    - pymdownx.magiclink
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
+#    - markdown_include.include:
+#       base_path: docs
+    - attr_list
+extra_css:
+    #- css/bootstrap_paper.min.css
+    - css/style.css
+copyright: Copyright &copy; 2021 2Foundations Inc
+#site_favicon: 'img/favicon.ico'

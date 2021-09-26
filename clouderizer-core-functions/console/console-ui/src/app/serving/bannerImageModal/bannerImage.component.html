@@ -1,0 +1,70 @@
+<div class="modal-header">
+        <h4 class="modal-title">Project Settings</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+</div>
+<div class="modal-body">
+    <div class="col-sm-12 m-0 advanceBox">
+        <div class="col-sm-12 row m-0 advanceContent">
+            <div class="col-sm-7 advanceContent2">
+                <div style="margin-left:5%;">
+                    <p><b style="font-family: MontserratMedium; color:#414141">Upload </b> <b style="font-family: MontserratBold; color:#414141">Banner</b><b style="font-family: MontserratMedium; color:#414141"> Image/Icon</b></p>
+                    <div style="display:inline-flex">
+                        <div>
+                            <input hidden id="bgImage" type="file" class="custom-file-input" (change)="onFileChange($event)">
+                            <label style="cursor:pointer" for="bgImage">
+                                <p *ngIf="!bgimageName" style="font-size:12px;line-height:40px;margin-left:2%">Choose a file</p>
+                                <p *ngIf="bgimageName" style="font-size:12px;line-height:40px;margin-left:2%">{{bgimageName}}</p>
+                            </label>
+                        </div>
+                        <div [class.spinner]="uploading" (click)="bgimageName && uploadClassImage()" [style.pointer-events]="uploadHideAndShow || uploading ? 'none': 'auto'" [style.width]="uploadHideAndShow || uploading ? '120px': '100px'" class="row uploadButton">
+                            <span [style.display]="!uploadHideAndShow && !uploading ? 'inherit': 'none'" class="uploadImg"></span>
+                            <span class="uploadText" [style.display]="!uploadHideAndShow && !uploading ? 'inherit': 'none'">
+                                Upload
+                            </span>
+                            <span style="margin-left:30px" class="uploadText" [style.display]="uploading ? 'inherit': 'none'">
+                                Uploading..
+                            </span>
+                            <svg [style.display]="uploadHideAndShow ? 'inherit': 'none'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 382"><defs><style>.cls-1{fill:none;}</style></defs><title>Tick</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="382" height="382"/><path class="cls-2" d="M123.43,310a17.48,17.48,0,0,1-12.38-5.12L34.7,228.5a12.5,12.5,0,0,1,17.68-17.67l71.05,71,206.2-206.2A12.5,12.5,0,1,1,347.3,93.36L135.8,304.86A17.44,17.44,0,0,1,123.43,310Z"/></g></g></svg>
+                            <span class="uploadText" [style.display]="uploadHideAndShow ? 'inherit': 'none'">                     
+                                Uploaded
+                            </span>                     
+                        </div>                      
+                    </div>
+                    <p style="margin-top:1%"><b style="color:red;font-family: MontserratBold">Recommended: </b> <b style="font-family: MontserratBold; color: #414141">1920 &#10005; 350 .jpg/.png, Max 2MB file</b></p>
+                </div>
+            </div>
+            <div class="col-sm-5 imageContent">
+                <img [src]="bgimageSrc" alt="backgroundimage" *ngIf="bgimageSrc" style="height: 120px; width:222px;margin-bottom:1%">
+                <p style="font-size:10px" *ngIf="bgimageSrc"><b style="font-family: MontserratRegular; color: #414141">size: </b><b style="font-family: MontserratBold; color: #414141">{{bgimageWidth}} &#10005; {{bgimageHeight}}</b> <b style="font-family: MontserratRegular; color: #414141">  format: </b><b style="font-family: MontserratBold; color: #414141">{{bgimageExt}}</b></p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:2%">
+            <div class="checkbox" *ngIf="projectType != 'public' && subtype != 'pythonscore'">
+                <mat-checkbox [(ngModel)]="preprocessEnabled"><p style="font-size:13px;font-family:MontserratMedium">Need Preprocessing?</p></mat-checkbox>
+            </div>
+
+            <div class="checkbox" *ngIf="projectType != 'public' && subtype != 'pythonscore'">
+                <mat-checkbox [(ngModel)]="postprocessEnabled"><p style="font-size:13px;font-family:MontserratMedium">Need Postprocessing?</p></mat-checkbox>
+            </div>
+
+            <div class="checkbox" *ngIf="projectType != 'public' && subtype == 'pythonscore'">
+                <mat-checkbox [(ngModel)]="timeSeries"><p style="font-size:13px;font-family:MontserratMedium">Is it a Time series model?</p></mat-checkbox>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:2%">
+            <div class="checkbox" *ngIf="projectType != 'public'">
+                <mat-checkbox [(ngModel)]="retrainModel"><p style="font-size:13px;font-family:MontserratMedium">Model Retraining</p></mat-checkbox>
+            </div>
+        </div>
+        <div class="checkbox" *ngIf="retrainModel">
+            <input class="retrainInput" placeholder="Enter retrain URL" name="retrain" [(ngModel)]="retrainURL" type="text"> 
+            <div><a style="font-size:12px">Secret Key: </a><a style="color:Blue; font-size:12px; font-family: MontserratSemiBold">{{projectModel.secret_key}}</a></div>                          
+        </div>  
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" [disabled]="retrainModel && !retrainURL" (click)="save()">Save</button>
+</div>

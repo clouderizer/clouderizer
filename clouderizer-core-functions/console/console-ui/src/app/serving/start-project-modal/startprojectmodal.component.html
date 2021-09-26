@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{startTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div>
+        <ul class="list-unstyled team-members">
+            <li>
+                <div class="row col-sm-12 align-items-center m-0 p-l-0 p-r-0 modal-platform" (click)="onClouderizer('standard')">
+                    <div class="col-sm-3 img-blk">
+                        <div class="avatar">
+                            <img src="assets/images/chips/cpu_clouderizer.svg" alt="Circle Image" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-sm-9 platform-text">
+                        <p>Standard</p>
+                        <span class="text-muted">1 vCPU, 2GB RAM</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="row col-sm-12 align-items-center m-0 p-l-0 p-r-0 modal-platform" (click)="onClouderizer('highmemory')">
+                    <div class="col-sm-3 img-blk">
+                        <div class="avatar">
+                            <img src="assets/images/chips/sd-card.svg" alt="Circle Image" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-sm-9 platform-text">
+                        <p>High memory</p>
+                        <span class="text-muted">3 vCPU, 8GB RAM</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="row col-sm-12 align-items-center m-0 p-l-0 p-r-0  modal-platform" (click)="onClouderizer('gpu')">
+                    <div class="col-sm-3  img-blk">
+                        <div class="avatar">
+                            <img src="assets/images/chips/gpu_clouderizer.svg" alt="Circle Image"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-sm-9 platform-text">
+                        <p>GPU</p>
+                        <span class="text-muted">1 Tesla P4 GPU, 8 vCPU, 30GB RAM</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="row col-sm-12 align-items-center m-0 p-l-0 p-r-0  modal-platform" (click)="onLambda()">
+                    <div class="col-sm-3  img-blk">
+                        <div class="avatar">
+                            <img src="assets/images/chips/gpu_clouderizer.svg" alt="Circle Image"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-sm-9 platform-text">
+                        <p>AWS Lambda</p>
+                        <span class="text-muted">Deploy on AWS Lambda</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="subtype == 'dai' && !user.daiconfig_sa">
+        <div style="text-align: center;">
+            <p style="color:red">Your Driverless AI license file is not linked with Clouderizer yet.</p>
+            <br />
+            <br />
+            <a class="anchor gradient" (click)="gotoConfig()" style="font-size:1.2em;">
+               setup now
+            </a>    
+        </div>
+    </div>
+    <div class="licenseText" *ngIf="user.company.planName == 'freecloud'">
+        {{miscService.getNonCommericalMessage()}}  
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="closeModal(false)">Cancel</button>
+</div>

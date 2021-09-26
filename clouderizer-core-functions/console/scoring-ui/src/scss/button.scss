@@ -1,0 +1,77 @@
+.btn{
+    font-size: 0.85em;
+    font-family: 'MontserratSemiBold';
+    background: #ffffff;
+    z-index: 1;
+    position: relative;
+    border: 1px solid transparent;
+    padding: 0.25em 0.75em;
+    img{
+        width: 17px;
+        margin-right: 5px;
+    }
+}
+.btn-outline-primary {
+    color:var(--btn-text-clr);
+    border-color:var(--btn-primary-clr);    
+}
+.btn-outline-primary:hover ,
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+ .btn-outline-primary:not(:disabled):not(.disabled):active,
+  .show>.btn-outline-primary.dropdown-toggle {
+    color:var(--btn-text-clr);
+    background-color: var(--span-grey-bg-clr);
+    border-color: var(--btn-primary-clr);
+}
+.btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+ .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+ .show>.btn-outline-primary.dropdown-toggle:focus,
+.btn-outline-primary.focus, .btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.2rem var(--btn-primary-hover-clr);
+}
+
+
+.btn-outline-danger{
+    color:var(--btn-text-clr);
+    border-color:var(--btn-danger-clr);    
+}
+
+
+.btn-outline-danger:hover ,
+.btn-outline-danger:not(:disabled):not(.disabled).active,
+ .btn-outline-danger:not(:disabled):not(.disabled):active,
+  .show>.btn-outline-danger.dropdown-toggle {
+    color: var(--btn-text-clr);
+    background-color: var(--span-grey-bg-clr);
+    border-color: var(--btn-danger-clr);
+}
+.btn-outline-danger:not(:disabled):not(.disabled).active:focus,
+ .btn-outline-danger:not(:disabled):not(.disabled):active:focus,
+ .show>.btn-outline-danger.dropdown-toggle:focus,
+.btn-outline-danger.focus, .btn-outline-danger:focus {
+    box-shadow: 0 0 0 0.2rem var(--btn-danger-hover-clr);
+}
+
+
+
+.btn-outline-violet{
+    color:var(--btn-text-clr);
+    border-color:var(--btn-violet-clr);    
+    &:hover, &:active{
+        background-color: var(--span-grey-bg-clr);
+    }
+}
+
+.btn-outline-darker{
+    color:var(--btn-text-clr);
+    border-color:var(--btn-darker-clr);    
+    &:hover, &:active{
+        background-color: var(--span-grey-bg-clr);
+    }
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    color: black;
+    background-color: powderblue;
+    cursor: default;
+}

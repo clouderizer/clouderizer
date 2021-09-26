@@ -1,0 +1,58 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: https://test.serverless.clouderizer.com
+functions:
+  # console:
+  #   lang: dockerfile
+  #   handler: ./console
+  #   #image: registry.gitlab.com/showcase-internal/internalfunctions/console:opensource   #mar16
+  #   image: gcr.io/production-servers-228902/console:opensource 
+  #   secrets:
+  #     - dockerhub
+  #     - sails-config
+  #     - gcp-service-key
+  #   readonly_root_filesystem: false
+  #   environment:
+  #       read_timeout: 1m
+  #       write_timeout: 1m
+  #       exec_timeout: 1m
+  #       OPENFAAS_URL: https://test.serverless.clouderizer.com
+  publishproject:
+    lang: dockerfile
+    handler: ./publishproject
+    #image: registry.gitlab.com/showcase-internal/internalfunctions/publishproject:opensource  #mar16
+    image: gcr.io/production-servers-228902/publishproject:opensource 
+    secrets:
+      - dockerhub
+      - gitlab
+      - faas-secret-key
+      - gcp-service-key
+    readonly_root_filesystem: false
+    environment:
+        read_timeout: 1m
+        write_timeout: 1m
+        exec_timeout: 1m
+        OPENFAAS_URL: https://test.serverless.clouderizer.com
+  # pmmlparser:
+  #   lang: cldz_java11
+  #   handler: ./pmmlparserbeta
+  #   #image: registry.gitlab.com/showcase-internal/internalfunctions/pmmlparser:opensource
+  #   image: gcr.io/production-servers-228902/pmmlparser:opensource
+  #   secrets:
+  #     - dockerhub
+  #   environment:
+  #       read_timeout: 5m
+  #       write_timeout: 5m
+  #       exec_timeout: 5m
+  # h2oparser:
+  #   lang: cldz_java11
+  #   handler: ./h2oparser
+  #   #image: registry.gitlab.com/showcase-internal/internalfunctions/h2oparser:opensource
+  #   image: gcr.io/production-servers-228902/h2oparser:opensource
+  #   secrets:
+  #     - dockerhub
+  #   environment:
+  #       read_timeout: 5m
+  #       write_timeout: 5m
+  #       exec_timeout: 5m

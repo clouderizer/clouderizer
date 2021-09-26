@@ -1,0 +1,21 @@
+.contentPartLogin{
+    height: calc(100vh - 50px);
+    box-shadow: 1px 1px 10px #cccccc;
+}
+.logo-main{
+    max-height:30px;
+}
+.leftLoginPanel {
+    height: 100%;
+    overflow: auto;
+}
+
+.rightLoginPanel{
+    background: var(--bg-login-clr);
+    overflow: auto;
+    height: 100%;
+}
+
+h4{
+    font-family: "MontserratSemibold";
+}

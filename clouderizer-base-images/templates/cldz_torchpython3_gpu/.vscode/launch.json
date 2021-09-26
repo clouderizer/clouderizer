@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/python-service/uds.py",
+      "args": ["pmml4s"],
+      "console": "integratedTerminal",
+      "env": {"PYTHONPATH": "${PYTHONPATH}:${workspaceFolder}/function"}
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/node-service/app.js",
+      //"args": ["../function/projectConfig.json"],
+      "env": {"PYTHONPATH": "${PYTHONPATH}:${workspaceFolder}/function"},
+      "runtimeVersion": "12.9.1"
+    }
+  ]
+}

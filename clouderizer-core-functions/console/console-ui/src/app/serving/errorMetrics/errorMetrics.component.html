@@ -1,0 +1,41 @@
+<div class="modal-header">
+	<h4 class="modal-title">Error Metrics</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="limiter" style="max-width:100%">
+		<div class="container-table100">
+			<div class="wrap-table100">
+                <div class="table100 ver3 m-b-110">
+					<div class="table100-head">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<th class="cell100 column1">Class</th>
+									<th class="cell100 column2">Precision</th>
+									<th class="cell100 column3">Recall</th>
+									<th class="cell100 column4">F1 Score</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<div class="table100-body js-pscroll">
+						<table>
+							<tbody>
+								<tr class="row100 body" *ngFor="let record of records">
+									<td class="cell100 column1">{{record.name}}</td>
+									<td class="cell100 column2">{{record.precision || 'Not captured yet'}}</td>
+									<td class="cell100 column3">{{record.recall || 'Not captured yet'}}</td>
+									<td class="cell100 column4">{{record.f1score || 'Not captured yet'}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>

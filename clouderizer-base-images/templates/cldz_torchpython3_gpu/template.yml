@@ -1,0 +1,3 @@
+language: cldz_python3_gpu
+fprocess: node /home/app/node-service/app.js
+

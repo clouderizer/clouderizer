@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div class="col-sm-12 row m-0 p-0 dashboardmain">
+    <div class="leftSidebar">
+        <app-left-sidebar></app-left-sidebar>
+    </div>
+    <div class="mainDivContent">
+        <div class="col-sm-12 row m-0 p-0 h-100">
+            <div class="tab-content pagesTabs">
+                <div class="row p-0 m-0 h-100">
+                    <div id="subMenu" [ngClass]="{collapsed: !showSidebar}" class="h-100 sub-menulist p-l-0">
+                        <h4>Showcase</h4>
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a routerLinkActive="active" [routerLink]="['/serving/model']">
+                                  <img alt="list" src="assets/images/serving/Serving_Model_List.svg" />
+                                    Showcase Projects
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                
+                    <div class="rightmainContentDiv" [ngClass]="{expanded: !showSidebar}">
+                        <span class="hideSidebarIcn dashboardicn" (click)="showSidebar = !showSidebar">
+                            <img *ngIf="!showSidebar" alt="arrowright" src="assets/images/arrow_right.svg" />
+                            <img *ngIf="showSidebar" alt="arrowleft" src="assets/images/arrow_left.svg" />
+                        </span>
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
