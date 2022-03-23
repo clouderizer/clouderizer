@@ -2,7 +2,7 @@
 
 #### Syntax
 
-```cldz deploy -n python PATH_TO_JUPYTER_NOTEBOOK {REQUIREMENTS_TXT}```
+```cldz quickdeploy -n python PATH_TO_JUPYTER_NOTEBOOK {REQUIREMENTS_TXT}```
 
 ```-n``` flag tells ```cldz``` that deployment is of type notebook. Immediately after -n we follow up with the notebook kernel type. Following kernels are supported
 
@@ -12,7 +12,7 @@
 
 If no flag is given, ```cldz``` assumes the first argument is a python based jupyter notebook and second argument is a requirements file.
 #### Example
-```cldz deploy -n python awesome-notebook.ipynb requirements.txt```
+```cldz quickdeploy -n python awesome-notebook.ipynb requirements.txt```
 
 #### Async Endpoints
 
@@ -22,7 +22,7 @@ Notebook deployments support Async serverless endpoints. This is useful as often
 
 #### Syntax
 
-```cldz deploy -m MODEL_TYPE PATH_TO_H2O_MODEL_FILE```
+```cldz quickdeploy -m MODEL_TYPE PATH_TO_H2O_MODEL_FILE```
 
 ```-m``` flag tells ```cldz``` that deployment is of type model. Immediately after -m we follow up with the model type. Following model types are supported
 
@@ -33,7 +33,7 @@ Notebook deployments support Async serverless endpoints. This is useful as often
 
 #### h2o / dai / pmml model deployment
 
-```cldz deploy -m h2o PATH_TO_H2O_MODEL_FILE```
+```cldz quickdeploy -m h2o PATH_TO_H2O_MODEL_FILE```
 
 ```-m``` flag tells ```cldz``` that deployment is of type model.
 
@@ -47,7 +47,7 @@ h2o in the above example can be replaced with dai / pmml.
 
 Since python predict code needs to be executed.
 
-```cldz deploy -m python PATH_TO_PYTHON_MODEL --predict predict.py```
+```cldz quickdeploy -m python PATH_TO_PYTHON_MODEL --predict predict.py```
 
 ```PATH_TO_PYTHON_MODEL``` is usually the model file we load and score in ```predict.py```.
 
@@ -58,7 +58,7 @@ Does your model requires preprocess / postprocess scripts at the time of scoring
 
 Suppose you have a pmml model with both preprocess and postprocess files. Syntax is:
 
-```cldz deploy -m pmml PATH_TO_PMML_FILE --preprocess preprocess.py --postprocess postprocess.py```
+```cldz quickdeploy -m pmml PATH_TO_PMML_FILE --preprocess preprocess.py --postprocess postprocess.py```
 
 VERY IMPORTANT NOTE: Preprocess and postprocess flags are optional. Even mispelling the flags will deploy the model but without the mispelled arguments.
 
@@ -94,4 +94,24 @@ Clouderizer currently supports 3 image types:
 
 *standard* image type is selected by default 
 
-```cldz deploy my_notebook.ipynb --image torch```
+```cldz quickdeploy my_notebook.ipynb --image torch```
+
+### Startup scripts
+
+Your project might need a few additional system dependencies. We use a Linux based distro Ubuntu for all the project setup.
+Incase the dependencies you need are missing, with ```cldz quickdeploy``` you can insert your dependency file with ```--startup_scripts``` arg i.e list of linux shell commands which installs the needed dependencies.
+
+Suppose you need vim text editor in your project, create a file ```project_shell_commands.txt```.
+File contents:<br>
+apt-get update<br>
+apt-get install -y vim
+
+This will install vim in your project environment
+
+```cldz quickdeploy my_notebook.ipynb --startup_scripts project_shell_commands.txt```
+
+### Privileged user
+
+To install some dependencies or run system commands within notebook ```root``` user access is needed. With ```cldz quickdeploy``` you can pass ```--user root``` for root user privileges in your environment. 
+
+```cldz quickdeploy my_notebook.ipynb --user root```

@@ -1,22 +1,24 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="Clouderizer is an end to end MLOps platform for businesses. It helps teams build, deploy, manage AI / ML models in production environmnet.">
       
+      
+        <link rel="canonical" href="https://docs.clouderizer.com/cli/deploy/">
       
       
         <meta name="author" content="Clouderizer Team">
       
       
-        <link rel="canonical" href="https://docs.clouderizer.com/cli/deploy/">
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
       
-      <link rel="shortcut icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-1.8.0">
     
     
       
@@ -24,116 +26,80 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
-      
-        
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
-        
-          
-          
-          <meta name="theme-color" content="#4051b5">
-        
+      <script src="../../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-bfecc7305d.css">
       
     
     
-    
       
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-      
-    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
       <link rel="stylesheet" href="../../css/style.css">
     
     
-      
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-113348927-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
-    
-    
   </head>
   
   
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
-      
   
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
         
-        <a href="#deploy-notebooks" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      
-
-<header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid" aria-label="Header">
-    <a href="https://docs.clouderizer.com" title="Clouderizer Documentation" class="md-header-nav__button md-logo" aria-label="Clouderizer Documentation">
-      
-  <img src="../../img/logo.png" alt="logo">
-
-    </a>
-    <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header-nav__title" data-md-component="header-title">
-      <div class="md-header-nav__ellipsis">
-        <div class="md-header-nav__topic">
-          <span class="md-ellipsis">
-            Clouderizer Documentation
-          </span>
-        </div>
-        <div class="md-header-nav__topic">
-          <span class="md-ellipsis">
-            
-              cldz deploy
-            
-          </span>
-        </div>
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://docs.clouderizer.com" title="Clouderizer Documentation" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
       </div>
-    </div>
-    
-      <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  CLI
+                </span>
+              
+            
+            cldz deploy
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="" data-md-lang-tokenizer="[\s\-]+">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -141,93 +107,28 @@
     </div>
   </div>
 </div>
-    
-    
+        
+      </div>
+      
+    </div>
   </nav>
 </header>
     
-    <div class="md-container" data-md-component="container">
+    <div class="md-container">
       
       
-        
-          
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../.." class="md-tabs__link">
-      Overview
-    </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../showcase/introduction/" class="md-tabs__link">
-        Showcase
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-    
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../setup/" class="md-tabs__link md-tabs__link--active">
-        CLI
-      </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
-</nav>
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
           
             
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    
-
-
-
-  
-
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="https://docs.clouderizer.com" title="Clouderizer Documentation" class="md-nav__button md-logo" aria-label="Clouderizer Documentation">
-      
-  <img src="../../img/logo.png" alt="logo">
-
-    </a>
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
     Clouderizer Documentation
   </label>
   
@@ -237,506 +138,459 @@
       
       
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
+
+  <li class="md-nav__item">
+    <a href="../.." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
 
     
       
       
       
 
-  
-  
-  
+
+  <li class="md-nav__item md-nav__item--nested">
     
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
-      
-      <label class="md-nav__link" for="nav-2">
-        Showcase
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Showcase" data-md-level="1">
-        <label class="md-nav__title" for="nav-2">
-          <span class="md-nav__icon md-icon"></span>
-          Showcase
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/introduction/" class="md-nav__link">
-        Introduction
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/quickstart/" class="md-nav__link">
-        Quick Start
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" >
-      
-      <label class="md-nav__link" for="nav-2-3">
-        Upload
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Upload" data-md-level="2">
-        <label class="md-nav__title" for="nav-2-3">
-          <span class="md-nav__icon md-icon"></span>
-          Upload
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/createproject/" class="md-nav__link">
-        Create Project
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/configure/" class="md-nav__link">
-        Configure
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/preprocessing/" class="md-nav__link">
-        Preprocessing
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/prediction/" class="md-nav__link">
-        Prediction
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/postprocessing/" class="md-nav__link">
-        Postprocessing
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/uploadmodels/debuggingsetup/" class="md-nav__link">
-        Debugging Setup
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4" >
-      
-      <label class="md-nav__link" for="nav-2-4">
-        Deploy
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Deploy" data-md-level="2">
-        <label class="md-nav__title" for="nav-2-4">
-          <span class="md-nav__icon md-icon"></span>
-          Deploy
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/deploymodels/" class="md-nav__link">
-        Deploy
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5" >
-      
-      <label class="md-nav__link" for="nav-2-5">
-        Invoke
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Invoke" data-md-level="2">
-        <label class="md-nav__title" for="nav-2-5">
-          <span class="md-nav__icon md-icon"></span>
-          Invoke
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/scoremodels/restfulapis/" class="md-nav__link">
-        RESTful APIs
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5-2" type="checkbox" id="nav-2-5-2" >
-      
-      <label class="md-nav__link" for="nav-2-5-2">
-        Scoring UI
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Scoring UI" data-md-level="3">
-        <label class="md-nav__title" for="nav-2-5-2">
-          <span class="md-nav__icon md-icon"></span>
-          Scoring UI
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/scoremodels/scoringui/introduction/" class="md-nav__link">
-        Introduction
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/scoremodels/scoringui/formbasedscoring/" class="md-nav__link">
-        Form based Scoring
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/scoremodels/scoringui/bulkscoring/" class="md-nav__link">
-        Bulk Scoring
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/scoremodels/scoringui/customizations/" class="md-nav__link">
-        Customizations
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6" >
-      
-      <label class="md-nav__link" for="nav-2-6">
-        Manage
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Manage" data-md-level="2">
-        <label class="md-nav__title" for="nav-2-6">
-          <span class="md-nav__icon md-icon"></span>
-          Manage
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/managemodels/monitornotebooks/" class="md-nav__link">
-        Monitor Notebooks
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/managemodels/monitormodels/" class="md-nav__link">
-        Monitor Models
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/managemodels/updatenotebooks/" class="md-nav__link">
-        Update Notebooks
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../showcase/managemodels/updatemodels/" class="md-nav__link">
-        Update Models
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
-      
-      <label class="md-nav__link" for="nav-3">
-        CLI
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="CLI" data-md-level="1">
-        <label class="md-nav__title" for="nav-3">
-          <span class="md-nav__icon md-icon"></span>
-          CLI
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../setup/" class="md-nav__link">
-        Setup
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          cldz deploy
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        cldz deploy
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
+    <label class="md-nav__link" for="nav-2">
+      Showcase
     </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Showcase
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/quickstart/" title="Quick Start" class="md-nav__link">
+      Quick Start
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3">
+    
+    <label class="md-nav__link" for="nav-2-3">
+      Upload
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        Upload
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/createproject/" title="Create Project" class="md-nav__link">
+      Create Project
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/configure/" title="Configure" class="md-nav__link">
+      Configure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/preprocessing/" title="Preprocessing" class="md-nav__link">
+      Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/prediction/" title="Prediction" class="md-nav__link">
+      Prediction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/postprocessing/" title="Postprocessing" class="md-nav__link">
+      Postprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/uploadmodels/debuggingsetup/" title="Debugging Setup" class="md-nav__link">
+      Debugging Setup
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4">
+    
+    <label class="md-nav__link" for="nav-2-4">
+      Deploy
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        Deploy
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/deploymodels/" title="Deploy" class="md-nav__link">
+      Deploy
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Invoke
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        Invoke
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/scoremodels/restfulapis/" title="RESTful APIs" class="md-nav__link">
+      RESTful APIs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5-2" type="checkbox" id="nav-2-5-2">
+    
+    <label class="md-nav__link" for="nav-2-5-2">
+      Scoring UI
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-5-2">
+        Scoring UI
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/scoremodels/scoringui/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/scoremodels/scoringui/formbasedscoring/" title="Form based Scoring" class="md-nav__link">
+      Form based Scoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/scoremodels/scoringui/bulkscoring/" title="Bulk Scoring" class="md-nav__link">
+      Bulk Scoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/scoremodels/scoringui/customizations/" title="Customizations" class="md-nav__link">
+      Customizations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6">
+    
+    <label class="md-nav__link" for="nav-2-6">
+      Manage
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-6">
+        Manage
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/managemodels/monitornotebooks/" title="Monitor Notebooks" class="md-nav__link">
+      Monitor Notebooks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/managemodels/monitormodels/" title="Monitor Models" class="md-nav__link">
+      Monitor Models
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/managemodels/updatenotebooks/" title="Update Notebooks" class="md-nav__link">
+      Update Notebooks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../showcase/managemodels/updatemodels/" title="Update Models" class="md-nav__link">
+      Update Models
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      CLI
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        CLI
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../setup/" title="Setup" class="md-nav__link">
+      Setup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        cldz deploy
+      </label>
+    
+    <a href="./" title="cldz deploy" class="md-nav__link md-nav__link--active">
+      cldz deploy
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#deploy-notebooks" class="md-nav__link">
+  <a href="#deploy-notebooks" title="Deploy Notebooks" class="md-nav__link">
     Deploy Notebooks
   </a>
   
-    <nav class="md-nav" aria-label="Deploy Notebooks">
+    <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
+  <a href="#syntax" title="Syntax" class="md-nav__link">
     Syntax
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#example" title="Example" class="md-nav__link">
     Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-endpoints" class="md-nav__link">
+  <a href="#async-endpoints" title="Async Endpoints" class="md-nav__link">
     Async Endpoints
   </a>
   
@@ -748,29 +602,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-models" class="md-nav__link">
+  <a href="#deploy-models" title="Deploy Models" class="md-nav__link">
     Deploy Models
   </a>
   
-    <nav class="md-nav" aria-label="Deploy Models">
+    <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#syntax_1" class="md-nav__link">
+  <a href="#syntax_1" title="Syntax" class="md-nav__link">
     Syntax
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#h2o-dai-pmml-model-deployment" class="md-nav__link">
+  <a href="#h2o-dai-pmml-model-deployment" title="h2o / dai / pmml model deployment" class="md-nav__link">
     h2o / dai / pmml model deployment
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#python-model-deployment" class="md-nav__link">
+  <a href="#python-model-deployment" title="python model deployment" class="md-nav__link">
     python model deployment
   </a>
   
@@ -782,122 +636,122 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-processing-and-post-processing-scripts" class="md-nav__link">
+  <a href="#pre-processing-and-post-processing-scripts" title="Pre-processing and Post-processing scripts" class="md-nav__link">
     Pre-processing and Post-processing scripts
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#infra-configuration-flag" class="md-nav__link">
+  <a href="#infra-configuration-flag" title="Infra Configuration Flag" class="md-nav__link">
     Infra Configuration Flag
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#image-configuration-flag" class="md-nav__link">
+  <a href="#image-configuration-flag" title="Image Configuration Flag" class="md-nav__link">
     Image Configuration Flag
   </a>
   
 </li>
       
+      
+      
     </ul>
   
 </nav>
-      
-    </li>
-  
+    
+  </li>
 
+        
           
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../update/" class="md-nav__link">
-        cldz update
-      </a>
-    </li>
-  
+          
+          
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../start/" class="md-nav__link">
-        cldz start
-      </a>
-    </li>
-  
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stop/" class="md-nav__link">
-        cldz stop
-      </a>
-    </li>
-  
+  <li class="md-nav__item">
+    <a href="../update/" title="cldz update" class="md-nav__link">
+      cldz update
+    </a>
+  </li>
 
+        
           
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ls/" class="md-nav__link">
-        cldz ls
-      </a>
-    </li>
-  
+          
+          
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../describe/" class="md-nav__link">
-        cldz describe
-      </a>
-    </li>
-  
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../delete/" class="md-nav__link">
-        cldz delete
-      </a>
-    </li>
-  
+  <li class="md-nav__item">
+    <a href="../start/" title="cldz start" class="md-nav__link">
+      cldz start
+    </a>
+  </li>
 
+        
           
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../miscellaneous/" class="md-nav__link">
-        Miscellaneous
-      </a>
-    </li>
-  
+          
+          
 
+
+  <li class="md-nav__item">
+    <a href="../stop/" title="cldz stop" class="md-nav__link">
+      cldz stop
+    </a>
+  </li>
+
+        
           
-        </ul>
-      </nav>
-    </li>
-  
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ls/" title="cldz ls" class="md-nav__link">
+      cldz ls
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../describe/" title="cldz describe" class="md-nav__link">
+      cldz describe
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../delete/" title="cldz delete" class="md-nav__link">
+      cldz delete
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../miscellaneous/" title="Miscellaneous" class="md-nav__link">
+      Miscellaneous
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
 
     
   </ul>
@@ -907,45 +761,41 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary">
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
+    <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#deploy-notebooks" class="md-nav__link">
+  <a href="#deploy-notebooks" title="Deploy Notebooks" class="md-nav__link">
     Deploy Notebooks
   </a>
   
-    <nav class="md-nav" aria-label="Deploy Notebooks">
+    <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
+  <a href="#syntax" title="Syntax" class="md-nav__link">
     Syntax
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#example" title="Example" class="md-nav__link">
     Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-endpoints" class="md-nav__link">
+  <a href="#async-endpoints" title="Async Endpoints" class="md-nav__link">
     Async Endpoints
   </a>
   
@@ -957,29 +807,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-models" class="md-nav__link">
+  <a href="#deploy-models" title="Deploy Models" class="md-nav__link">
     Deploy Models
   </a>
   
-    <nav class="md-nav" aria-label="Deploy Models">
+    <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#syntax_1" class="md-nav__link">
+  <a href="#syntax_1" title="Syntax" class="md-nav__link">
     Syntax
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#h2o-dai-pmml-model-deployment" class="md-nav__link">
+  <a href="#h2o-dai-pmml-model-deployment" title="h2o / dai / pmml model deployment" class="md-nav__link">
     h2o / dai / pmml model deployment
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#python-model-deployment" class="md-nav__link">
+  <a href="#python-model-deployment" title="python model deployment" class="md-nav__link">
     python model deployment
   </a>
   
@@ -991,25 +841,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-processing-and-post-processing-scripts" class="md-nav__link">
+  <a href="#pre-processing-and-post-processing-scripts" title="Pre-processing and Post-processing scripts" class="md-nav__link">
     Pre-processing and Post-processing scripts
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#infra-configuration-flag" class="md-nav__link">
+  <a href="#infra-configuration-flag" title="Infra Configuration Flag" class="md-nav__link">
     Infra Configuration Flag
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#image-configuration-flag" class="md-nav__link">
+  <a href="#image-configuration-flag" title="Image Configuration Flag" class="md-nav__link">
     Image Configuration Flag
   </a>
   
 </li>
+      
+      
       
     </ul>
   
@@ -1028,22 +880,22 @@
                 
                 <h3 id="deploy-notebooks">Deploy Notebooks<a class="headerlink" href="#deploy-notebooks" title="Permanent link">&para;</a></h3>
 <h4 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h4>
-<p><code>cldz deploy -n python PATH_TO_JUPYTER_NOTEBOOK {REQUIREMENTS_TXT}</code></p>
-<p><code>-n</code> flag tells <code>cldz</code> that deployment is of type notebook. Immediately after -n we follow up with the notebook kernel type. Following kernels are supported</p>
+<p><code class="codehilite">cldz deploy -n python PATH_TO_JUPYTER_NOTEBOOK {REQUIREMENTS_TXT}</code></p>
+<p><code class="codehilite">-n</code> flag tells <code class="codehilite">cldz</code> that deployment is of type notebook. Immediately after -n we follow up with the notebook kernel type. Following kernels are supported</p>
 <ul>
 <li>python</li>
 <li>R (coming soon)</li>
 <li>julia (coming soon)</li>
 </ul>
-<p>If no flag is given, <code>cldz</code> assumes the first argument is a python based jupyter notebook and second argument is a requirements file.</p>
+<p>If no flag is given, <code class="codehilite">cldz</code> assumes the first argument is a python based jupyter notebook and second argument is a requirements file.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
-<p><code>cldz deploy -n python awesome-notebook.ipynb requirements.txt</code></p>
+<p><code class="codehilite">cldz deploy -n python awesome-notebook.ipynb requirements.txt</code></p>
 <h4 id="async-endpoints">Async Endpoints<a class="headerlink" href="#async-endpoints" title="Permanent link">&para;</a></h4>
-<p>Notebook deployments support Async serverless endpoints. This is useful as often Notebook execution is a long running operation. Async endpoints can be invoked via any http client like curl. Caller can specify a callback URL (webhook) in its http invocation under header <code>X-callback-url</code>. Serverless function immediately replies back with 202 request accepted response code and continue to execute the notebook. Once notebook execution is complete, the callback URL (webhook) is called with the result. In addition to this webhook, output of the invocation can also be viewed under <strong>Invocation History</strong> on Clouderizer console.</p>
+<p>Notebook deployments support Async serverless endpoints. This is useful as often Notebook execution is a long running operation. Async endpoints can be invoked via any http client like curl. Caller can specify a callback URL (webhook) in its http invocation under header <code class="codehilite">X-callback-url</code>. Serverless function immediately replies back with 202 request accepted response code and continue to execute the notebook. Once notebook execution is complete, the callback URL (webhook) is called with the result. In addition to this webhook, output of the invocation can also be viewed under <strong>Invocation History</strong> on Clouderizer console.</p>
 <h3 id="deploy-models">Deploy Models<a class="headerlink" href="#deploy-models" title="Permanent link">&para;</a></h3>
 <h4 id="syntax_1">Syntax<a class="headerlink" href="#syntax_1" title="Permanent link">&para;</a></h4>
-<p><code>cldz deploy -m MODEL_TYPE PATH_TO_H2O_MODEL_FILE</code></p>
-<p><code>-m</code> flag tells <code>cldz</code> that deployment is of type model. Immediately after -m we follow up with the model type. Following model types are supported</p>
+<p><code class="codehilite">cldz deploy -m MODEL_TYPE PATH_TO_H2O_MODEL_FILE</code></p>
+<p><code class="codehilite">-m</code> flag tells <code class="codehilite">cldz</code> that deployment is of type model. Immediately after -m we follow up with the model type. Following model types are supported</p>
 <ul>
 <li>h2o.ai MOJO model</li>
 <li>PMML</li>
@@ -1051,22 +903,22 @@
 <li>ONNX</li>
 </ul>
 <h4 id="h2o-dai-pmml-model-deployment">h2o / dai / pmml model deployment<a class="headerlink" href="#h2o-dai-pmml-model-deployment" title="Permanent link">&para;</a></h4>
-<p><code>cldz deploy -m h2o PATH_TO_H2O_MODEL_FILE</code></p>
-<p><code>-m</code> flag tells <code>cldz</code> that deployment is of type model.</p>
-<p>If <code>-m</code> is not specified,<code>cldz</code> assumes type as notebook.</p>
+<p><code class="codehilite">cldz deploy -m h2o PATH_TO_H2O_MODEL_FILE</code></p>
+<p><code class="codehilite">-m</code> flag tells <code class="codehilite">cldz</code> that deployment is of type model.</p>
+<p>If <code class="codehilite">-m</code> is not specified,<code class="codehilite">cldz</code> assumes type as notebook.</p>
 <p>h2o in the above example can be replaced with dai / pmml.</p>
 <p><img alt="CLI_LOGGEDIN" src="../../img/cldz_deploy.png" /> </p>
 <h4 id="python-model-deployment">python model deployment<a class="headerlink" href="#python-model-deployment" title="Permanent link">&para;</a></h4>
 <p>Since python predict code needs to be executed.</p>
-<p><code>cldz deploy -m python PATH_TO_PYTHON_MODEL --predict predict.py</code></p>
-<p><code>PATH_TO_PYTHON_MODEL</code> is usually the model file we load and score in <code>predict.py</code>.</p>
+<p><code class="codehilite">cldz deploy -m python PATH_TO_PYTHON_MODEL --predict predict.py</code></p>
+<p><code class="codehilite">PATH_TO_PYTHON_MODEL</code> is usually the model file we load and score in <code class="codehilite">predict.py</code>.</p>
 <h3 id="pre-processing-and-post-processing-scripts">Pre-processing and Post-processing scripts<a class="headerlink" href="#pre-processing-and-post-processing-scripts" title="Permanent link">&para;</a></h3>
 <p>Does your model requires preprocess / postprocess scripts at the time of scoring?</p>
 <p>Suppose you have a pmml model with both preprocess and postprocess files. Syntax is:</p>
-<p><code>cldz deploy -m pmml PATH_TO_PMML_FILE --preprocess preprocess.py --postprocess postprocess.py</code></p>
+<p><code class="codehilite">cldz deploy -m pmml PATH_TO_PMML_FILE --preprocess preprocess.py --postprocess postprocess.py</code></p>
 <p>VERY IMPORTANT NOTE: Preprocess and postprocess flags are optional. Even mispelling the flags will deploy the model but without the mispelled arguments.</p>
 <h3 id="infra-configuration-flag">Infra Configuration Flag<a class="headerlink" href="#infra-configuration-flag" title="Permanent link">&para;</a></h3>
-<p><code>--infra</code> flag tells cldz the type of infra you want to run on.</p>
+<p><code class="codehilite">--infra</code> flag tells cldz the type of infra you want to run on.</p>
 <p>Clouderizer currently supports 3 infra types:</p>
 <ol>
 <li>standard - 2GB Memory</li>
@@ -1078,9 +930,9 @@
 <p class="admonition-title">Note</p>
 </div>
 <p>Tensorflow 2.4+ is supported for GPU.</p>
-<p><code>cldz start PROJECT_NAME --infra gpu</code></p>
+<p><code class="codehilite">cldz start PROJECT_NAME --infra gpu</code></p>
 <h3 id="image-configuration-flag">Image Configuration Flag<a class="headerlink" href="#image-configuration-flag" title="Permanent link">&para;</a></h3>
-<p><code>--image</code> flag tells cldz the type of base image you want to run on.</p>
+<p><code class="codehilite">--image</code> flag tells cldz the type of base image you want to run on.</p>
 <p>Clouderizer currently supports 3 image types:</p>
 <ol>
 <li>standard - python 3.8</li>
@@ -1088,13 +940,13 @@
 <li>torch - python 3.8 + Pytorch + Fastai + nbdev</li>
 </ol>
 <p><em>standard</em> image type is selected by default </p>
-<p><code>cldz deploy my_notebook.ipynb --image torch</code></p>
+<p><code class="codehilite">cldz deploy my_notebook.ipynb --image torch</code></p>
+                
+                  
                 
               
               
                 
-
-
               
             </article>
           </div>
@@ -1105,34 +957,34 @@
 <footer class="md-footer">
   
     <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+      <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../setup/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          <a href="../setup/" title="Setup" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
                 Setup
-              </div>
+              </span>
             </div>
           </a>
         
         
-          <a href="../update/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
+          <a href="../update/" title="cldz update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
                 cldz update
-              </div>
+              </span>
             </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
             </div>
           </a>
         
@@ -1147,11 +999,14 @@
             Copyright &copy; 2021 2Foundations Inc
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
       </div>
+      
+        
       
     </div>
   </div>
@@ -1159,18 +1014,15 @@
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.53cc9318.min.js"></script>
-      <script src="../../assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/application-1d6ee6ee6c.js"></script>
       
-      <script>
-        app = initialize({
-          base: "../..",
-          features: ['navigation.sections', 'navigation.tabs'],
-          search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
-          }, typeof search !== "undefined" && search)
-        })
-      </script>
+      
+      <script>app.initialize({url:{base:"../.."}})</script>
+      
+    
+    
+      
+      <script>!function(e,t,a,n,o,c,i){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,c=t.createElement(a),i=t.getElementsByTagName(a)[0],c.async=1,c.src=n,i.parentNode.insertBefore(c,i)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-113348927-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var t=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",t,e.href)})});var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})</script>
       
     
   </body>
