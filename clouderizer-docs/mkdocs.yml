@@ -75,7 +75,7 @@ pages:
 
     - CLI:
         - Setup: cli/setup.md
-        - cldz deploy: cli/deploy.md
+        - cldz quickdeploy: cli/deploy.md
         - cldz update: cli/update.md
         - cldz start: cli/start.md
         - cldz stop: cli/stop.md
